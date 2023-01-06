@@ -9,9 +9,26 @@
   </head>
 
   <body>
-    <a href="/">Home</a>
-<a href="/auth/signup">Sign Up</a>
-<a href="/auth/login">Log In</a>
+        <nav>
+    <ul>
+      <li>
+        <a href="/">Home</a><span> | </span>
+         {{#if userDetails}}
+         <a href="/auth/userProfile">Profile</a> <span> | </span>
+         <form id="logout-form" action="/auth/logout" method="GET">
+          <button>Logout</button> <span> | </span>
+        </form>
+        {{else}}
+        <a href="/auth/signup">Signup</a> <span> | </span>
+        <a href="/auth/login">Login</a>
+        {{/if}}
+        
+ 
+        
+ 
+      </li>
+    </ul>
+  </nav>
 
 
     {{{body}}}

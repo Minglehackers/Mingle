@@ -43,17 +43,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
   }
 
   //   ! This regular expression checks password for special characters and minimum length
-  /*
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!regex.test(password)) {
     res
       .status(400)
       .render("auth/signup", {
-        errorMessage: "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
+        errorMessage: "Password needs to have at least 6 characters and must contain at least one number, one lowercase and one uppercase letter."
     });
     return;
   }
-  */
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -64,7 +62,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       return User.create({ username, email, password: hashedPassword });
     })
     .then((user) => {
-      res.redirect("/auth/login");
+      res.redirect("/auth/userProfile");
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {
@@ -78,6 +76,11 @@ router.post("/signup", isLoggedOut, (req, res) => {
         next(error);
       }
     });
+});
+
+// GET /auth/userProfile
+router.get("/userProfile", isLoggedIn, (req, res) => {
+  res.render("users/user-profile", { userInSession: req.session.currentUser });
 });
 
 // GET /auth/login
@@ -152,5 +155,34 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
   });
 });
+
+// GET EDIT : /auth/edit
+router.get("/edit", isLoggedIn, (req, res) => {
+  res.render("users/user-edit", { userInSession: req.session.currentUser });
+});
+
+// POST EDIT : /auth/edit
+router.post("/edit", isLoggedIn, (req, res) => {
+  const newDetails = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  }
+
+  User.findOneAndUpdate(newDetails)
+  .then(() => {
+    res.redirect('/auth/userProfile');
+  })
+  .catch(error => {
+    console.log(`Error updating user: ${error}`)
+    next();
+  })
+});
+
+// GET DELETE : /auth/delete
+router.get("/delete", isLoggedIn, (req, res) => {
+  res.render("users/user-delete", { userInSession: req.session.currentUser });
+});
+
+// POST DELETE : /auth/delete
 
 module.exports = router;

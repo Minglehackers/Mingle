@@ -3,6 +3,10 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
+    isModerator: {
+      type: Boolean,
+      default: false
+    },
     isAdmin: {
       type: Boolean,
       default: false
@@ -25,17 +29,32 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
     },
-    posts: [{
-      type: Schema.Types.ObjectId,
-      ref: "Post"
-    }],
+    firstName: {
+      type: String,
+      maxLength: 30,
+      default: "First Name"
+    },
+    lastName: {
+      type: String,
+      maxLength: 30,
+      default: "Last Name"
+    },
+    profilePicture: {
+      type: String,
+      default: '../public/images/default-profile-picture.png'
+    },
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+      }
+    ],
     comments: [
       {
         type: Schema.Types.ObjectId,
         ref: "Comment"
       }
     ]
-
   },
   {
     timestamps: true,

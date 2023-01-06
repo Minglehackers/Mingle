@@ -1,0 +1,14 @@
+<div>
+    <h2>Edit {{userInSession.username}}'s profile</h2>
+
+    <form action="/auth/edit" method="post">
+    <label>First Name:
+        <input type="text" name="firstName" placeholder="{{userInSession.firstName}}">
+    </label>
+    <label>Last Name:
+        <input type="text" name="lastName" placeholder="{{userInSession.lastName}}">
+    </label>
+
+    <button>Update</button>
+    </form>
+</div>

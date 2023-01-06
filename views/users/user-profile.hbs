@@ -1,0 +1,31 @@
+{{!-- views/users/user-profile.hbs --}}
+ 
+{{!-- the new version, with the session: --}}
+ 
+{{#if userInSession}}
+  <h2>Welcome, {{ userInSession.username }}!</h2>
+  <p>This is your profile page my friend!</p>
+  <button>
+    <a href="/auth/userProfile">Reload the page</a>
+  </button>
+
+  <div>
+    <img src="{{userInSession.profilePicture}}" alt="Profile picture"/>
+    <!--To be modified-->
+    <p><b>Name:</b> {{userInSession.firstName}} {{userInSession.lastName}}</p>
+    <p><b>E-mail address:</b> {{userInSession.email}}</p>
+    <p><b>Posts:</b> {{userInSession.posts.length}}</p>
+    <p><b>Comments:</b> {{userInSession.comments.length}}</p>
+
+    <div>
+        <a href="/auth/edit">Edit profile</a>
+        <a href="/auth/delete">Delete</a>
+    </div>
+
+  </div>
+
+{{else}}
+  
+  <br><p>Still no logged in user, sorry!</p>
+ 
+{{/if}}
