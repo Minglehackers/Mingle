@@ -1,0 +1,26 @@
+<h2> Displaying the list of posts</h2>
+
+{{#each posts}}
+<section class ="post-summary">
+<a href="/posts/{{this._id}}"><h2>{{this.title}}</h2></a>
+<br>
+<span>Posted by: {{this.author}} </span>
+<span>{{this.subreddit}}</span>
+<p>
+    {{this.text}}
+</p>
+<img src="{{this.img}}" alt="image">
+<br>
+<hr>
+
+
+<a href="#">{{this.comments.length}} Comments.</a>
+ {{this.votes.length}} <br>
+
+
+    <a href="/posts/{{this._id}}">More details</a>
+     
+</p>
+</section>
+
+{{/each}}
