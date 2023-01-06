@@ -1,0 +1,29 @@
+<h2>Create a new post</h2>
+
+<form action="/posts/create" method ="post">
+<label>
+    Title:
+    <input type="text" name ="title" />
+</label>
+
+<label> Text:
+        <textarea name ="text" cols ="30" rows ="4" /> </textarea>
+
+    </label>>
+
+<label> Subreddit:
+         <select name="subreddit">
+            {{#each subredditsFromDb}}
+            <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+
+</label>>
+
+<label>
+   Enter Image URL:
+    <input type="text" name ="img" />
+</label>
+
+<button type="submit"> Create Post</button>
+</form>
