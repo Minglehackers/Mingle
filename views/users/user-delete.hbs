@@ -1,0 +1,7 @@
+<h2>Is this goodbye?</h2>
+
+<p>Are you sure you don't want to reconsider? Once you delete your account, there's no getting it back.</p>
+<form action="/auth/profile/{{userInSession._id}}/delete" method="post">
+    <input type="text" name="userDeletion" placeholder="Type in your username">
+    <button>Delete my account</button>
+</form>

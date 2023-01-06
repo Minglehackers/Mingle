@@ -3,14 +3,15 @@
 {{!-- the new version, with the session: --}}
  
 {{#if userInSession}}
-  <h2>Welcome, {{ userInSession.username }}!</h2>
+  <h2>Welcome, {{userInSession.username}}!</h2>
   <p>This is your profile page my friend!</p>
   <button>
-    <a href="/auth/userProfile">Reload the page</a>
+    <a href="/auth/profile/{{userInSession._id}}">Reload the page</a>
   </button>
 
   <div>
-    <img src="{{userInSession.profilePicture}}" alt="Profile picture"/>
+    <img src="{{userInSession.profilePicture}}" alt="Profile picture" style="width: 300px;" />
+    
     <!--To be modified-->
     <p><b>Name:</b> {{userInSession.firstName}} {{userInSession.lastName}}</p>
     <p><b>E-mail address:</b> {{userInSession.email}}</p>
@@ -18,8 +19,8 @@
     <p><b>Comments:</b> {{userInSession.comments.length}}</p>
 
     <div>
-        <a href="/auth/edit">Edit profile</a>
-        <a href="/auth/delete">Delete</a>
+        <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a>
+        <a href="/auth/profile/{{userInSession._id}}/delete">Delete</a>
     </div>
 
   </div>
