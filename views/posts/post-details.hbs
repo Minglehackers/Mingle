@@ -17,26 +17,34 @@
     </p>
 <img src="{{img}}" alt="image">
 <br>
-<a href="#">{{comments.length}} Comments.</a> <br>
+<!-- jump link to comment thread  -->
+
+<a href="#comment_thread">{{comments.length}} Comments.</a> <br>
    {{votes.length}} <br>
 <hr>
 
 <h2>Comment as {{author}}:</h2>
-
+<!-- needs form action and may need to add value here -->
 <form action="" method ="post">
    <label>
    Comment:
     <textarea name ="comment" cols ="30" rows ="4" /> </textarea>
      
 </label>
-<a href="/posts/post-details"><button type="submit">Comment</button></a>
+<button type="submit">Comment</button>
 
 </form>
 
 <hr>
- 
- <h2>Comments for this thread:</h2>
+ <!-- Comments thread will appear here for the specific post -->
+ <h2 id ="comment_thread">Comments for this thread:</h2>
  {{#each dataFromDb}}
 {{this.comments}}
-
 {{/each}}
+
+<p>
+    <button><a href="/posts/{{this._id}}/edit">Edit</a></button>
+
+   <button><a href="/posts/{{this._id}}/edit">Delete</a></button>
+
+</p>

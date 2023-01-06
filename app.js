@@ -33,11 +33,10 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
 // TODO: Routes
-// app.use('/', require('./routes/index'));
-// app.use('/subreddit', require('./routes/subreddit.routes'));
+//app.use('/', require('./routes/index'));
+//app.use('/subreddit', require('./routes/subreddit.routes'));
 //app.use('/user', require('./routes/user.routes'));
-// auth/userProfile
-//
+
 
 
 const authRoutes = require("./routes/auth.routes");
