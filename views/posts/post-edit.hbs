@@ -1,0 +1,30 @@
+<h2>Update your post</h2>
+<h2>Edit the post: {{postDetails.title}}</h2>
+
+<form action="/posts/{{postDetails._id}}/edit" method="post">
+    <label> Title:
+        <input type="text" name="title" value="{{postDetails.title}}" />
+    </label>
+
+    
+    <label> Text:
+        <textarea name="text" cols="30" rows="4">
+       
+    </textarea>
+    </label>
+<label>  Choose Community:
+         <select name="subreddit">
+            {{#each subredditsFromDb}}
+            <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+
+</label>>
+<label>
+   Enter Image URL:
+    <input type="text" name ="img" />
+</label>
+
+
+    <button>Save changes</button>
+</form>
