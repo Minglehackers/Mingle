@@ -1,10 +1,12 @@
 const { Schema, model } = require("mongoose");
 
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
-
 
 const userSchema = new Schema(
   {
+    isAdmin: {
+      type: Boolean,
+      default: false
+    },
     username: {
       type: String,
       required: true,
@@ -27,6 +29,13 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Post"
     }],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment"
+      }
+    ]
+
   },
   {
     timestamps: true,

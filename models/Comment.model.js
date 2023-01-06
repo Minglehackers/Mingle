@@ -3,7 +3,7 @@ module.exports = model("User", userSchema);
 
 const { Schema, model } = require("mongoose");
 
-const postSchema = new Schema(
+const commentSchema = new Schema(
     {
         title: {
             type: String,
@@ -23,16 +23,9 @@ const postSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Comment"
         }],
-        votes: [{
-            type: Schema.Types.ObjectId,
-            ref: "User"
-        }],
-
-        img: String,
-
-        subreddit: {
-            type: Schema.Types.ObjectId,
-            ref: "Subreddit"
+        votes: {
+            type: Number,
+            default: 0
         }
 
     },
@@ -42,4 +35,4 @@ const postSchema = new Schema(
     }
 );
 
-module.exports = model("Post", postSchema);
+module.exports = model("Comment", postSchema);

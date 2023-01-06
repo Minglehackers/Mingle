@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const subredditSchema = new Schema(
     {
+
         name: {
             type: String,
             required: true,
@@ -16,8 +17,12 @@ const subredditSchema = new Schema(
         },
         topics: [{
             type: Schema.Types.ObjectId,
-            ref: "Post"
+            ref: "Thread"
         }],
+        moderator: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
     },
     {
         timestamps: true,
