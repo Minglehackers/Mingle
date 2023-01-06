@@ -27,8 +27,20 @@ app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
+// TODO: Routes
+app.use('/', require('./routes/index'));
+app.use('/subreddit', require('./routes/subreddit.routes'));
+app.use('/user', require('./routes/user.routes'));
+
+
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
+
+
+
+
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
