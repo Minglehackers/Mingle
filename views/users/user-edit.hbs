@@ -1,13 +1,19 @@
 <div>
     <h2>Edit {{userInSession.username}}'s profile</h2>
 
-    <form action="/auth/profile/{{userInSession._id}}/edit" method="post">
+    <form action="/auth/profile/{{userInSession._id}}/edit" method="post" enctype="multipart/form-data">
     <label>First Name:
         <input type="text" name="firstName" maxlength="20" value="{{userInSession.firstName}}">
     </label>
+
     <label>Last Name:
         <input type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}">
     </label>
-    <button>Update</button>
+
+    <label>Profile picture:
+        <input type="file" name="profile-picture-image" />
+        <input type="text" name="existingImage" hidden value="{{userInSession.profilePicture}}">
+    </label>
+    <button type="submit">Update</button>
     </form>
 </div>

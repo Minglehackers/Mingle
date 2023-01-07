@@ -24,6 +24,7 @@ const projectName = "mingle";
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
 app.use( (req, res, next) => {
+    res.locals.userImage = req.body
     app.locals.userDetails = req.session.currentUser; //store user details in app.locals (so that is is available in handlebars)
     next();
 });
