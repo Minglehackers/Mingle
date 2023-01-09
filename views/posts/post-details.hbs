@@ -2,28 +2,32 @@
 <section class="post-details">
 
 
+<h2>{{postDetails.title}}</h2>
+
+
       <p>
-        <span>{{postDetails}}</span>
-        <span>Posted by: {{author}} </span>
        
+        <span>Posted by: {{postDetails.author.username}} </span>
+       
+       <p>
+       
+        {{postDetails.text}}
     </p>
-    <h2>{{title}}</h2>
+    </p>
+   
     <button type="submit"> Upvote</button>
     <button type="submit"> Downvote</button>
   
-    <p>
-       
-        {{text}}
-    </p>
-<img src="{{img}}" alt="image">
+    
+<img src="{{postDetails.img}}" alt="image">
 <br>
 <!-- jump link to comment thread  -->
 
-<a href="#comment_thread">{{comments.length}} Comments.</a> <br>
-   {{votes.length}} <br>
+<a href="#comment_thread">{{postDetails.comments.length}} Comments.</a> <br>
+   {{postDetails.votes.length}} <br>
 <hr>
 
-<h2>Comment as {{author}}:</h2>
+<h5>Comment as {{postDetails.author.username}}:</h5>
 <!-- needs form action and may need to add value here -->
 <form action="" method ="post">
    <label>

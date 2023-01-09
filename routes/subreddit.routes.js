@@ -50,7 +50,7 @@ router.get("/:id/post/:pid", (req, res, next) => {
     }).populate("originalPost")
         .then((postdetails) => {
             commentArr = postdetails;
-            return Post.findById(pid)
+            return Post.findById(pid).populate("author")
         })
         .then((details) => {
 
