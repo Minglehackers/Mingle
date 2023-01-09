@@ -1,22 +1,22 @@
-<h1> {{name}}</h1>
+<h1> {{subredditdetails.name}}</h1>
 
 <h2>description</h2>
 <p>
 
-  {{description}}
+  {{subredditdetails.description}}
 </p>
 
 {{! list all posts }}
 
 <h3>Posts</h3>
-{{#each posts}}
+{{#each post}}
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{body}}</p>
+      <p class="card-text">{{text}}</p>
       <a href="/post/{{_id}}" class="btn btn-primary">Go to post</a>
     </div>
   </div>
 {{/each}}
 
-<a href="/subreddit/{{_id}}/post/create">Create Post</a>
+<a href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>

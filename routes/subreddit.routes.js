@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const subredditController = require("./controllers/subredditController");
 const Subreddit = require("../models/Subreddit.model");
-
+const Post = require ("../models/Post.model");
 router.get("/", (req, res, next) =>
     Subreddit.find().then((subreddits) => {
         res.render("subreddit/list", { subreddits })
@@ -15,10 +15,22 @@ router.get("/", (req, res, next) =>
 
 router.get("/:id", (req, res, next) => {
     const id = req.params.id;
-    Subreddit
-        .findById(id)
-        .then((subreddit) => {
-            res.render("subreddit/subreddit-details", subreddit);
+    let postArr;
+    Post.find({
+        subreddit: id})
+        .then((postdetails) =>{
+postArr = postdetails;
+return  Subreddit.findById(id)
+ })
+.then((subredditDetails) => {
+
+    const data = {
+       post: postArr,
+        subredditdetails:subredditDetails,
+
+    }
+
+            res.render("subreddit/subreddit-details",data);
         })
         .catch((err) => { next(err); });
 });
@@ -37,25 +49,28 @@ router.get("/:id/post/create", (req, res, next) => {
 
 
 router.post("/:id/post/create", (req, res, next) => {
+    let postId;
     const id = req.params.id
-    const { title, text, img } = req.body
-    const { author } = req.session.currentUser._id
-    console.log(author)
+    
+    const authorID  = req.session.currentUser._id
+    console.log("author is ---->"+authorID)
     const newPost = {
-        title, text, img, author, subreddit: id
+        title: req.body.title,
+        text: req.body.text,
+        author: authorID,
+        subreddit: id
     }
+Post.create(newPost)
+.then((postDetails)=>{
+    console.log("from post ____"+ postDetails);
+    res.redirect(`/subreddit/${id}`);
+  
 
-    Subreddit.findById(id)
-        .then(subreddit => {
-            subreddit.topics.push(newPost);
-            return subreddit.save()
-        })
-        .then(() => {
-            res.redirect(`/subreddit/${id}`)
-        })
-        .catch(err => {
-            next(err)
-        })
+})
+.catch((err) => {
+            console.log("err creating new post to the db", err);
+            next();
+          });
 })
 
 
