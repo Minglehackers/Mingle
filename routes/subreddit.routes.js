@@ -87,7 +87,7 @@ router.post("/:id/post/:pid", (req, res, next) => {
         .then((commentDetails) => {
             comment = commentDetails
             console.log("from post ____" + commentDetails);
-            res.redirect(`/subreddit/${subreddit}/post/${postID}`, comment);
+            res.redirect(`/subreddit/${subreddit}/post/${postID}`);
 
 
         })

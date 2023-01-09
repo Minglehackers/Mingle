@@ -32,23 +32,31 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
     
-         {{#if userDetails}}
+                {{#if userDetails}}
 
-          <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/auth/profile/{{userDetails._id}}">Profile</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/auth/profile/{{userDetails._id}}">Profile</a>
+                </li>
 
-          <li class="nav-item">
-         <form id="logout-form" action="/auth/logout" method="GET">
-          <button>Logout</button>
-          </li>
-          <li class="nav-item">
-          <img src="{{userDetails.profilePicture}}" alt="Profile picture" style="width: 50px;">
-          </li>
-        </form>
+
+             <div id ="nav-form">
+                   <form class="d-flex" id="logout-form" action="/auth/logout" method="GET">
+               <li class="nav-item">
+                  <img src="{{userDetails.profilePicture}}" alt="Profile picture" style="width: 50px;">
+                </li>
+          <li class="nav-item hello"> Hello,{{userDetails.username}}</li>
+                <li class="nav-item"><button id = "logout-btn">Logout</button></li>
+            </form>
+           </div>
+      
         {{else}}
-        <a href="/auth/signup">Signup</a> <span> | </span>
-        <a href="/auth/login">Login</a>
+         <li class="nav-item">
+          <a  class="nav-link active" aria-current="page" href="/auth/signup">Signup</a>
+         </li>
+          <li class="nav-item"> 
+            <a class="nav-link active" aria-current="page" href="/auth/login">Login</a>
+          </li>
+       
         {{/if}}
         
  

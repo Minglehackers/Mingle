@@ -1,25 +1,35 @@
-<h1> {{subredditdetails.name}}</h1>
+<h1 class="mb-3 text-center"> {{subredditdetails.name}}</h1>
 
-<h2>description</h2>
+<h5>About this subreddit:</h5>
 <p>
 
   {{subredditdetails.description}}
 </p>
-
+<hr>
 {{! list all posts }}
 
 <h3>Posts</h3>
+<div class ="container-fluid">
+     <div class="row">
 {{#each post}}
-  <div class="card">
+ <div class="col-3">
+  <div class="card" style="width: 18rem; margin:1rem;">
     <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{text}}</p>
-      <p>author : {{author.username}}</p>
-      <p>details: {{subreddit}}</p>
-      <a href="{{subreddit}}/post/{{_id}}" class="btn btn-primary">Go to post</a>
+      <h5 class="card-title text-center">{{title}}</h5>
+      <hr>
+      <p class="card-text">{{text}} <br><br>
+     <span style ="font-weight: bold;">Created By :</span>  {{author.username}} <br>
+      <div class = "text-center">
+        <a href="{{subreddit}}/post/{{_id}}" class="btn btn-primary  btn-sm">Go to post</a>
+      </div>
+      </p>
 
     </div>
   </div>
+ </div>
 {{/each}}
-
-<a href="/{{subredditdetails._id}}/post/create">Create Post</a>
+     </div>
+</div>
+<div class = "text-center" >
+<a class="btn btn-primary" href="/{{subredditdetails._id}}/post/create">Create Post</a>
+</div>

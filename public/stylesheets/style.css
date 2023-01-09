@@ -10,3 +10,20 @@ a {
 h1 {
   color: 15px;
 }
+.hello{
+  margin: 7.5px;
+}
+#logout-form{
+  display: inline-flex;
+}
+#logout-btn{
+  gap: 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+
+  
+}
+#header-index{
+  display: flex;
+  justify-content: center;
+}
