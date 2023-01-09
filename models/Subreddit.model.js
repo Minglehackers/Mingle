@@ -17,7 +17,7 @@ const subredditSchema = new Schema(
         },
         topics: [{
             type: Schema.Types.ObjectId,
-            ref: "Thread"
+            ref: "Post"
         }],
         moderator: {
             type: Schema.Types.ObjectId,

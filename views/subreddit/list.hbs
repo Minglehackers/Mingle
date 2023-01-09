@@ -1,0 +1,9 @@
+<h2>Subreddit list</h2>
+
+<a href="/subreddit/create">Create subreddit</a>
+
+{{#each subreddits}}
+  <div class="subreddit">
+    <a href="subreddit/{{_id}}">{{name}}</a>
+  </div>
+{{/each}}

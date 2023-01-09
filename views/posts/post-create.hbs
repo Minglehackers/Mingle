@@ -1,6 +1,8 @@
 <h2>Create a new post</h2>
+<h3>{{_id}}</h3>
 
-<form action="/posts/create" method ="post">
+<form action="/subreddit/{{_id}}/post/create" method ="post">
+
 <label>
     Title:
     <input type="text" name ="title" />
@@ -11,14 +13,14 @@
 
     </label>>
 
-<label>  Choose Community:
+{{!-- <label>  Choose Community:
          <select name="subreddit">
             {{#each subredditsFromDb}}
             <option value="{{this._id}}">{{this.name}}</option>
             {{/each}}
         </select>
 
-</label>>
+</label> --}}
 
 <label>
    Enter Image URL:

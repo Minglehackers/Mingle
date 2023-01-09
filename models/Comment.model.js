@@ -1,6 +1,3 @@
-module.exports = model("User", userSchema);
-
-
 const { Schema, model } = require("mongoose");
 
 const commentSchema = new Schema(
@@ -35,4 +32,4 @@ const commentSchema = new Schema(
     }
 );
 
-module.exports = model("Comment", postSchema);
+module.exports = model("Comment", commentSchema);

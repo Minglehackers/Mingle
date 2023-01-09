@@ -23,8 +23,9 @@ const projectName = "mingle";
 
 app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
 
-app.use( (req, res, next) => {
-    app.locals.userDetails = req.session.currentUser; //store user details in app.locals (so that is is available in handlebars)
+app.use((req, res, next) => {
+    app.locals.userDetails = req.session.currentUser;
+    console.log(req.session.currentUser) //store user details in app.locals (so that is is available in handlebars)
     next();
 });
 
@@ -33,8 +34,9 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
 // TODO: Routes
+const subredditRoutes = require("./routes/subreddit.routes");
 //app.use('/', require('./routes/index'));
-//app.use('/subreddit', require('./routes/subreddit.routes'));
+app.use('/subreddit', subredditRoutes);
 //app.use('/user', require('./routes/user.routes'));
 
 
