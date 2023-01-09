@@ -14,9 +14,12 @@
     <div class="card-body">
       <h5 class="card-title">{{title}}</h5>
       <p class="card-text">{{text}}</p>
-      <a href="/post/{{_id}}" class="btn btn-primary">Go to post</a>
+      <p>author : {{author.username}}</p>
+      <p>details: {{subreddit}}</p>
+      <a href="{{subreddit}}/post/{{_id}}" class="btn btn-primary">Go to post</a>
+
     </div>
   </div>
 {{/each}}
 
-<a href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
+<a href="/{{subredditdetails._id}}/post/create">Create Post</a>
