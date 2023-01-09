@@ -31,17 +31,17 @@ const userSchema = new Schema(
     },
     firstName: {
       type: String,
-      maxLength: 30,
+      maxLength: 20,
       default: "First Name"
     },
     lastName: {
       type: String,
-      maxLength: 30,
+      maxLength: 20,
       default: "Last Name"
     },
     profilePicture: {
       type: String,
-      default: '../public/images/default-profile-picture.png'
+      default: 'https://cdn.dribbble.com/users/6142/screenshots/5679189/media/1b96ad1f07feee81fa83c877a1e350ce.png?compress=1&resize=1200x900&vertical=top'
     },
     posts: [
       {

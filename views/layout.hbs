@@ -14,9 +14,10 @@
       <li>
         <a href="/">Home</a><span> | </span>
          {{#if userDetails}}
-         <a href="/auth/userProfile">Profile</a> <span> | </span>
+         <a href="/auth/profile/{{userDetails._id}}">Profile</a> <span> | </span>
          <form id="logout-form" action="/auth/logout" method="GET">
-          <button>Logout</button> <span> | </span>
+          <button>Logout</button>
+          <img src="{{userDetails.profilePicture}}" alt="Profile picture" style="width: 50px;">
         </form>
         {{else}}
         <a href="/auth/signup">Signup</a> <span> | </span>
