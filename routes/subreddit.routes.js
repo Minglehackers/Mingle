@@ -47,23 +47,64 @@ router.get("/:id/post/:pid", (req, res, next) => {
 
     Comment.find({
         originalPost: pid
-    }).populate("originalPost")
+    }).populate("originalPost author")
         .then((postdetails) => {
             commentArr = postdetails;
             return Post.findById(pid).populate("author")
         })
         .then((details) => {
 
+
             const data = {
-                post: commentArr,
+                comments: commentArr,
                 postDetails: details,
 
             }
-
+            console.log(data, "---------------------------")
             res.render("posts/post-details", data);
         })
         .catch((err) => { next(err); });
 });
+
+
+// Post COMMENTS 
+
+router.post("/:id/post/:pid", (req, res, next) => {
+    const subreddit = req.params.id
+    const postID = req.params.pid
+    const authorID = req.session.currentUser._id
+    let comment;
+
+    const newComment = {
+        text: req.body.text,
+        author: authorID,
+        originalPost: postID
+    }
+
+    console.log(newComment)
+
+    Comment.create(newComment)
+        .then((commentDetails) => {
+            comment = commentDetails
+            console.log("from post ____" + commentDetails);
+            res.redirect(`/subreddit/${subreddit}/post/${postID}`, comment);
+
+
+        })
+        .catch((err) => {
+            console.log("err creating new post to the db", err);
+            next();
+        });
+
+
+});
+
+
+
+
+
+
+
 
 
 

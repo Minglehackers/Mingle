@@ -1,10 +1,10 @@
-<h2>Post Details</h2>
 <section class="post-details">
 
 
-<h2>{{postDetails.title}}</h2>
+<h1>{{postDetails.title}}</h1>
 
 
+<p> data: {{data.comments}}</p>
       <p>
        
         <span>Posted by: {{postDetails.author.username}} </span>
@@ -15,6 +15,7 @@
     </p>
     </p>
    
+
     <button type="submit"> Upvote</button>
     <button type="submit"> Downvote</button>
   
@@ -29,10 +30,11 @@
 
 <h5>Comment as {{postDetails.author.username}}:</h5>
 <!-- needs form action and may need to add value here -->
-<form action="" method ="post">
+{{!-- <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}" method ="post"> --}}
+<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}" method ="post">
    <label>
    Comment:
-    <textarea name ="comment" cols ="30" rows ="4" /> </textarea>
+    <textarea name ="text" cols ="30" rows ="4" /> </textarea>
      
 </label>
 <button type="submit">Comment</button>
@@ -52,3 +54,13 @@
    <button><a href="/posts/{{this._id}}/edit">Delete</a></button>
 
 </p>
+
+
+{{#each comments}}
+  <div class="subreddit">
+    <p>Static text</p>
+    <h4>{{text}}</h4>
+    <p>{{author.username}}</p>
+    <a href="subreddit/{{_id}}">{{name}}</a>
+  </div>
+{{/each}}
