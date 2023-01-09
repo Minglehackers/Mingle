@@ -39,6 +39,45 @@ router.get("/:id", (req, res, next) => {
 });
 
 
+router.get("/:id/post/create", (req, res, next) => {
+    const id = req.params.id;
+    console.log(id);
+    Subreddit
+        .findById(id)
+        .then((subreddit) => {
+            res.render("posts/post-create", subreddit);
+        })
+        .catch((err) => { next(err); });
+});
+
+
+router.post("/:id/post/create", (req, res, next) => {
+    let postId;
+    const id = req.params.id
+
+    const authorID = req.session.currentUser._id
+
+    const newPost = {
+        title: req.body.title,
+        text: req.body.text,
+        author: authorID,
+        subreddit: id
+    }
+    Post.create(newPost)
+        .then((postDetails) => {
+            console.log("from post ____" + postDetails);
+            res.redirect(`/subreddit/${id}`);
+
+
+        })
+        .catch((err) => {
+            console.log("err creating new post to the db", err);
+            next();
+        });
+})
+
+
+
 // POST page
 router.get("/:id/post/:pid", (req, res, next) => {
     const id = req.params.id;
@@ -98,73 +137,6 @@ router.post("/:id/post/:pid", (req, res, next) => {
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-router.get("/:id/post/create", (req, res, next) => {
-    const id = req.params.id;
-    Subreddit
-        .findById(id)
-        .then((subreddit) => {
-            res.render("posts/post-create", subreddit);
-        })
-        .catch((err) => { next(err); });
-});
-
-
-router.post("/:id/post/create", (req, res, next) => {
-    let postId;
-    const id = req.params.id
-
-    const authorID = req.session.currentUser._id
-
-    const newPost = {
-        title: req.body.title,
-        text: req.body.text,
-        author: authorID,
-        subreddit: id
-    }
-    Post.create(newPost)
-        .then((postDetails) => {
-            console.log("from post ____" + postDetails);
-            res.redirect(`/subreddit/${id}`);
-
-
-        })
-        .catch((err) => {
-            console.log("err creating new post to the db", err);
-            next();
-        });
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

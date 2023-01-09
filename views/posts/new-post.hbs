@@ -1,7 +1,17 @@
 <h3>Create a new post</h3>
-<h5> For the Subreddit : {{name}}</h5>
 
-<form action="/subreddit/{{_id}}/post/create" method ="post">
+<form action="/post/create" method ="post">
+
+ <label>Select Subredddit:
+        <select name="subreddit">
+            {{#each allSubreddits}}
+            <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+    </label>
+
+
+
 <div class="form-group">
 <label>
     Title:
@@ -17,14 +27,6 @@
     </label>>
     <br><br>
 </div>
+<button type="submit">Create Post</button>
 
-
-<div class="form-group">
-<label>
-   Enter Image URL:<br><br>
-    <input class="form-control" type="text" name ="img" />
-</label>
-</div>
-<br><br>
-<button class="btn btn-primary" type="submit"> Create Post</button>
 </form>
