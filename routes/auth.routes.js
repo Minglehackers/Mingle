@@ -152,6 +152,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
+// *** USER PROFILE ***
 // GET USER PROFILE : /auth/userProfile/:id
 router.get("/profile/:id", isLoggedIn, (req, res) => {
   const id = req.params.id
@@ -167,7 +168,7 @@ router.get("/profile/:id", isLoggedIn, (req, res) => {
   
 });
 
-
+// *** EDIT USER PROFILE ***
 // GET EDIT USER PROFILE : /auth/profile/:id/edit
 router.get("/profile/:id/edit", isLoggedIn, (req, res) => {
   const id = req.params.id
@@ -185,7 +186,7 @@ router.get("/profile/:id/edit", isLoggedIn, (req, res) => {
 // POST EDIT USER PROFILE : /auth/profile/:id/edit
 router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-picture-image'), (req, res) => {
   const id = req.params.id;
-
+  
   const { firstName, lastName, existingImage } = req.body;
 
   let profilePicture;
@@ -196,16 +197,20 @@ router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-pictur
   }
 
   User.findByIdAndUpdate(id, { firstName, lastName, profilePicture }, { new: true })
-  .then(() => {
-    res.redirect(`/auth/profile/${id}`)
-  })
-  .catch(error => {
-    res.redirect("/")
-    console.log(`Error updating user profile: ${error}`)
-    next();
-  })
+    .select("-password")
+    .then((newDetails) => {
+      req.session.currentUser = newDetails
+      res.redirect(`/auth/profile/${id}`)
+      })
+      .catch(error => {
+        res.redirect("/")
+        console.log(`Error updating user profile: ${error}`)
+        next();
+      })
+      
 });
 
+// *** DELETE USER ***
 // GET DELETE : /auth/profile/:id/delete
 router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
   const id = req.params.id
