@@ -5,31 +5,41 @@
 
   {{subredditdetails.description}}
 </p>
-<hr>
+<hr />
 {{! list all posts }}
 
 <h3>Posts</h3>
-<div class ="container-fluid">
-     <div class="row">
-{{#each post}}
- <div class="col-3">
-  <div class="card" style="width: 18rem; margin:1rem;">
-    <div class="card-body">
-      <h5 class="card-title text-center">{{title}}</h5>
-      <hr>
-      <p class="card-text">{{text}} <br><br>
-     <span style ="font-weight: bold;">Created By :</span>  {{author.username}} <br>
-      <div class = "text-center">
-        <a href="{{subreddit}}/post/{{_id}}" class="btn btn-primary  btn-sm">Go to post</a>
-      </div>
-      </p>
+<div class="container-fluid">
+  <div class="row">
+    {{#each post}}
+      <div class="col-3">
+        <div class="card" style="width: 18rem; margin:1rem;">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{title}}</h5>
+            <hr />
+            <p class="card-text">{{text}}
+              <br /><br />
+              <span style="font-weight: bold;">Created By :</span>
+              {{author.username}}
+              <br />
+              <div class="text-center">
+                <a href="{{subreddit}}/post/{{_id}}" class="btn btn-primary btn-sm">Go to post</a>
+              </div>
+            </p>
 
-    </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
   </div>
- </div>
-{{/each}}
-     </div>
 </div>
-<div class = "text-center" >
-<a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
+<div class="text-center">
+  <a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
+</div>
+<div>
+  <div class="text-center">
+    <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
+      <button class="btn btn-danger">Delete Subreddit</button>
+    </form>
+  </div>
 </div>

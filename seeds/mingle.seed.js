@@ -18,7 +18,7 @@ const adjective = ["happy", "rotating", "red", "fast", "elastic", "smily", "unbe
 
 mongoose.connect(MONGO_URI).then(() => {
     console.log("Connected to DB: ", MONGO_URI);
-    User.findOne({ username: "charlie" })
+    User.findOne({ username: "user" })
         .then((user) => {
             console.log("user", user)
             for (let i = 0; i < 2; i++) {

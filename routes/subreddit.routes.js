@@ -5,6 +5,8 @@ const Subreddit = require("../models/Subreddit.model");
 const Post = require("../models/Post.model");
 const Comment = require("../models/Comment.model");
 
+
+//  go to main subreddit list
 router.get("/", (req, res, next) =>
     Subreddit.find().then((subreddits) => {
         res.render("subreddit/list", { subreddits })
@@ -14,7 +16,7 @@ router.get("/", (req, res, next) =>
         })
 );
 
-
+// go to single subreddit
 router.get("/:id", (req, res, next) => {
     const id = req.params.id;
     let postArr;
@@ -39,6 +41,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 
+// go to Post create form
 router.get("/:id/post/create", (req, res, next) => {
     const id = req.params.id;
     console.log(id);
@@ -51,6 +54,7 @@ router.get("/:id/post/create", (req, res, next) => {
 });
 
 
+// POST Post
 router.post("/:id/post/create", (req, res, next) => {
     let postId;
     const id = req.params.id
@@ -161,6 +165,140 @@ router.post("/create", (req, res, next) => {
 
 
 
+//* Topics
+// delete subreddit 
+
+router.post("/:id/delete", (req, res, next) => {
+    const id = req.params.id
+
+    Post.find({ subreddit: id }).then(posts => {
+        const postIdArr = posts.map(post => post._id)
+
+        return postIdArr.forEach(id => Comment.find({ originalPost: id })
+        )
+    })
+        .then(comments => console.log(comments))
+
+})
+
+// /:id/post/:pid"
+//http://localhost:3000/subreddit/63bd27e02767721efd222cf5/post/63bd2877ca81a2dac734a0d8
+
+// http://localhost:3000/subreddit/63bd27e02767721efd222cf5/post/63bd2877ca81a2dac734a0d8/edit
+
+//  GET ROUTE for Updating an existing post 
+
+router.get("/:id/post/:pid/edit", (req, res, next) => {
+    const pid = req.params.pid
+    // const text = req.body.text
+    // const title = req.body.title
+    Post.findById(pid)
+        .then((postDetails) => {
+            console.log(postDetails)
+            res.render("posts/post-edit", { postDetails })
+        })
+        .catch(err => next(err))
+
+
+})
+// POST ROUTE for Updating an existing post 
+
+
+router.post("/:id/post/:pid/edit", (req, res, next) => {
+    const id = req.params.id
+    const pid = req.params.pid
+    const text = req.body.text
+    const title = req.body.title
+    Post.findByIdAndUpdate(pid, { text, title }, { new: true })
+        .then(() => {
+            res.redirect(`/subreddit/${id}/post/${pid}`)
+        })
+        .catch((err) => {
+            next(err)
+        })
+})
+
+// Subreddit.findByIdAndDelete(id)
+//     .then(() => res.redirect("/subreddit"))
+//     .catch((err) => {
+//         next(err)
+//     })
+
+
+
+
+// delete post
+router.post("/:id/post/:pid/delete", (req, res, next) => {
+    const id = req.params.id
+    const pid = req.params.pid
+    // maybe delete comments too
+    Comment.deleteMany({ originalPost: pid }).
+        then(() => {
+
+            return Post.findByIdAndDelete(pid)
+        }).then(() =>
+            res.redirect("/subreddit")
+        )
+        .catch((err) => {
+            next(err)
+        })
+
+})
+
+// delete comment
+router.post("/:id/post/:pid/delete", (req, res, next) => {
+    const id = req.params.id
+    const pid = req.params.pid
+    Comment.findByIdAndDelete(id)
+        .catch((err) => {
+            next(err)
+        })
+
+})
+
+
+
+//edit commemt
+router.get("/comment/:cid/edit", (req, res, next) => {
+    const cid = req.params.cid
+    const text = req.body.text
+    Comment.findById(cid)
+        .then((commentDetails) => {
+            console.log(commentDetails)
+            res.render("comments/comment-edit", { commentDetails })
+        })
+        .catch(err => next(err))
+
+
+})
+
+
+router.post("/comment/:cid/edit", (req, res, next) => {
+    const cid = req.params.cid
+    const text = req.body.text
+    let postId;
+    let subredditId;
+
+    console.log(text)
+    Comment.findByIdAndUpdate(cid, { text }, { new: true })
+        .then((newComment) => {
+            postId = newComment.originalPost
+            return Post.findById(postId)
+        })
+        .then((postDetails) => {
+            subredditId = postDetails.subreddit
+            res.redirect(`/subreddit/${subredditId}/post/${postId}`)
+        })
+        .catch((err) => {
+            next(err)
+        })
+
+})
+
+
+
+
+
 
 
 
@@ -181,6 +319,12 @@ router.post("/create", (req, res, next) => {
 // router.get("/:rID/posts/:pID/edit", subredditController.getEditForm);
 // router.post("/:rID/posts/:pID/edit", subredditController.postEditForm);
 // router.post("/:rID/posts/:pID/delete", subredditController.deletePost);
+
+
+
+
+
+
 
 
 module.exports = router;

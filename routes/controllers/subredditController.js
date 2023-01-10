@@ -7,14 +7,13 @@ const Subreddit = require("../../models/Subreddit.model");
 
 
 exports.listSubreddits = (req, res, next) => {
-    Subreddit.find()
-        .then((subreddits) => {
-            res.render("subreddits/subreddit-list", { subreddits });
-        })
+    Subreddit.find().then((subreddits) => {
+        res.render("subreddit/list", { subreddits })
+    })
         .catch((err) => {
             next(err);
-        });
-};
+        })
+}
 
 
 exports.getSubreddit = (req, res, next) => {

@@ -50,7 +50,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .status(400)
       .render("auth/signup", {
         errorMessage: "Password needs to have at least 6 characters and must contain at least one number, one lowercase and one uppercase letter."
-    });
+      });
     return;
   }
 
@@ -158,14 +158,14 @@ router.get("/profile/:id", isLoggedIn, (req, res) => {
   const id = req.params.id
 
   User.findByIdAndUpdate(id)
-  .then((userInSession) => {
-    res.render("users/user-profile", {userInSession});
-  })
-  .catch(error => {
-    console.log(`Error while loading the user profile: ${error}`)
-    next();
-  })
-  
+    .then((userInSession) => {
+      res.render("users/user-profile", { userInSession });
+    })
+    .catch(error => {
+      console.log(`Error while loading the user profile: ${error}`)
+      next();
+    })
+
 });
 
 // *** EDIT USER PROFILE ***
@@ -174,20 +174,26 @@ router.get("/profile/:id/edit", isLoggedIn, (req, res) => {
   const id = req.params.id
 
   User.findById(id)
-  .then((userInSession) => {
-    res.render("users/user-edit", {userInSession});
-  })
-  .catch(error => {
-    console.log(`Error updating user: ${error}`)
-    next();
-  })
+    .then((userInSession) => {
+      res.render("users/user-edit", { userInSession });
+    })
+    .catch(error => {
+      console.log(`Error updating user: ${error}`)
+      next();
+    })
 });
 
 // POST EDIT USER PROFILE : /auth/profile/:id/edit
 router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-picture-image'), (req, res) => {
   const id = req.params.id;
-  
-  const { firstName, lastName, existingImage } = req.body;
+
+  let { firstName, lastName, existingImage, isAdmin } = req.body;
+
+  if (isAdmin === "on") {
+    isAdmin = true
+  } else {
+    isAdmin = false
+  }
 
   let profilePicture;
   if (req.file) {
@@ -196,18 +202,18 @@ router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-pictur
     profilePicture = existingImage;
   }
 
-  User.findByIdAndUpdate(id, { firstName, lastName, profilePicture }, { new: true })
+  User.findByIdAndUpdate(id, { firstName, lastName, profilePicture, isAdmin }, { new: true })
     .select("-password")
     .then((newDetails) => {
       req.session.currentUser = newDetails
       res.redirect(`/auth/profile/${id}`)
-      })
-      .catch(error => {
-        res.redirect("/")
-        console.log(`Error updating user profile: ${error}`)
-        next();
-      })
-      
+    })
+    .catch(error => {
+      res.redirect("/")
+      console.log(`Error updating user profile: ${error}`)
+      next();
+    })
+
 });
 
 // *** DELETE USER ***
@@ -216,13 +222,13 @@ router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
   const id = req.params.id
 
   User.findById(id)
-  .then((userInSession) => {
-    res.render("users/user-delete", {userInSession});
-  })
-  .catch(error => {
-    console.log(`Error updating user: ${error}`)
-    next();
-  })
+    .then((userInSession) => {
+      res.render("users/user-delete", { userInSession });
+    })
+    .catch(error => {
+      console.log(`Error updating user: ${error}`)
+      next();
+    })
 });
 
 // POST DELETE : /auth/delete
@@ -230,21 +236,21 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
   const id = req.params.id
 
   User.findById(id)
-  .then((userInSession) => {
-    if (req.body.userDeletion === userInSession.username){
-      User.findByIdAndDelete(id)
-      .then(() => {
-        res.redirect('/auth/logout')
-      })
-      .catch((error) => {
-        console.log(`Error deleting user: ${error}`)
-        next();
-      })
-    } else {
-      res.render('/profile/:id')
-    }
-  })
-    
+    .then((userInSession) => {
+      if (req.body.userDeletion === userInSession.username) {
+        User.findByIdAndDelete(id)
+          .then(() => {
+            res.redirect('/auth/logout')
+          })
+          .catch((error) => {
+            console.log(`Error deleting user: ${error}`)
+            next();
+          })
+      } else {
+        res.render('/profile/:id')
+      }
+    })
+
 
 });
 

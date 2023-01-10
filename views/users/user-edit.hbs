@@ -1,19 +1,24 @@
 <div>
-    <h2>Edit {{userInSession.username}}'s profile</h2>
+  <h2>Edit {{userInSession.username}}'s profile</h2>
 
-    <form action="/auth/profile/{{userInSession._id}}/edit" method="post" enctype="multipart/form-data">
+  <form action="/auth/profile/{{userInSession._id}}/edit" method="post" enctype="multipart/form-data">
     <label>First Name:
-        <input type="text" name="firstName" maxlength="20" value="{{userInSession.firstName}}">
+      <input type="text" name="firstName" maxlength="20" value="{{userInSession.firstName}}" />
     </label>
 
     <label>Last Name:
-        <input type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}">
+      <input type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}" />
     </label>
 
     <label>Profile picture:
-        <input type="file" name="profile-picture-image" />
-        <input type="text" name="existingImage" hidden value="{{userInSession.profilePicture}}">
+      <input type="file" name="profile-picture-image" />
+      <input type="text" name="existingImage" hidden value="{{userInSession.profilePicture}}" />
     </label>
+    <div class="">
+      <label>is Admin
+        <input type="checkbox" name="isAdmin" />
+      </label>
+    </div>
     <button type="submit">Update</button>
-    </form>
+  </form>
 </div>

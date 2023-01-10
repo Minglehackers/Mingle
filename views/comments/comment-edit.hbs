@@ -1,0 +1,7 @@
+<h2>Edit comment</h2>
+<form action="/subreddit/comment/{{commentDetails._id}}/edit" method="post">
+  <textarea name="text" cols="40" rows="10" minlength="5" maxlength="1000">{{commentDetails.text}}</textarea>
+
+  <button type="submit">Update</button>
+
+</form>
