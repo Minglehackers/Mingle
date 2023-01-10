@@ -9,6 +9,8 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
+var passport = require('passport');
+
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
@@ -27,6 +29,9 @@ app.use((req, res, next) => {
     app.locals.userDetails = req.session.currentUser; //store user details in app.locals (so that is is available in handlebars)
     next();
 });
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");

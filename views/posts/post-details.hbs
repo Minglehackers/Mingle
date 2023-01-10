@@ -21,12 +21,13 @@
                   </div>
                   <div>
                      <div class="text-center">
-                        <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete" method="post">
+                        <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete"
+                           method="post">
                            <button class="btn btn-danger">Delete Post</button>
                         </form>
 
                         <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="get">
-                        <button class="bt">Edit Post</button>
+                           <button class="bt">Edit Post</button>
                         </form>
                      </div>
                   </div>
@@ -78,14 +79,22 @@
       {{#each comments}}
 
       <li class="list-group-item">
+      
+         {{!--   {{../postDetails}}  --}}
          <h4>{{text}}</h4>
-         <p>subreddit : {{postDetails.subreddit}} </p>
+         <p>subredditId : {{originalPost.subreddit}} </p>
          <p>By: {{author.username}}</p>
          <a href="subreddit/{{_id}}">{{name}}</a>
+
          <p>
             <button><a href="/subreddit/comment/{{_id}}/edit">Edit</a></button>
 
-            <button><a href="/posts/{{this._id}}/delete">Delete</a></button>
+         <form action="/subreddit/comment/{{_id}}/delete" method="post">
+            <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
+            <input type="hidden" name="pid" value="{{originalPost._id}}">
+            <button>Delete</button>
+         </form>
+
 
          </p>
       </li>

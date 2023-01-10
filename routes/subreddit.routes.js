@@ -5,6 +5,43 @@ const Subreddit = require("../models/Subreddit.model");
 const Post = require("../models/Post.model");
 const Comment = require("../models/Comment.model");
 
+const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedIn = require("../middleware/isLoggedIn");
+
+
+// *** CREATE SUBREDDITS ***
+// GET create subreddit
+router.get("/create", isLoggedIn, (req, res, next) => {
+    res.render("subreddit/create")
+});
+
+// POST create subreddit
+router.post("/create", isLoggedIn, (req, res, next) => {
+    const { name, description } = req.body;
+    let author = req.session.currentUser._id
+    
+    Subreddit.create({ name, description, moderator: author })
+        .then(() => {
+            res.redirect(`/subreddit`);
+        })
+        .catch((err) => {
+            next(err);
+        });
+});
+
+
+
+// *** Update subreddits ***
+// GET
+
+// POST
+
+// *** Delete subreddits ***
+// GET
+
+// POST
+
+
 
 //  go to main subreddit list
 router.get("/", (req, res, next) =>
@@ -25,7 +62,7 @@ router.get("/:id", (req, res, next) => {
     }).populate("author")
         .then((postdetails) => {
             postArr = postdetails;
-            return Subreddit.findById(id)
+            return Subreddit.findById(id).populate("moderator","username")
         })
         .then((subredditDetails) => {
 
@@ -42,7 +79,7 @@ router.get("/:id", (req, res, next) => {
 
 
 // go to Post create form
-router.get("/:id/post/create", (req, res, next) => {
+router.get("/:id/post/create", isLoggedIn, (req, res, next) => {
     const id = req.params.id;
     console.log(id);
     Subreddit
@@ -55,7 +92,7 @@ router.get("/:id/post/create", (req, res, next) => {
 
 
 // POST Post
-router.post("/:id/post/create", (req, res, next) => {
+router.post("/:id/post/create", isLoggedIn, (req, res, next) => {
     let postId;
     const id = req.params.id
 
@@ -112,7 +149,7 @@ router.get("/:id/post/:pid", (req, res, next) => {
 
 // Post COMMENTS 
 
-router.post("/:id/post/:pid", (req, res, next) => {
+router.post("/:id/post/:pid", isLoggedIn, (req, res, next) => {
     const subreddit = req.params.id
     const postID = req.params.pid
     const authorID = req.session.currentUser._id
@@ -143,32 +180,10 @@ router.post("/:id/post/:pid", (req, res, next) => {
 });
 
 
-
-
-
-// go to create form    
-router.get("/create", (req, res, next) => res.render("subreddit/create",));
-
-
-
-router.post("/create", (req, res, next) => {
-    const { name, description } = req.body;
-    Subreddit.create({ name, description })
-        .then(() => {
-            res.redirect("/subreddit");
-        })
-        .catch((err) => {
-            next(err);
-        });
-});
-
-
-
-
 //* Topics
 // delete subreddit 
 
-router.post("/:id/delete", (req, res, next) => {
+router.post("/:id/delete", isLoggedIn, (req, res, next) => {
     const id = req.params.id
 
     Post.find({ subreddit: id }).then(posts => {
@@ -188,7 +203,7 @@ router.post("/:id/delete", (req, res, next) => {
 
 //  GET ROUTE for Updating an existing post 
 
-router.get("/:id/post/:pid/edit", (req, res, next) => {
+router.get("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
     const pid = req.params.pid
     // const text = req.body.text
     // const title = req.body.title
@@ -204,7 +219,7 @@ router.get("/:id/post/:pid/edit", (req, res, next) => {
 // POST ROUTE for Updating an existing post 
 
 
-router.post("/:id/post/:pid/edit", (req, res, next) => {
+router.post("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
     const id = req.params.id
     const pid = req.params.pid
     const text = req.body.text
@@ -228,7 +243,7 @@ router.post("/:id/post/:pid/edit", (req, res, next) => {
 
 
 // delete post
-router.post("/:id/post/:pid/delete", (req, res, next) => {
+router.post("/:id/post/:pid/delete", isLoggedIn, (req, res, next) => {
     const id = req.params.id
     const pid = req.params.pid
     // maybe delete comments too
@@ -246,10 +261,15 @@ router.post("/:id/post/:pid/delete", (req, res, next) => {
 })
 
 // delete comment
-router.post("/:id/post/:pid/delete", (req, res, next) => {
-    const id = req.params.id
-    const pid = req.params.pid
-    Comment.findByIdAndDelete(id)
+router.post("/comment/:cid/delete", isLoggedIn, (req, res, next) => {
+    const cid = req.params.cid
+    const sid = req.body.sid
+    const pid = req.body.pid;
+
+    Comment.findByIdAndDelete(cid)
+        .then(() => {
+            res.redirect(`/subreddit/${sid}/post/${pid}`)
+        })
         .catch((err) => {
             next(err)
         })
@@ -259,7 +279,7 @@ router.post("/:id/post/:pid/delete", (req, res, next) => {
 
 
 //edit commemt
-router.get("/comment/:cid/edit", (req, res, next) => {
+router.get("/comment/:cid/edit", isLoggedIn, (req, res, next) => {
     const cid = req.params.cid
     const text = req.body.text
     Comment.findById(cid)
@@ -273,7 +293,7 @@ router.get("/comment/:cid/edit", (req, res, next) => {
 })
 
 
-router.post("/comment/:cid/edit", (req, res, next) => {
+router.post("/comment/:cid/edit", isLoggedIn, (req, res, next) => {
     const cid = req.params.cid
     const text = req.body.text
     let postId;
@@ -294,8 +314,6 @@ router.post("/comment/:cid/edit", (req, res, next) => {
         })
 
 })
-
-
 
 
 
