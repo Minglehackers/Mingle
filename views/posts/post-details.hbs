@@ -51,6 +51,7 @@
    Leave a Comment:
     <textarea  class="form-control" name ="text" cols ="30" rows ="4" /> </textarea>
      </label>
+     <input type="hidden" name="type" value="postComment">
  </div>
  <br>
 <button type="submit" class="btn btn-primary">Post Comment</button>
@@ -65,15 +66,50 @@
 
 <ul class="list-group">
 {{#each comments}}
-  
+
+
+      
+      <p>comments: {{this.parentComment}}</p>
+      <p>------{{this.subreddit._id}}</p>
    <li class="list-group-item">
     <h4>{{text}}</h4>
     <p>By: {{author.username}}</p>
     <a href="subreddit/{{_id}}">{{name}}</a>
     <p>
+
     <button><a href="/posts/{{this._id}}/edit">Edit</a></button>
 
    <button><a href="/posts/{{this._id}}/edit">Delete</a></button>
+<h4>{{comments}}</h4>
+   
+   <form action="/subreddit/{{subreddit._id}}/post/{{originalPost._id}}" method ="post">
+ <div class="form-group" >
+   <label>
+   Leave a Comment:
+    <textarea  class="form-control" name ="text" cols ="30" rows ="4" /> </textarea>
+     </label>
+     <input type="hidden" name="type" value="commentComment">
+     <input type="hidden" name="parentComment" value="{{this._id}}">
+     <input type="hidden" name="originalPost" value="{{originalPost._id}}">
+
+ </div>
+ <br>
+<button type="submit" class="btn btn-primary">Post Comment</button>
+
+</form>
+{{#each comments}}
+   <li class="list-group-item">
+    <h4>{{text}}</h4>
+    <p>comments: {{comments}}</p>
+    <p>By: {{author.username}}</p>
+    <a href="subreddit/{{_id}}">{{name}}</a>
+    <p>
+ {{!-- {{ #if isAuthor}}
+    <button><a href="/posts/{{this._id}}/edit">Edit</a></button>
+
+   <button><a href="/posts/{{this._id}}/edit">Delete</a></button>
+   {{/if}} --}}
+   {{/each}}
 
 </p>
    </li> 

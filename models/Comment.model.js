@@ -19,6 +19,15 @@ const commentSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Post"
         },
+        parentComment: {
+            type: Schema.Types.ObjectId,
+            ref: "Comment"
+        },
+        subreddit: {
+            type: Schema.Types.ObjectId,
+            ref: "Subreddit"
+        },
+
 
         votes: {
             type: Number,

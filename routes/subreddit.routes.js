@@ -78,16 +78,20 @@ router.post("/:id/post/create", (req, res, next) => {
 
 
 
-// POST page
+// Topic page
 router.get("/:id/post/:pid", (req, res, next) => {
     const id = req.params.id;
     const pid = req.params.pid
     let commentArr;
 
+
+
     Comment.find({
-        originalPost: pid
-    }).populate("originalPost author")
+        originalPost: pid,
+
+    }).populate("originalPost author comments subreddit")
         .then((postdetails) => {
+
             commentArr = postdetails;
             return Post.findById(pid).populate("author")
         })
@@ -112,29 +116,44 @@ router.post("/:id/post/:pid", (req, res, next) => {
     const subreddit = req.params.id
     const postID = req.params.pid
     const authorID = req.session.currentUser._id
+    const parentComment = req.body.parentComment || null
+
+
     let comment;
 
     const newComment = {
         text: req.body.text,
         author: authorID,
-        originalPost: postID
+        originalPost: postID,
+        type: req.body.type,
+        subreddit: subreddit
+
     }
 
-    console.log(newComment)
+    if (parentComment) {
+        newComment.parentComment = parentComment
+    } else {
+        newComment.parentComment = postID
+    }
+
+    console.log(newComment, "new comment")
 
     Comment.create(newComment)
         .then((commentDetails) => {
             comment = commentDetails
-            console.log("from post ____" + commentDetails);
-            res.redirect(`/subreddit/${subreddit}/post/${postID}`);
-
-
+            return Post
+                .findByIdAndUpdate(postID, { $push: { comments: commentDetails._id } }, { new: true })
         })
+        .then((postDetails) => {
+
+            res.redirect(`/subreddit/${subreddit}/post/${postID}`);
+        }
+        )
         .catch((err) => {
             console.log("err creating new post to the db", err);
             next();
-        });
-
+        }
+        );
 
 });
 
