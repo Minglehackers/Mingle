@@ -15,8 +15,15 @@
     <!--To be modified-->
     <p><b>Name:</b> {{userInSession.firstName}} {{userInSession.lastName}}</p>
     <p><b>E-mail address:</b> {{userInSession.email}}</p>
-    <p><b>Posts:</b> {{userInSession.posts.length}}</p>
-    <p><b>Comments:</b> {{userInSession.comments.length}}</p>
+    <p><b>Posts:</b> {{postArr.length}}</p>
+   <!-- {{#each postArr}}
+<p>
+
+  {{this.title}}
+</p> 
+
+    {{/each}}-->
+    <p><b>Comments:</b> {{commentArr.length}}</p>
 
     <div>
         <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a>

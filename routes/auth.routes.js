@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const Post = require("../models/Post.model");
+const Comment = require("../models/Comment.model");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -155,11 +157,34 @@ router.get("/logout", isLoggedIn, (req, res) => {
 // *** USER PROFILE ***
 // GET USER PROFILE : /auth/userProfile/:id
 router.get("/profile/:id", isLoggedIn, (req, res) => {
-  const id = req.params.id
 
-  User.findByIdAndUpdate(id)
+let postArr;
+let commentArr;
+
+  const id = req.params.id
+  Comment.find({
+    author: id
+})
+    .then((commentdetails) => {
+        commentArr = commentdetails;
+        //console.log("the comments for this user -------->"+commentArr);
+        return Post.find({
+          author: id
+      })
+    })
+    .then((postdetails) =>{
+      postArr = postdetails;
+     // console.log("the posts for this user -------->"+postArr);
+      return User.findByIdAndUpdate(id)
+    })
+  
     .then((userInSession) => {
-      res.render("users/user-profile", { userInSession });
+      const data = {
+        userInSession : userInSession,
+        postArr : postArr,
+        commentArr :commentArr,
+      }
+      res.render("users/user-profile", data);
     })
     .catch(error => {
       console.log(`Error while loading the user profile: ${error}`)
