@@ -122,8 +122,7 @@ exports.postNew = (req, res, next) => {
 exports.getEditForm = (req, res, next) => {
     const pid = req.params.pid;
     console.log(res.locals.samePerson);
-    // const text = req.body.text
-    // const title = req.body.title
+
     Post.findById(pid)
         .then((postDetails) => {
             console.log(postDetails);
@@ -149,7 +148,7 @@ exports.postEdit = (req, res, next) => {
 exports.delete = (req, res, next) => {
     const id = req.params.id;
     const pid = req.params.pid;
-    // maybe delete comments too
+
     Comment.deleteMany({ originalPost: pid })
         .then(() => {
             return Post.findByIdAndDelete(pid);
