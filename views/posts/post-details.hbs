@@ -8,7 +8,7 @@
          <div class="col">
             <div class="card text-center" style="width:30rem;">
                <div class="card-body">
-                  <h5 class="card-title">Posted by: {{postDetails.author.username}}</h5> <br>
+                  <h5 class="card-title">Posted by: <a href="/auth/profile/{{postDetails.author._id}}">{{postDetails.author.username}}</a></h5> <br>
                   <p class="card-text">
                      {{postDetails.text}} <br> <br>
                      <img src="{{postDetails.img}}" alt="image">
@@ -19,6 +19,9 @@
                      <button type="submit"> Downvote</button>
 
                   </div>
+                 
+                 
+{{#if samePerson}}
                   <div>
                      <div class="text-center">
                         <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete"
@@ -27,10 +30,12 @@
                         </form>
 
                         <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="get">
-                           <button class="bt">Edit Post</button>
+                           <button class="btn btn-primary">Edit Post</button>
                         </form>
                      </div>
                   </div>
+{{/if}}
+         
                   <div>
                      <br>
                      <a href="#comment_thread">{{comments.length}} Comments.</a> <br>
@@ -55,7 +60,7 @@
    <!-- jump link to comment thread  -->
 
    <br>
-   <h5>Comment as {{postDetails.author.username}}:</h5>
+   <h5>Comment as <a href="/auth/profile/{{userDetails._id}}">{{userDetails.username}}</a>: </h5>
 
    <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}" method="post">
       <div class="form-group">
@@ -66,6 +71,9 @@
       </div>
       <br>
       <button type="submit" class="btn btn-primary">Post Comment</button>
+      {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+      {{/if}}
 
    </form>
 
@@ -98,5 +106,4 @@
 
          </p>
       </li>
-
       {{/each}}

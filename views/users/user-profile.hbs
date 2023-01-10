@@ -25,11 +25,13 @@
     {{/each}}-->
     <p><b>Comments:</b> {{commentArr.length}}</p>
 
+
+{{#if samePerson}}
     <div>
         <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a>
         <a href="/auth/profile/{{userInSession._id}}/delete">Delete</a>
     </div>
-
+{{/if}}
   </div>
 
 {{else}}

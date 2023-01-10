@@ -28,3 +28,7 @@
 <br><br>
 <button class="btn btn-primary" type="submit"> Create Post</button>
 </form>
+
+{{#if errorMessage}}
+    <p class="error">{{errorMessage}}</p>
+{{/if}}

@@ -4,10 +4,12 @@ const subredditController = require("./controllers/subredditController");
 const Subreddit = require("../models/Subreddit.model");
 const Post = require("../models/Post.model");
 const Comment = require("../models/Comment.model");
+const mongoose = require('mongoose')
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-
+const isSamePerson = require("../middleware/isSamePerson");
+const youShallNotPass = require("../middleware/youShallNotPass")
 
 // *** CREATE SUBREDDITS ***
 // GET create subreddit
@@ -19,13 +21,32 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 router.post("/create", isLoggedIn, (req, res, next) => {
     const { name, description } = req.body;
     let author = req.session.currentUser._id
+
+    if (name === "" || description === "") {
+        res.status(400).render("subreddit/create", {
+          errorMessage:
+            "All fields are mandatory. Please provide a name and a description.",
+        });
+        return;
+      }
+      if (name.length < 3 || description.length < 8) {
+        res.status(400).render("subreddit/create", {
+          errorMessage: "The name needs to be at least 3 characters long and the description needs to be at least 8 characters long.",
+        });
     
+        return;
+      }
+
     Subreddit.create({ name, description, moderator: author })
         .then(() => {
             res.redirect(`/subreddit`);
         })
         .catch((err) => {
-            next(err);
+            if (err instanceof mongoose.Error.ValidationError) {
+                res.status(500).render("subreddit/create", { errorMessage: err.message });
+              } else {
+                next(err);
+              } 
         });
 });
 
@@ -104,23 +125,40 @@ router.post("/:id/post/create", isLoggedIn, (req, res, next) => {
         author: authorID,
         subreddit: id
     }
+
+    if (req.body.title === "" || req.body.text === "") {
+        res.status(400).render(`posts/post-create`, {
+          errorMessage:
+            "All fields are mandatory. Please provide a title and a text.",
+        });
+        return;
+      }
+      if (newPost.title.length < 5 || newPost.text.length < 5) {
+        res.status(400).render(`posts/post-create`, {
+          errorMessage: "The title and the text need to be at least 5 characters long.",
+        });
+    
+        return;
+      }
     Post.create(newPost)
         .then((postDetails) => {
             console.log("from post ____" + postDetails);
             res.redirect(`/subreddit/${id}`);
 
-
         })
         .catch((err) => {
-            console.log("err creating new post to the db", err);
-            next();
+            if (err instanceof mongoose.Error.ValidationError) {
+                res.status(500).render(`posts/post-create`, { errorMessage: err.message });
+              } else {
+                next(err);
+              }
         });
 })
 
 
 
 // POST page
-router.get("/:id/post/:pid", (req, res, next) => {
+router.get("/:id/post/:pid", isLoggedIn, (req, res, next) => {
     const id = req.params.id;
     const pid = req.params.pid
     let commentArr;
@@ -133,14 +171,21 @@ router.get("/:id/post/:pid", (req, res, next) => {
             return Post.findById(pid).populate("author")
         })
         .then((details) => {
+   
 
+            if (`${req.session.currentUser._id}` !== `${details.author._id}`) {
+                res.locals.samePerson = false
+            
+            } else {
+                res.locals.samePerson = true }
+
+                console.log(res.locals)
 
             const data = {
                 comments: commentArr,
                 postDetails: details,
 
             }
-            console.log(data, "---------------------------")
             res.render("posts/post-details", data);
         })
         .catch((err) => { next(err); });
@@ -154,30 +199,23 @@ router.post("/:id/post/:pid", isLoggedIn, (req, res, next) => {
     const postID = req.params.pid
     const authorID = req.session.currentUser._id
     let comment;
-
+    
     const newComment = {
         text: req.body.text,
         author: authorID,
         originalPost: postID
     }
 
-    console.log(newComment)
-
-    Comment.create(newComment)
+        Comment.create(newComment)
         .then((commentDetails) => {
             comment = commentDetails
             console.log("from post ____" + commentDetails);
             res.redirect(`/subreddit/${subreddit}/post/${postID}`);
-
-
         })
         .catch((err) => {
-            console.log("err creating new post to the db", err);
-            next();
-        });
-
-
-});
+                next(err);
+              })
+    });
 
 
 //* Topics
@@ -203,8 +241,9 @@ router.post("/:id/delete", isLoggedIn, (req, res, next) => {
 
 //  GET ROUTE for Updating an existing post 
 
-router.get("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
+router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, (req, res, next) => {
     const pid = req.params.pid
+    console.log(res.locals.samePerson)
     // const text = req.body.text
     // const title = req.body.title
     Post.findById(pid)
@@ -219,7 +258,7 @@ router.get("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
 // POST ROUTE for Updating an existing post 
 
 
-router.post("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
+router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, (req, res, next) => {
     const id = req.params.id
     const pid = req.params.pid
     const text = req.body.text
@@ -243,7 +282,7 @@ router.post("/:id/post/:pid/edit", isLoggedIn, (req, res, next) => {
 
 
 // delete post
-router.post("/:id/post/:pid/delete", isLoggedIn, (req, res, next) => {
+router.post("/:id/post/:pid/delete", isLoggedIn, youShallNotPass, (req, res, next) => {
     const id = req.params.id
     const pid = req.params.pid
     // maybe delete comments too

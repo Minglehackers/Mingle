@@ -17,7 +17,8 @@ const fileUploader = require('../config/cloudinary.config');
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-
+const isSamePerson = require("../middleware/isSamePerson");
+const youShallNotPass = require("../middleware/youShallNotPass");
 // GET /auth/signup
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
@@ -156,8 +157,8 @@ router.get("/logout", isLoggedIn, (req, res) => {
 
 // *** USER PROFILE ***
 // GET USER PROFILE : /auth/userProfile/:id
-router.get("/profile/:id", isLoggedIn, (req, res) => {
-
+router.get("/profile/:id", isLoggedIn, isSamePerson, (req, res) => {
+console.log(res.locals)
 let postArr;
 let commentArr;
 
@@ -195,7 +196,7 @@ let commentArr;
 
 // *** EDIT USER PROFILE ***
 // GET EDIT USER PROFILE : /auth/profile/:id/edit
-router.get("/profile/:id/edit", isLoggedIn, (req, res) => {
+router.get("/profile/:id/edit", isLoggedIn, youShallNotPass, (req, res) => {
   const id = req.params.id
 
   User.findById(id)

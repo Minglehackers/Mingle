@@ -30,6 +30,16 @@ app.use((req, res, next) => {
     next();
 });
 
+
+module.exports = (req, res, next) => {
+
+    if (req.session.currentUser._id !== req.params.id) {
+        return res.redirect("/");
+    }
+    next();
+  };
+  
+
 app.use(passport.initialize());
 app.use(passport.session());
 

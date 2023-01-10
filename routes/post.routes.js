@@ -30,6 +30,22 @@ router.post("/create", (req, res, next) => {
         author: authorID,
         subreddit: req.body.subreddit,
     }
+
+    if (req.body.title === "" || req.body.text === "") {
+        res.status(400).render(`posts/new-post`, {
+          errorMessage:
+            "All fields are mandatory. Please provide a title and a text.",
+        });
+        return;
+      }
+      if (newPost.title.length < 5 || newPost.text.length < 5) {
+        res.status(400).render(`posts/new-post`, {
+          errorMessage: "The title and the text need to be at least 5 characters long.",
+        });
+    
+        return;
+      }
+
     Post.create(newPost)
         .then((postDetails) => {
             console.log("from post ____" + postDetails);
@@ -39,8 +55,11 @@ router.post("/create", (req, res, next) => {
 
         })
         .catch((err) => {
-            console.log("err creating new post to the db", err);
-            next();
+            if (err instanceof mongoose.Error.ValidationError) {
+                res.status(500).render(`posts/new-post`, { errorMessage: err.message });
+              } else {
+                next(err);
+              }
         });
 })
 
