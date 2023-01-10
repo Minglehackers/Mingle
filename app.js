@@ -37,8 +37,8 @@ module.exports = (req, res, next) => {
         return res.redirect("/");
     }
     next();
-  };
-  
+};
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,7 +53,7 @@ const subredditRoutes = require("./routes/subreddit.routes");
 app.use('/subreddit', subredditRoutes);
 //app.use('/user', require('./routes/user.routes'));
 
-
+app.use("/inbox", require("./routes/inbox.routes"));
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);

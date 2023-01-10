@@ -1,7 +1,7 @@
-{{!-- views/users/user-profile.hbs --}}
- 
-{{!-- the new version, with the session: --}}
- 
+{{! views/users/user-profile.hbs }}
+
+{{! the new version, with the session: }}
+
 {{#if userInSession}}
   <h2>Welcome, {{userInSession.username}}!</h2>
   <p>This is your profile page my friend!</p>
@@ -11,12 +11,12 @@
 
   <div>
     <img src="{{userInSession.profilePicture}}" alt="Profile picture" style="width: 300px;" />
-    
+
     <!--To be modified-->
     <p><b>Name:</b> {{userInSession.firstName}} {{userInSession.lastName}}</p>
     <p><b>E-mail address:</b> {{userInSession.email}}</p>
     <p><b>Posts:</b> {{postArr.length}}</p>
-   <!-- {{#each postArr}}
+    <!-- {{#each postArr}}
 <p>
 
   {{this.title}}
@@ -25,17 +25,22 @@
     {{/each}}-->
     <p><b>Comments:</b> {{commentArr.length}}</p>
 
-
-{{#if samePerson}}
-    <div>
+    {{#if samePerson}}
+      <div>
         <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a>
         <a href="/auth/profile/{{userInSession._id}}/delete">Delete</a>
+      </div>
+    {{/if}}
+
+    <div>
+
+      <a href="/auth/profile/{{userInSession._id}}/message">Send message</a>
     </div>
-{{/if}}
+
   </div>
 
 {{else}}
-  
-  <br><p>Still no logged in user, sorry!</p>
- 
+
+  <br /><p>Still no logged in user, sorry!</p>
+
 {{/if}}
