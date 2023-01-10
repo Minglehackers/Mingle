@@ -15,6 +15,8 @@ router.get("/", subredditController.listReddits);
 router.get("/:id", subredditController.displaySingleReddit);
 router.post("/:id/delete", isLoggedIn, subredditController.deleteSubreddit)
 // TODO: Update subreddit
+router.get("/:id/edit", isLoggedIn, subredditController.getEditForm)
+router.post("/:id/edit", isLoggedIn, subredditController.postEditForm)
 
 //*** POSTS ***
 router.get("/:id/post/create", isLoggedIn, postController.getCreateForm);

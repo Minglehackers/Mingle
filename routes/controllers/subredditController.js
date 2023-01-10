@@ -91,3 +91,27 @@ exports.deleteSubreddit = (req, res, next) => {
 
     })
 }
+
+exports.getEditForm = (req, res, next) => {
+    const id = req.params.id;
+    Subreddit.findById(id)
+        .then((subreddit) => {
+            console.log(subreddit)
+            res.render("subreddit/edit", { subreddit });
+        }
+        )
+        .catch((err) => { next(err); });
+}
+
+exports.postEditForm = (req, res, next) => {
+    const id = req.params.id;
+    const { name, description } = req.body;
+    Subreddit.findByIdAndUpdate(id
+        , { name, description }
+        , { new: true })
+        .then((subreddit) => {
+            res.redirect(`/subreddit/${subreddit._id}`);
+        }
+        )
+        .catch((err) => { next(err); });
+}
