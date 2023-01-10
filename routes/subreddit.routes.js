@@ -1,386 +1,42 @@
 const express = require("express");
 const router = express.Router();
 const subredditController = require("./controllers/subredditController");
-const Subreddit = require("../models/Subreddit.model");
-const Post = require("../models/Post.model");
-const Comment = require("../models/Comment.model");
-const mongoose = require('mongoose')
+const commentController = require("./controllers/commentController");
+const postController = require("./controllers/postController");
+// const userController = require("./controllers/userController");
+// const Subreddit = require("../models/Subreddit.model");
+// const Post = require("../models/Post.model");
+// const Comment = require("../models/Comment.model");
+// const mongoose = require('mongoose')
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isSamePerson = require("../middleware/isSamePerson");
 const youShallNotPass = require("../middleware/youShallNotPass")
 
-// *** CREATE SUBREDDITS ***
-// GET create subreddit
-router.get("/create", isLoggedIn, (req, res, next) => {
-    res.render("subreddit/create")
-});
-
-// POST create subreddit
-router.post("/create", isLoggedIn, (req, res, next) => {
-    const { name, description } = req.body;
-    let author = req.session.currentUser._id
-
-    if (name === "" || description === "") {
-        res.status(400).render("subreddit/create", {
-          errorMessage:
-            "All fields are mandatory. Please provide a name and a description.",
-        });
-        return;
-      }
-      if (name.length < 3 || description.length < 8) {
-        res.status(400).render("subreddit/create", {
-          errorMessage: "The name needs to be at least 3 characters long and the description needs to be at least 8 characters long.",
-        });
-    
-        return;
-      }
-
-    Subreddit.create({ name, description, moderator: author })
-        .then(() => {
-            res.redirect(`/subreddit`);
-        })
-        .catch((err) => {
-            if (err instanceof mongoose.Error.ValidationError) {
-                res.status(500).render("subreddit/create", { errorMessage: err.message });
-              } else {
-                next(err);
-              } 
-        });
-});
-
-
-
-// *** Update subreddits ***
-// GET
-
-// POST
-
-// *** Delete subreddits ***
-// GET
-
-// POST
-
-
-
-//  go to main subreddit list
-router.get("/", (req, res, next) =>
-    Subreddit.find().then((subreddits) => {
-        res.render("subreddit/list", { subreddits })
-    })
-        .catch((err) => {
-            next(err);
-        })
-);
-
-// go to single subreddit
-router.get("/:id", (req, res, next) => {
-    const id = req.params.id;
-    let postArr;
-    Post.find({
-        subreddit: id
-    }).populate("author")
-        .then((postdetails) => {
-            postArr = postdetails;
-            return Subreddit.findById(id).populate("moderator","username")
-        })
-        .then((subredditDetails) => {
-
-            const data = {
-                post: postArr,
-                subredditdetails: subredditDetails,
-
-            }
-
-            res.render("subreddit/subreddit-details", data);
-        })
-        .catch((err) => { next(err); });
-});
-
-
-// go to Post create form
-router.get("/:id/post/create", isLoggedIn, (req, res, next) => {
-    const id = req.params.id;
-    console.log(id);
-    Subreddit
-        .findById(id)
-        .then((subreddit) => {
-            res.render("posts/post-create", subreddit);
-        })
-        .catch((err) => { next(err); });
-});
-
-
-// POST Post
-router.post("/:id/post/create", isLoggedIn, (req, res, next) => {
-    let postId;
-    const id = req.params.id
-
-    const authorID = req.session.currentUser._id
-
-    const newPost = {
-        title: req.body.title,
-        text: req.body.text,
-        author: authorID,
-        subreddit: id
-    }
-
-    if (req.body.title === "" || req.body.text === "") {
-        res.status(400).render(`posts/post-create`, {
-          errorMessage:
-            "All fields are mandatory. Please provide a title and a text.",
-        });
-        return;
-      }
-      if (newPost.title.length < 5 || newPost.text.length < 5) {
-        res.status(400).render(`posts/post-create`, {
-          errorMessage: "The title and the text need to be at least 5 characters long.",
-        });
-    
-        return;
-      }
-    Post.create(newPost)
-        .then((postDetails) => {
-            console.log("from post ____" + postDetails);
-            res.redirect(`/subreddit/${id}`);
-
-        })
-        .catch((err) => {
-            if (err instanceof mongoose.Error.ValidationError) {
-                res.status(500).render(`posts/post-create`, { errorMessage: err.message });
-              } else {
-                next(err);
-              }
-        });
-})
-
-
-
-// POST page
-router.get("/:id/post/:pid", isLoggedIn, (req, res, next) => {
-    const id = req.params.id;
-    const pid = req.params.pid
-    let commentArr;
-
-    Comment.find({
-        originalPost: pid
-    }).populate("originalPost author")
-        .then((postdetails) => {
-            commentArr = postdetails;
-            return Post.findById(pid).populate("author")
-        })
-        .then((details) => {
-   
-
-            if (`${req.session.currentUser._id}` !== `${details.author._id}`) {
-                res.locals.samePerson = false
-            
-            } else {
-                res.locals.samePerson = true }
-
-                console.log(res.locals)
-
-            const data = {
-                comments: commentArr,
-                postDetails: details,
-
-            }
-            res.render("posts/post-details", data);
-        })
-        .catch((err) => { next(err); });
-});
-
-
-// Post COMMENTS 
-
-router.post("/:id/post/:pid", isLoggedIn, (req, res, next) => {
-    const subreddit = req.params.id
-    const postID = req.params.pid
-    const authorID = req.session.currentUser._id
-    let comment;
-    
-    const newComment = {
-        text: req.body.text,
-        author: authorID,
-        originalPost: postID
-    }
-
-        Comment.create(newComment)
-        .then((commentDetails) => {
-            comment = commentDetails
-            console.log("from post ____" + commentDetails);
-            res.redirect(`/subreddit/${subreddit}/post/${postID}`);
-        })
-        .catch((err) => {
-                next(err);
-              })
-    });
-
-
-//* Topics
-// delete subreddit 
-
-router.post("/:id/delete", isLoggedIn, (req, res, next) => {
-    const id = req.params.id
-
-    Post.find({ subreddit: id }).then(posts => {
-        const postIdArr = posts.map(post => post._id)
-
-        return postIdArr.forEach(id => Comment.find({ originalPost: id })
-        )
-    })
-        .then(comments => console.log(comments))
-
-})
-
-// /:id/post/:pid"
-//http://localhost:3000/subreddit/63bd27e02767721efd222cf5/post/63bd2877ca81a2dac734a0d8
-
-// http://localhost:3000/subreddit/63bd27e02767721efd222cf5/post/63bd2877ca81a2dac734a0d8/edit
-
-//  GET ROUTE for Updating an existing post 
-
-router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, (req, res, next) => {
-    const pid = req.params.pid
-    console.log(res.locals.samePerson)
-    // const text = req.body.text
-    // const title = req.body.title
-    Post.findById(pid)
-        .then((postDetails) => {
-            console.log(postDetails)
-            res.render("posts/post-edit", { postDetails })
-        })
-        .catch(err => next(err))
-
-
-})
-// POST ROUTE for Updating an existing post 
-
-
-router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, (req, res, next) => {
-    const id = req.params.id
-    const pid = req.params.pid
-    const text = req.body.text
-    const title = req.body.title
-    Post.findByIdAndUpdate(pid, { text, title }, { new: true })
-        .then(() => {
-            res.redirect(`/subreddit/${id}/post/${pid}`)
-        })
-        .catch((err) => {
-            next(err)
-        })
-})
-
-// Subreddit.findByIdAndDelete(id)
-//     .then(() => res.redirect("/subreddit"))
-//     .catch((err) => {
-//         next(err)
-//     })
-
-
-
-
-// delete post
-router.post("/:id/post/:pid/delete", isLoggedIn, youShallNotPass, (req, res, next) => {
-    const id = req.params.id
-    const pid = req.params.pid
-    // maybe delete comments too
-    Comment.deleteMany({ originalPost: pid }).
-        then(() => {
-
-            return Post.findByIdAndDelete(pid)
-        }).then(() =>
-            res.redirect("/subreddit")
-        )
-        .catch((err) => {
-            next(err)
-        })
-
-})
-
-// delete comment
-router.post("/comment/:cid/delete", isLoggedIn, (req, res, next) => {
-    const cid = req.params.cid
-    const sid = req.body.sid
-    const pid = req.body.pid;
-
-    Comment.findByIdAndDelete(cid)
-        .then(() => {
-            res.redirect(`/subreddit/${sid}/post/${pid}`)
-        })
-        .catch((err) => {
-            next(err)
-        })
-
-})
-
-
-
-//edit commemt
-router.get("/comment/:cid/edit", isLoggedIn, (req, res, next) => {
-    const cid = req.params.cid
-    const text = req.body.text
-    Comment.findById(cid)
-        .then((commentDetails) => {
-            console.log(commentDetails)
-            res.render("comments/comment-edit", { commentDetails })
-        })
-        .catch(err => next(err))
-
-
-})
-
-
-router.post("/comment/:cid/edit", isLoggedIn, (req, res, next) => {
-    const cid = req.params.cid
-    const text = req.body.text
-    let postId;
-    let subredditId;
-
-    console.log(text)
-    Comment.findByIdAndUpdate(cid, { text }, { new: true })
-        .then((newComment) => {
-            postId = newComment.originalPost
-            return Post.findById(postId)
-        })
-        .then((postDetails) => {
-            subredditId = postDetails.subreddit
-            res.redirect(`/subreddit/${subredditId}/post/${postId}`)
-        })
-        .catch((err) => {
-            next(err)
-        })
-
-})
-
-
-
-
-
-
-
-
-
-// router.put("/:rID", subredditController.updateSubreddit);
-// router.delete("/:id", subredditController.deleteSubreddit);
-
-
-// router.get("/:rID/posts", subredditController.listPostsSubreddit);
-
-// router.get("/:rID/posts/:pID", subredditController.openThread);
-
-// router.get("/:rID/posts/create", subredditController.getCreateForm);
-// router.post("/:rID/posts/create", subredditController.postCreateForm);
-
-// router.get("/:rID/posts/:pID/edit", subredditController.getEditForm);
-// router.post("/:rID/posts/:pID/edit", subredditController.postEditForm);
-// router.post("/:rID/posts/:pID/delete", subredditController.deletePost);
-
-
-
-
-
+// *** SUBREDDITS ***
+router.get("/create", isLoggedIn, subredditController.getCreateForm);
+router.post("/create", isLoggedIn, subredditController.postCreateForm);
+router.get("/", subredditController.listReddits);
+router.get("/:id", subredditController.displaySingleReddit);
+router.post("/:id/delete", isLoggedIn, subredditController.deleteSubreddit)
+// TODO: Update subreddit
+
+
+//*** POSTS ***
+router.get("/:id/post/create", isLoggedIn, postController.getCreateForm);
+router.post("/:id/post/create", isLoggedIn, postController.postPost);
+router.get("/:id/post/:pid", isLoggedIn, postController.displayView);
+router.post("/:id/post/:pid", isLoggedIn, postController.postNew);
+router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEditForm)
+router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.postEdit)
+router.post("/:id/post/:pid/delete", isLoggedIn, youShallNotPass, postController.delete)
+
+
+// *** COMMENTS ***
+router.post("/comment/:cid/delete", isLoggedIn, commentController.delete)
+router.get("/comment/:cid/edit", isLoggedIn, commentController.getEditForm)
+router.post("/comment/:cid/edit", isLoggedIn, commentController.postEdit)
 
 
 

@@ -6,7 +6,7 @@ const Subreddit = require("../../models/Subreddit.model");
 
 
 
-exports.listSubreddits = (req, res, next) => {
+exports.listReddits = (req, res, next) => {
     Subreddit.find().then((subreddits) => {
         res.render("subreddit/list", { subreddits })
     })
@@ -15,260 +15,79 @@ exports.listSubreddits = (req, res, next) => {
         })
 }
 
-
-exports.getSubreddit = (req, res, next) => {
-    const { rID } = req.params;
-    Subreddit
-        .findById(rID).populate("posts")
-        .then((subreddit) => {
-            res.render("subreddits/subreddit-detail", subreddit);
-        }
-        )
-        .catch((err) => {
-            next(err);
-        }
-        );
-};
-
-
-exports.createSubreddit = (req, res, next) => {
-    const { name, description } = req.body;
-    Subreddit.create({ name, description })
-        .then(() => {
-            res.redirect("/subreddit-list");
+exports.displaySingleReddit = (req, res, next) => {
+    const id = req.params.id;
+    let postArr;
+    Post.find({
+        subreddit: id
+    }).populate("author")
+        .then((postdetails) => {
+            postArr = postdetails;
+            return Subreddit.findById(id).populate("moderator", "username")
         })
-        .catch((err) => {
-            next(err);
-        });
+        .then((subredditDetails) => {
+
+            const data = {
+                post: postArr,
+                subredditdetails: subredditDetails,
+
+            }
+
+            res.render("subreddit/subreddit-details", data);
+        })
+        .catch((err) => { next(err); });
 }
 
 
-exports.updateSubreddit = (req, res, next) => {
-    const { rID } = req.params;
+
+
+exports.getCreateForm = (req, res, next) => {
+    res.render("subreddit/create")
+}
+
+
+exports.postCreateForm = (req, res, next) => {
     const { name, description } = req.body;
-    Subreddit
-        .findById
-        (rID)
-        .then((subreddit) => {
-            subreddit.name = name;
-            subreddit.description = description;
-            return subreddit.save();
-        })
+    let author = req.session.currentUser._id
+
+    if (name === "" || description === "") {
+        res.status(400).render("subreddit/create", {
+            errorMessage:
+                "All fields are mandatory. Please provide a name and a description.",
+        });
+        return;
+    }
+    if (name.length < 3 || description.length < 8) {
+        res.status(400).render("subreddit/create", {
+            errorMessage: "The name needs to be at least 3 characters long and the description needs to be at least 8 characters long.",
+        });
+
+        return;
+    }
+
+    Subreddit.create({ name, description, moderator: author })
         .then(() => {
-            res.redirect("/subreddit-list");
+            res.redirect(`/subreddit`);
         })
         .catch((err) => {
-            next(err);
+            if (err instanceof mongoose.Error.ValidationError) {
+                res.status(500).render("subreddit/create", { errorMessage: err.message });
+            } else {
+                next(err);
+            }
         });
 }
 
 
 exports.deleteSubreddit = (req, res, next) => {
-    // delete all posts from subreddit and then delete subreddit
-    const { rID } = req.params;
-    Subreddit
-        .findByIdAndDelete(rID)
-        .then(() => {
-            res.redirect("/subreddit-list");
-        }
-        ).then(() => {
-            Post.deleteMany({
-                subreddit
-                    : rID
+
+    const id = req.params.id
+    Comment.deleteMany({ subreddit: id }).then(() => {
+        Post.deleteMany({ subreddit: id }).then(() => {
+            Subreddit.findByIdAndDelete(id).then(() => {
+                res.redirect("/subreddit")
             })
         })
-        .catch((err) => {
-            next(err);
-        }
-        );
 
+    })
 }
-
-
-
-
-
-
-
-
-exports.listPostsSubreddit = (req, res, next) => {
-    const { id } = req.params;
-    Subreddit.findById(id)
-        .populate("posts")
-        .then((subreddit) => {
-            res.render("posts/post-list", { subreddit });
-        })
-        .catch((err) => {
-            next(err);
-        });
-};
-
-
-exports.openThread = (req, res, next) => {
-    const { id } = req.params;
-
-
-
-}
-
-exports.getCreateForm = (req, res, next) => {
-    res.render("celebrities/new-celebrity");
-}
-
-exports.postCreateForm = (req, res, next) => {
-    const { name, occupation, catchPhrase } = req.body;
-    Celebrity.create({ name, occupation, catchPhrase })
-        .then(() => {
-            res.redirect("/celebrities-list");
-        })
-        .catch((err) => {
-            next(err);
-        });
-}
-
-
-exports.getEditForm = (req, res, next) => {
-    const { id } = req.params;
-    Celebrity
-        .findById(id)
-        .then((celebrity) => {
-            res.render("celebrities/celebrity-edit", celebrity);
-        }
-        )
-        .catch((err) => {
-            next(err);
-        }
-        );
-}
-
-exports.postEditForm = (req, res, next) => {
-    const { id } = req.params;
-    const { name, occupation, catchPhrase } = req.body;
-    Celebrity.findById(id)
-        .then((celebrity) => {
-            celebrity.name = name;
-            celebrity.occupation = occupation;
-            celebrity.catchPhrase = catchPhrase;
-            celebrity.save()
-                .then(() => {
-                    res.redirect("/celebrities/celebrity-list");
-                })
-                .catch((err) => {
-                    next(err);
-                });
-        })
-        .catch((err) => {
-            next(err);
-        });
-}
-
-
-exports.delete = (req, res, next) => {
-    const { id } = req.params;
-    Celebrity.findByIdAndDelete(id)
-        .then(() => {
-            res.redirect("/celebrities/celebrity-list");
-        })
-        .catch((err) => {
-            next(err);
-        });
-}
-
-
-
-
-
-exports.listPostsSubreddit = (req, res, next) => {
-    console.log("listPostsSubreddit");
-    // const { rID } = req.params;
-    // Subreddit.findById(rID)
-    //     .populate("posts")
-    //     .then((subreddit) => {
-    //         res.render("posts/post-list", { subreddit });
-    //     }
-    //     )
-    //     .catch((err) => {
-    //         next(err);
-    //     }
-    //     );
-};
-
-exports.openThread = (req, res, next) => {
-    const { rID, pID } = req.params;
-    Post.findById(pID)
-        .populate("author")
-        .then((post) => {
-            res.render("posts/post-detail", post);
-        }
-        )
-        .catch((err) => {
-            next(err);
-        }
-        );
-};
-
-
-exports.getCreateForm = (req, res, next) => {
-    res.render("posts/post-create");
-}
-
-exports.postCreateForm = (req, res, next) => {
-    const { title, content } = req.body;
-    const { id } = req.params;
-    Post.create({ title, content, author: req.session.currentUser._id, subreddit: id })
-        .then(() => {
-            res.redirect("/subreddit-list");
-        })
-        .catch((err) => {
-            next(err);
-        });
-}
-
-exports.getEditForm = (req, res, next) => {
-    const { pID } = req.params;
-    Post.findById
-        (pID
-        )
-        .then((post) => {
-            res.render("posts/post-edit", post);
-        }
-        )
-        .catch((err) => {
-            next(err);
-        }
-        );
-}
-
-
-exports.postEditForm = (req, res, next) => {
-    const { id } = req.params;
-    const { title, content } = req.body;
-    Post.findByIdAndUpdate
-        (id
-            , { title, content }
-            , { updated: true }
-        )
-        .then(() => {
-            res.redirect("/subreddit-list");
-        }
-        )
-        .catch((err) => {
-            next(err);
-        }
-        );
-}
-
-
-exports.deletePost = (req, res, next) => {
-    const { id } = req.params;
-    Post.findByIdAndDelete(id)
-        .then(() => {
-            res.redirect("/subreddit-list");
-        })
-        .catch((err) => {
-            next(err);
-        });
-}
-
-module.exports = router;
-
