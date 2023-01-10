@@ -3,11 +3,6 @@ const router = express.Router();
 const subredditController = require("./controllers/subredditController");
 const commentController = require("./controllers/commentController");
 const postController = require("./controllers/postController");
-// const userController = require("./controllers/userController");
-// const Subreddit = require("../models/Subreddit.model");
-// const Post = require("../models/Post.model");
-// const Comment = require("../models/Comment.model");
-// const mongoose = require('mongoose')
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
