@@ -19,6 +19,14 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isSamePerson = require("../middleware/isSamePerson");
 const youShallNotPass = require("../middleware/youShallNotPass");
+
+// Controller  
+const inboxController = require("./controllers/inboxController");
+const Message = require("../models/Message.model");
+
+
+
+
 // GET /auth/signup
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
@@ -158,32 +166,32 @@ router.get("/logout", isLoggedIn, (req, res) => {
 // *** USER PROFILE ***
 // GET USER PROFILE : /auth/userProfile/:id
 router.get("/profile/:id", isLoggedIn, isSamePerson, (req, res) => {
-console.log(res.locals)
-let postArr;
-let commentArr;
+  console.log(res.locals)
+  let postArr;
+  let commentArr;
 
   const id = req.params.id
   Comment.find({
     author: id
-})
+  })
     .then((commentdetails) => {
-        commentArr = commentdetails;
-        //console.log("the comments for this user -------->"+commentArr);
-        return Post.find({
-          author: id
+      commentArr = commentdetails;
+      //console.log("the comments for this user -------->"+commentArr);
+      return Post.find({
+        author: id
       })
     })
-    .then((postdetails) =>{
+    .then((postdetails) => {
       postArr = postdetails;
-     // console.log("the posts for this user -------->"+postArr);
+      // console.log("the posts for this user -------->"+postArr);
       return User.findByIdAndUpdate(id)
     })
-  
+
     .then((userInSession) => {
       const data = {
-        userInSession : userInSession,
-        postArr : postArr,
-        commentArr :commentArr,
+        userInSession: userInSession,
+        postArr: postArr,
+        commentArr: commentArr,
       }
       res.render("users/user-profile", data);
     })
@@ -279,5 +287,18 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
 
 
 });
+
+
+// ? INBOX
+
+
+
+
+
+router.get('/inbox', youShallNotPass, inboxController.displayInbox);
+router.get('/inbox/:id', youShallNotPass, inboxController.displayConversation);
+
+router.post('/inbox/:id', youShallNotPass, inboxController.sendMessage);
+
 
 module.exports = router;
