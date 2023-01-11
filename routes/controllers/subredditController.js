@@ -56,22 +56,18 @@ exports.displaySingleReddit = (req, res, next) => {
             return Subreddit.findById(id).populate("moderator", "username")
         })
         .then((subredditDetails) => {
-            if (req.session.currentSession){
+            if (req.session.currentUser){
                 checkIfSamePerson(req, res, subredditDetails.moderator._id)
                 const data = {
                     post: postArr,
                     subredditdetails: subredditDetails,
-    
                 }
-    
                 res.render("subreddit/subreddit-details", data);
             } else {
                 const data = {
                     post: postArr,
                     subredditdetails: subredditDetails,
-    
                 }
-    
                 res.render("subreddit/subreddit-details", data);
             }
             
