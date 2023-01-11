@@ -5,12 +5,41 @@ const User = require("../../models/User.model");
 const Subreddit = require("../../models/Subreddit.model");
 const Comment = require("../../models/Comment.model");
 const mongoose = require("mongoose");
+const checkIfSamePerson = require("../../utils/checkIfSamePerson");
 
 
 exports.listReddits = (req, res, next) => {
     Subreddit.find().then((subreddits) => {
         res.render("subreddit/list", { subreddits })
     })
+        .catch((err) => {
+            next(err);
+        })
+}
+
+exports.filterReddits = (req, res, next) => {
+    const input = req.body.querry 
+    console.log("querry ", input)
+
+    Subreddit.find().then((subreddits) => {
+        
+        
+        const filteredSubreddits = 
+        subreddits.filter(subreddit=> {
+                         return subreddit.name.toLowerCase().includes(input.toLowerCase())      
+        })
+        
+        const data ={
+             subreddits,
+            filteredSubreddits
+        }
+
+        console.log("data: ", data)
+
+        res.render("subreddit/list", data)
+ 
+    
+   })
         .catch((err) => {
             next(err);
         })
@@ -27,14 +56,25 @@ exports.displaySingleReddit = (req, res, next) => {
             return Subreddit.findById(id).populate("moderator", "username")
         })
         .then((subredditDetails) => {
-
-            const data = {
-                post: postArr,
-                subredditdetails: subredditDetails,
-
+            if (req.session.currentSession){
+                checkIfSamePerson(req, res, subredditDetails.moderator._id)
+                const data = {
+                    post: postArr,
+                    subredditdetails: subredditDetails,
+    
+                }
+    
+                res.render("subreddit/subreddit-details", data);
+            } else {
+                const data = {
+                    post: postArr,
+                    subredditdetails: subredditDetails,
+    
+                }
+    
+                res.render("subreddit/subreddit-details", data);
             }
-
-            res.render("subreddit/subreddit-details", data);
+            
         })
         .catch((err) => { next(err); });
 }
@@ -48,17 +88,24 @@ exports.getCreateForm = (req, res, next) => {
 
 
 exports.postCreateForm = (req, res, next) => {
-    const { name, description } = req.body;
-    let author = req.session.currentUser._id
+    const newSubreddit = {
+        name: req.body.name,
+        description: req.body.description,
+        moderator: req.session.currentUser._id,
+        img: req.file && req.file.path,
+    }
+    
+    // const { name, description } = req.body;
+    // let author = req.session.currentUser._id
 
-    if (name === "" || description === "") {
+    if (newSubreddit.name === "" || newSubreddit.description === "") {
         res.status(400).render("subreddit/create", {
             errorMessage:
-                "All fields are mandatory. Please provide a name and a description.",
+                "Please provide a name and a description.",
         });
         return;
     }
-    if (name.length < 3 || description.length < 8) {
+    if (newSubreddit.name.length < 3 || newSubreddit.description.length < 8) {
         res.status(400).render("subreddit/create", {
             errorMessage: "The name needs to be at least 3 characters long and the description needs to be at least 8 characters long.",
         });
@@ -66,8 +113,9 @@ exports.postCreateForm = (req, res, next) => {
         return;
     }
 
-    Subreddit.create({ name, description, moderator: author, img: req.file.path })
-        .then(() => {
+    Subreddit.create(newSubreddit)
+        .then((newSubreddit) => {
+            console.log(newSubreddit)
             res.redirect(`/subreddit`);
         })
         .catch((err) => {
@@ -97,7 +145,6 @@ exports.getEditForm = (req, res, next) => {
     const id = req.params.id;
     Subreddit.findById(id)
         .then((subreddit) => {
-            console.log(subreddit)
             res.render("subreddit/edit", { subreddit });
         }
         )
@@ -106,11 +153,13 @@ exports.getEditForm = (req, res, next) => {
 
 exports.postEditForm = (req, res, next) => {
     const id = req.params.id;
-    const { name, description } = req.body;
-    Subreddit.findByIdAndUpdate(id
-        , { name, description }
-        , { new: true })
+    const name = req.body.name;
+    const description = req.body.description;
+    const img = req.file && req.file.path;
+    
+    Subreddit.findByIdAndUpdate(id, { name, description, img }, { new: true })
         .then((subreddit) => {
+            console.log(subreddit)
             res.redirect(`/subreddit/${subreddit._id}`);
         }
         )

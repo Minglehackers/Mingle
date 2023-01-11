@@ -22,6 +22,7 @@ exports.getCreateForm = (req, res, next) => {
 exports.postPost = (req, res, next) => {
     let postId;
     const id = req.params.id;
+    let subredditDetails;
 
     const authorID = req.session.currentUser._id;
 
@@ -30,61 +31,125 @@ exports.postPost = (req, res, next) => {
         text: req.body.text,
         author: authorID,
         subreddit: id,
-        img: req.file.path
+        img: req.file && req.file.path
     };
 
+
+
     if (req.body.title === "" || req.body.text === "") {
+        console.log(newPost)
         res.status(400).render(`posts/post-create`, {
-            errorMessage: "All fields are mandatory. Please provide a title and a text.",
+            errorMessage: "Please provide a title and a text.",
+            ...newPost,
+            _id: id
         });
         return;
     }
     if (newPost.title.length < 5 || newPost.text.length < 5) {
+        console.log(newPost)
         res.status(400).render(`posts/post-create`, {
             errorMessage: "The title and the text need to be at least 5 characters long.",
+            ...newPost,
+            _id: id
         });
 
         return;
     }
-    Post.create(newPost)
-        .then((postDetails) => {
-            console.log("from post ____" + postDetails);
-            res.redirect(`/subreddit/${id}`);
-        })
-        .catch((err) => {
-            if (err instanceof mongoose.Error.ValidationError) {
-                res.status(500).render(`posts/post-create`, { errorMessage: err.message });
-            } else {
-                next(err);
-            }
-        });
+
+    Subreddit.findById(id)
+      .then((subreddit) => {
+        console.log(subreddit);
+        subredditDetails = subreddit;
+        return Post.create(newPost);
+      })
+      .then((postDetails) => {
+        console.log("from post ____" + postDetails);
+        res.redirect(`/subreddit/${id}`);
+      })
+      .catch((err) => {
+        if (err instanceof mongoose.Error.ValidationError) {
+          res
+            .status(500)
+            .render(`posts/post-create`, { errorMessage: err.message });
+
+        } else {
+          next(err);
+        }
+      });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.displayView = (req, res, next) => {
     const id = req.params.id;
     const pid = req.params.pid;
     let commentArr;
+    let totalVotes;
 
+    
     Comment.find({
         originalPost: pid,
     })
         .populate("originalPost author")
         .then((postdetails) => {
             commentArr = postdetails;
+            commentArr.forEach(element => {
+                if (req.session.currentUser){
+                    if (`${req.session.currentUser._id}` !== `${element.author._id}`) {
+                        element.isCommentAuthor = false;
+                    } else {
+                        element.isCommentAuthor = true;
+                    }
+                } else {
+                    element.isCommentAuthor = false;
+                }
+            })
             return Post.findById(pid).populate("author");
         })
         .then((details) => {
-            checkIfSamePerson(req, res, details.author._id)
+            totalVotes = details.upvotes.length - details.downvotes.length
+            if (req.session.currentUser){
+                checkIfSamePerson(req, res, details.author._id)
 
             const data = {
+                totalVotes: totalVotes,
                 comments: commentArr,
-                postDetails: details,
+                postDetails: details
             };
             res.render("posts/post-details", data);
+            } else {
+                const data = {
+                    totalVotes: totalVotes,
+                    comments: commentArr,
+                    postDetails: details
+                };
+                res.render("posts/post-details", data);
+            }
+            
         })
         .catch((err) => {
             next(err);
         });
+
 };
 
 exports.postNew = (req, res, next) => {
@@ -127,7 +192,8 @@ exports.postEdit = (req, res, next) => {
     const pid = req.params.pid;
     const text = req.body.text;
     const title = req.body.title;
-    Post.findByIdAndUpdate(pid, { text, title }, { new: true })
+    const img = req.file && req.file.path;
+    Post.findByIdAndUpdate(pid, { text, title, img }, { new: true })
         .then(() => {
             res.redirect(`/subreddit/${id}/post/${pid}`);
         })

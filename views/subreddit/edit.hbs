@@ -1,6 +1,6 @@
-<h1> Edit {{subreddit.title}}</h1>
+<h1> Edit {{subreddit.name}}</h1>
 
-<form action="/subreddit/{{subreddit._id}}/edit" method="post">
+<form action="/subreddit/{{subreddit._id}}/edit" method="post" enctype="multipart/form-data">
    <div class="form-group">
       <label for="name">Title</label>
       <input type="text" class="form-control" id="name" name="name" value="{{subreddit.name}}">
@@ -9,4 +9,7 @@
       <label for="description">Description</label>
       <input type="text" class="form-control" id="description" name="description" value="{{subreddit.description}}">
    </div>
+    <label>Picture:
+      <input type="file" name="img" />
+    </label>
    <button type="submit" class="btn btn-primary">Submit</button>

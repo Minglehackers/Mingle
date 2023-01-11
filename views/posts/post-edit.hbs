@@ -1,7 +1,7 @@
 <h2>Update your post</h2>
 <h2>Edit the post: {{postDetails.title}}</h2>
 
-<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="post">
+<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="post" enctype="multipart/form-data">
   <label>
     Title:
     <input type="text" name="title" value="{{postDetails.title}}" />
@@ -9,14 +9,12 @@
 
   <label>
     Text:
-    <textarea name="text" cols="30" rows="4">
-      {{postDetails.text}}
-    </textarea>
+    <textarea name="text" cols="30" rows="4">{{postDetails.text}}</textarea>
   </label>
-  <label>
-    Enter Image URL:
-    <input type="text" name="img" />
-  </label>
+
+  <label>Picture:
+      <input type="file" name="img" />
+    </label>
 
   <button>Save changes</button>
 </form>

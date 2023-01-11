@@ -11,6 +11,10 @@ const commentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    isCommentAuthor: {
+      type: Boolean,
+      default: true
+    },
     // comments: [{
     //     type: Schema.Types.ObjectId,
     //     ref: "Comment"

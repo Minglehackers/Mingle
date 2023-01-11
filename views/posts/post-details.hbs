@@ -1,39 +1,46 @@
 <section class="post-details">
 
-<a href="/subreddit/{{postDetails.subreddit}}"> <h1 class="mb-3 text-center">{{postDetails.title}}</h1></a>
-  
+   <a href="/subreddit/{{postDetails.subreddit}}">
+      <h1 class="mb-3 text-center">{{postDetails.title}}</h1>
+   </a>
+
 
    <div class="container-fluid">
       <div class="row">
          <div class="col">
             <div class="card text-center" style="width:30rem;">
                <div class="card-body">
-                  <h5 class="card-title">Posted by: <a href="/auth/profile/{{postDetails.author._id}}">{{postDetails.author.username}}</a></h5> <br>
+                  <h5 class="card-title">Posted by: <a
+                        href="/auth/profile/{{postDetails.author._id}}">{{postDetails.author.username}}</a></h5> <br>
                   <p class="card-text">
                      {{postDetails.text}} <br> <br>
+                     {{#if postDetails.img}}
                      <img src="{{postDetails.img}}" alt="image" style="width: 300px;">
+                     {{/if}}
                      <br> <br>
 
                   <div>
-<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/upvote" method="post">
-<button class="btn btn-primary" type="submit">Upvote</button>
-</form>
-<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote" method="post">
-<button class="btn btn-secondary" type="submit">Downvote</button>
-</form>
+                     <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/upvote" method="post">
+                        <button class="btn btn-primary" type="submit">Upvote</button>
+                     </form>
+                     <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote"
+                        method="post">
+                        <button class="btn btn-secondary" type="submit">Downvote</button>
+                     </form>
 
-                 
 
-            <p>upvotes: {{postDetails.upvotes.length}}</p>
-<p>downvotes:{{postDetails.downvotes.length}}</p>
+
+                     <p>upvotes: {{postDetails.upvotes.length}}</p>
+                     <p>downvotes:{{postDetails.downvotes.length}}</p>
+                     <p>Total votes: {{totalVotes}} </p>
                   </div>
-                 
-                 
-{{#if samePerson}} 
+
+
+                  {{#if samePerson}}
                   <div>
                      <div class="text-center">
                         <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete"
-                           method="post">        
+                           method="post">
                            <button class="btn btn-danger">Delete Post</button>
                         </form>
 
@@ -42,8 +49,8 @@
                         </form>
                      </div>
                   </div>
-{{/if}}
-         
+                  {{/if}}
+
                   <div>
                      <br>
                      <a href="#comment_thread">{{comments.length}} Comments.</a> <br>
@@ -95,21 +102,28 @@
       {{#each comments}}
 
       <li class="list-group-item">
-      
-         {{!--   {{../postDetails}}  --}}
          <h4>{{text}}</h4>
-         <p>subredditId : {{originalPost.subreddit}} </p>
-         <p>By: {{author.username}}</p>
-         <a href="subreddit/{{_id}}">{{name}}</a>
 
-         <p>
+         <div style="display:flex">
+            <img src="{{author.profilePicture}}" alt="image" style="width: 35px;">
+            <p>By: {{author.username}}</p>
+
+            <a href="subreddit/{{_id}}">{{name}}</a>
+
+
+            {{#if isCommentAuthor}}
             <button><a href="/subreddit/comment/{{_id}}/edit">Edit</a></button>
 
-         <form action="/subreddit/comment/{{_id}}/delete" method="post">
-            <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
-            <input type="hidden" name="pid" value="{{originalPost._id}}">
-            <button>Delete</button>
-         </form>
+
+            <form action="/subreddit/comment/{{_id}}/delete" method="post">
+               <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
+               <input type="hidden" name="pid" value="{{originalPost._id}}">
+               <button>Delete</button>
+            </form>
+            {{/if}}
+
+         </div>
+
 
 
          </p>

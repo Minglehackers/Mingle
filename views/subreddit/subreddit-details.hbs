@@ -9,7 +9,15 @@
   {{subredditdetails.description}}
 </p>
 <p>{{subredditdetails._id}}</p>
-<a href="/subreddit/{{subredditdetails._id}}/edit" class="btn btn-primary">Edit</a>
+{{#if samePerson}}
+<div>
+  <a href="/subreddit/{{subredditdetails._id}}/edit" class="btn btn-primary">Edit</a>
+    <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
+      <button class="btn btn-danger">Delete Subreddit</button>
+    </form>
+</div>
+{{/if}}
+
 <hr />
 {{! list all posts }}
 
@@ -40,11 +48,4 @@
 </div>
 <div class="text-center">
   <a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
-</div>
-<div>
-  <div class="text-center">
-    <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
-      <button class="btn btn-danger">Delete Subreddit</button>
-    </form>
-  </div>
 </div>

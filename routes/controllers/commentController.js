@@ -4,6 +4,7 @@ const Comment = require("../../models/Comment.model");
 const Post = require("../../models/Post.model");
 const User = require("../../models/User.model");
 const Subreddit = require("../../models/Subreddit.model");
+const checkIfSamePerson = require("../../utils/checkIfSamePerson");
 
 
 
@@ -25,6 +26,8 @@ exports.delete = (req, res, next) => {
 exports.getEditForm = (req, res, next) => {
     const cid = req.params.cid;
     const text = req.body.text;
+    
+
     Comment.findById(cid)
         .then((commentDetails) => {
             console.log(commentDetails);
@@ -38,8 +41,8 @@ exports.postEdit = (req, res, next) => {
     const text = req.body.text;
     let postId;
     let subredditId;
+    
 
-    console.log(text);
     Comment.findByIdAndUpdate(cid, { text }, { new: true })
         .then((newComment) => {
             postId = newComment.originalPost;

@@ -2,6 +2,7 @@
 
 <form action="/post/create" method="post" enctype="multipart/form-data">
 
+{{#if allSubreddits}}
     <label>Select Subredddit:
         <select name="subreddit">
             {{#each allSubreddits}}
@@ -9,7 +10,7 @@
             {{/each}}
         </select>
     </label>
-
+{{/if}}
 
 
     <div class="form-group">

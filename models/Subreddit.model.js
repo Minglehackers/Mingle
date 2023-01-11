@@ -23,7 +23,10 @@ const subredditSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         },
-        img: String
+        img: { 
+            type: String,
+            default: 'https://res.cloudinary.com/dm6a8aocc/image/upload/v1673448897/mingle/jc1iz6vviqidjss3d8yf.jpg'
+        }
     },
     {
         timestamps: true,
