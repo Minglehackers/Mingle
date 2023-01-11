@@ -1,6 +1,9 @@
 <h1>Inbox</h1>
 
-<div>
-  <h2>messages</h2>
+{{#each chats}}
+  <div class="chat">
+    <a href="/users/message/{{this.id}}">{{this.name}}</a>
+  </div>
+{{/each}}
 
-</div>
+{{! Path: views\users\message.hbs }}
