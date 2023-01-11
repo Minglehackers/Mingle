@@ -35,7 +35,7 @@ exports.displayConversation = (req, res, next) => {
         .then((messages) => {
             messages.forEach((message) => messageArray.push(message));
             messageArray.sort((a, b) => a.createdAt - b.createdAt);
-            res.render("users/conversation", { messageArray });
+            res.render("users/chat", { messageArray });
         })
         .catch((err) => {
             next(err);
