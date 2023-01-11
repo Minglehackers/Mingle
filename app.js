@@ -58,6 +58,17 @@ app.use("/inbox", require("./routes/inbox.routes"));
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+/* Added handlebar helper to equate in views using handlebars */
+
+hbs.handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
+    if (arguments.length < 3)
+        throw new Error("Handlebars Helper equal needs 2 parameters");
+    if( lvalue!=rvalue ) {
+        return options.inverse(this);
+    } else {
+        return options.fn(this);
+    }
+});
 
 
 const postRoutes = require("./routes/post.routes");

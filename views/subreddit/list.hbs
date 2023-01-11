@@ -1,9 +1,40 @@
 <div id="header-index">
+
   <h1 class="mb-3 text-center">List Of Subreddits</h1>
 
 </div>
 
+  <form action="subreddit/filter" method="post">
+<input style="padding:10px" type="text" placeholder="Search for subreddit" name="querry"/>
+<button style="padding:10px, background-color=rgb(45, 91, 189)" type="submit">Submit</button>
+</form>
+
+
+
+{{#if filteredSubreddits}}
+<button class="btn btn-dang">Clear Filters </button>
+<section class="subreddit-summary">
+  <div class="container-fluid">
+    <div class="row">
+      {{#each filteredSubreddits}}
+        <div class="col-4">
+          <div class="card" style="width: 18rem; margin:1rem;">
+            <div class="card-body">
+              <h5 class="card-title"> <a href="subreddit/{{_id}}">{{name}}</a></h5>
+              <p class="card-text">{{description}}</p>
+
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  </section>
+{{/if}}
+
 <br />
+
+{{!-- {{#unless !filteredSubreddits}} --}}
 <section class="subreddit-summary">
   <div class="container-fluid">
     <div class="row">
@@ -20,7 +51,9 @@
       {{/each}}
     </div>
   </div>
-</section>
+  </section>
+  {{!-- {{/if}} --}}
+
 <div class="text-center">
   <a class="btn btn-primary" href="/subreddit/create">Create subreddit</a>
 </div>

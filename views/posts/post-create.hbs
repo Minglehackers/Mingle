@@ -1,20 +1,26 @@
 <h3>Create a new post</h3>
+{{#if name}}
 <h5>For the Subreddit : {{name}}</h5>
-
+{{/if}}
 <form action="/subreddit/{{_id}}/post/create" method="post" enctype="multipart/form-data">
     <div class="form-group">
+        <br />
         <label>
             Title:
-            <br><br>
-            <input type="text" class="form-control" name="title" />
+            <br /><br />
+            {{#if title}}
+                <input type="text" class="form-control" name="title" value={{title}} />
+            {{else}}
+                <input type="text" class="form-control" name="title" />        
+            {{/if}}
         </label>
     </div>
     <br> <br>
     <div class="form-group">
         <label> Text: <br><br>
-            <textarea class="form-control" name="text" cols="30" rows="4" /> </textarea>
+            <textarea class="form-control" name="text" cols="30" rows="4" value={{text}} /> </textarea>
 
-        </label>>
+        </label>
         <br><br>
     </div>
 
