@@ -103,14 +103,16 @@
          <a href="subreddit/{{_id}}">{{name}}</a>
 
          <p>
+            {{#equal author._id ../userDetails._id}}
+            
             <button><a href="/subreddit/comment/{{_id}}/edit">Edit</a></button>
-
+         
          <form action="/subreddit/comment/{{_id}}/delete" method="post">
             <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
             <input type="hidden" name="pid" value="{{originalPost._id}}">
             <button>Delete</button>
          </form>
-
+         {{/equal}}
 
          </p>
       </li>
