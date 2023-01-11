@@ -20,10 +20,15 @@ const postSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Comment"
         }],
-        votes: [{
+        upvotes: [{
             type: Schema.Types.ObjectId,
             ref: "User"
         }],
+        downvotes: [{
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }],
+
 
         img: String,
 

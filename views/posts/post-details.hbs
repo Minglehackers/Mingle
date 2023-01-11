@@ -15,9 +15,17 @@
                      <br> <br>
 
                   <div>
-                     <button type="submit"> Upvote</button>
-                     <button type="submit"> Downvote</button>
+<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/upvote" method="post">
+<button class="btn btn-primary" type="submit">Upvote</button>
+</form>
+<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote" method="post">
+<button class="btn btn-secondary" type="submit">Downvote</button>
+</form>
 
+                 
+
+            <p>upvotes: {{postDetails.upvotes.length}}</p>
+<p>downvotes:{{postDetails.downvotes.length}}</p>
                   </div>
                  
                  

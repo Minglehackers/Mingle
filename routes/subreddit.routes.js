@@ -27,6 +27,11 @@ router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEd
 router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.postEdit)
 router.post("/:id/post/:pid/delete", isLoggedIn, youShallNotPass, postController.delete)
 
+// ? Votes
+router.post("/:id/post/:pid/upvote", isLoggedIn, postController.upvote)
+router.post("/:id/post/:pid/downvote", isLoggedIn, postController.downvote)
+
+
 // *** COMMENTS ***
 router.post("/comment/:cid/delete", isLoggedIn, commentController.delete)
 router.get("/comment/:cid/edit", isLoggedIn, commentController.getEditForm)
