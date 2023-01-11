@@ -66,7 +66,7 @@ exports.postCreateForm = (req, res, next) => {
         return;
     }
 
-    Subreddit.create({ name, description, moderator: author })
+    Subreddit.create({ name, description, moderator: author, img: req.file.path })
         .then(() => {
             res.redirect(`/subreddit`);
         })

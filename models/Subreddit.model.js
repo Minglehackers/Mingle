@@ -23,6 +23,7 @@ const subredditSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User"
         },
+        img: String
     },
     {
         timestamps: true,

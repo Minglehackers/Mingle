@@ -7,10 +7,11 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isSamePerson = require("../middleware/isSamePerson");
 const youShallNotPass = require("../middleware/youShallNotPass")
+const fileUploader = require('../config/cloudinary.config');
 
 // *** SUBREDDITS ***
 router.get("/create", isLoggedIn, subredditController.getCreateForm);
-router.post("/create", isLoggedIn, subredditController.postCreateForm);
+router.post("/create", isLoggedIn, fileUploader.single('img'), subredditController.postCreateForm);
 router.get("/", subredditController.listReddits);
 router.get("/:id", subredditController.displaySingleReddit);
 router.post("/:id/delete", isLoggedIn, subredditController.deleteSubreddit)
@@ -20,7 +21,7 @@ router.post("/:id/edit", isLoggedIn, subredditController.postEditForm)
 
 //*** POSTS ***
 router.get("/:id/post/create", isLoggedIn, postController.getCreateForm);
-router.post("/:id/post/create", isLoggedIn, postController.postPost);
+router.post("/:id/post/create", isLoggedIn, fileUploader.single('img'), postController.postPost);
 router.get("/:id/post/:pid", isLoggedIn, postController.displayView);
 router.post("/:id/post/:pid", isLoggedIn, postController.postNew);
 router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEditForm)

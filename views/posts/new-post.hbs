@@ -1,8 +1,8 @@
 <h3>Create a new post</h3>
 
-<form action="/post/create" method ="post">
+<form action="/post/create" method="post" enctype="multipart/form-data">
 
- <label>Select Subredddit:
+    <label>Select Subredddit:
         <select name="subreddit">
             {{#each allSubreddits}}
             <option value="{{this._id}}">{{this.name}}</option>
@@ -12,25 +12,29 @@
 
 
 
-<div class="form-group">
-<label>
-    Title:
-    <br><br>
-    <input type="text" class="form-control" name ="title" />
-</label>
-</div>
-<br> <br>
-<div class="form-group">
-<label> Text: <br><br>
-        <textarea  class="form-control" name ="text" cols ="30" rows ="4" /> </textarea>
+    <div class="form-group">
+        <label>
+            Title:
+            <br><br>
+            <input type="text" class="form-control" name="title" />
+        </label>
+    </div>
+    <br> <br>
+    <div class="form-group">
+        <label> Text: <br><br>
+            <textarea class="form-control" name="text" cols="30" rows="4" /> </textarea>
 
-    </label>>
-    <br><br>
-</div>
-<button type="submit">Create Post</button>
+        </label>>
+        <br><br>
+        <label>Picture:
+            <input type="file" name="img" />
+        </label>
+        <br><br>
+    </div>
+    <button type="submit">Create Post</button>
 
 </form>
 
 {{#if errorMessage}}
-    <p class="error">{{errorMessage}}</p>
+<p class="error">{{errorMessage}}</p>
 {{/if}}

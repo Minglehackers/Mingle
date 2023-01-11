@@ -29,6 +29,7 @@ exports.postPost = (req, res, next) => {
         text: req.body.text,
         author: authorID,
         subreddit: id,
+        img: req.file.path
     };
 
     if (req.body.title === "" || req.body.text === "") {
