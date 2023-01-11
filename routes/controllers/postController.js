@@ -75,7 +75,6 @@ exports.displayView = (req, res, next) => {
         })
         .then((details) => {
             checkIfSamePerson(req, res, details.author._id)
-            console.log(res.locals);
 
             const data = {
                 comments: commentArr,
