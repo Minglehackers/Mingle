@@ -5,6 +5,7 @@ const User = require("../../models/User.model");
 const Comment = require("../../models/Comment.model");
 const Subreddit = require("../../models/Subreddit.model");
 const mongoose = require("mongoose");
+const checkIfSamePerson = require("../../utils/checkIfSamePerson");
 
 exports.getCreateForm = (req, res, next) => {
     const id = req.params.id;
@@ -73,12 +74,7 @@ exports.displayView = (req, res, next) => {
             return Post.findById(pid).populate("author");
         })
         .then((details) => {
-            if (`${req.session.currentUser._id}` !== `${details.author._id}`) {
-                res.locals.samePerson = false;
-            } else {
-                res.locals.samePerson = true;
-            }
-
+            checkIfSamePerson(req, res, details.author._id)
             console.log(res.locals);
 
             const data = {

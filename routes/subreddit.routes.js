@@ -26,7 +26,7 @@ router.get("/:id/post/:pid", isLoggedIn, postController.displayView);
 router.post("/:id/post/:pid", isLoggedIn, postController.postNew);
 router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEditForm)
 router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.postEdit)
-router.post("/:id/post/:pid/delete", isLoggedIn, youShallNotPass, postController.delete)
+router.post("/:id/post/:pid/delete", isLoggedIn, postController.delete)
 
 // ? Votes
 router.post("/:id/post/:pid/upvote", isLoggedIn, postController.upvote)
