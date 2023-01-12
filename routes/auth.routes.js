@@ -23,6 +23,7 @@ const youShallNotPass = require("../middleware/youShallNotPass");
 // Controller  
 const inboxController = require("./controllers/inboxController");
 const Message = require("../models/Message.model");
+const Subreddit = require("../models/Subreddit.model");
 
 
 
