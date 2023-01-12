@@ -10,8 +10,8 @@ const youShallNotPass = require("../middleware/youShallNotPass")
 
 router.get("/", inboxController.displayInbox);
 router.get("/sendmsg/:id", inboxController.getMessageForm);
-router.post("/:id", inboxController.sendMessage);
-router.post("/:Uid/:oid", inboxController.displayConversation);
+router.post("/sendmsg/:id", inboxController.sendMessage);
+router.get("/chatwith/:Uid", inboxController.displayConversation);
 
 
 

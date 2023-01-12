@@ -9,18 +9,36 @@ const Message = require("../../models/Message.model");
 
 exports.displayInbox = (req, res, next) => {
     const id = req.params.id;
-    console.log(id);
+    const me = req.session.currentUser._id
+    ''
     const chats = [];
 
-    Message.find({ with: req.user._id })
-        .populate("with sentBy")
+    // Message.find({ with: me })
+    //     .populate("with sentBy")
+    //     .then((messages) => {
+    //         messages.forEach((msg) => !chats.includes(msg.sentBy) && chats.push(msg.sentBy));
+    //         return Message.find({ sentBy: me });
+    //     })
+    //     .then((messages) => messages.forEach((msg) => !chats.includes(msg.with) && chats.push(msg.with)));
+    // console.log(chats);
+
+    Message.find({ sentBy: me }).populate("with sentBy")
         .then((messages) => {
-            messages.forEach((msg) => !chats.includes(msg.sentBy) && chats.push(msg.sentBy));
-            return Message.find({ sentBy: req.user._id });
+            console.log(messages)
+            const data = {
+                messages
+            }
+
+            res.render("users/inbox", data);
         })
-        .then((messages) => messages.forEach((msg) => !chats.includes(msg.with) && chats.push(msg.with)));
-    res.render("users/inbox", { chats });
+        .catch((err) => {
+            next(err);
+        })
 };
+
+
+// res.render("users/inbox", { JSON: JSON.stringify(chats) });
+
 
 exports.displayConversation = (req, res, next) => {
     const id = req.params.Uid;
@@ -49,10 +67,22 @@ exports.getMessageForm = (req, res, next) => {
 
 exports.sendMessage = (req, res, next) => {
     const id = req.params.id;
-    const { content } = req.body;
-    Message.create({ content, with: id })
-        .then(() => {
-            res.redirect(`/inbox/${id}`);
+    const { message } = req.body;
+    const myId =
+
+        console.log(id, "-----------", message)
+
+    const newMessage = {
+        text: message,
+        with: id,
+        sentBy: req.session.currentUser._id,
+    };
+    console.log(newMessage)
+    Message.create(newMessage)
+        .then((msg) => {
+
+            console.log(msg);
+            res.redirect(`/inbox`);
         })
         .catch((err) => {
             next(err);

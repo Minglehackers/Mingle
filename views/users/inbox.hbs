@@ -1,9 +1,19 @@
 <h1>Inbox</h1>
+{{messages}}
 
-{{#each chats}}
-  <div class="chat">
-    <a href="/users/message/{{this.id}}">{{this.name}}</a>
+{{! for each memmebr of array render property name as h2 }}
+
+{{#each messages}}
+  <div class="card" style="width: 18rem; margin:1rem; ">
+    <div class="card-body">
+      <h5 class="card-title"> <a href="inbox/chatwith/{{this.with._id}}">{{this.with.username}}</a></h5>
+      <img src="{{this.with.profilePicture}}" alt="avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
+    </div>
+
   </div>
+
 {{/each}}
+
+{{! for each memmebr of array render property name as h2
 
 {{! Path: views\users\message.hbs }}
