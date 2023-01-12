@@ -23,7 +23,7 @@ require("./config")(app);
 const capitalize = require("./utils/capitalize");
 const projectName = "mingle";
 
-app.locals.appTitle = `${capitalize(projectName)} created with IronLauncher`;
+app.locals.appTitle = `${capitalize(projectName)}`;
 
 app.use((req, res, next) => {
     app.locals.userDetails = req.session.currentUser; //store user details in app.locals (so that is is available in handlebars)

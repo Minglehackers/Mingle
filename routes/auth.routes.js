@@ -221,7 +221,7 @@ router.get("/profile/:id/edit", isLoggedIn, youShallNotPass, (req, res) => {
 router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-picture-image'), (req, res) => {
   const id = req.params.id;
 
-  let { firstName, lastName, existingImage, isAdmin } = req.body;
+  let { firstName, lastName, existingImage, isAdmin, aboutMe } = req.body;
 
   if (isAdmin === "on") {
     isAdmin = true
@@ -236,7 +236,7 @@ router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-pictur
     profilePicture = existingImage;
   }
 
-  User.findByIdAndUpdate(id, { firstName, lastName, profilePicture, isAdmin }, { new: true })
+  User.findByIdAndUpdate(id, { firstName, lastName, profilePicture, isAdmin, aboutMe }, { new: true })
     .select("-password")
     .then((newDetails) => {
       req.session.currentUser = newDetails
@@ -273,7 +273,8 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
     .then((userInSession) => {
       if (req.body.userDeletion === userInSession.username) {
         User.findByIdAndDelete(id)
-          .then(() => {
+          .then((userDetails) => {
+            console.log(userDetails)
             res.redirect('/auth/logout')
           })
           .catch((error) => {

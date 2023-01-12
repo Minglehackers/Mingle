@@ -10,6 +10,10 @@
       <input type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}" />
     </label>
 
+    <label>About me:
+      <textarea class="form-control" name="aboutMe" cols="30" rows="4" maxlength="50" value="{{userInSession.aboutMe}}" /> </textarea>
+    </label>
+
     <label>Profile picture:
       <input type="file" name="profile-picture-image" />
       <input type="text" name="existingImage" hidden value="{{userInSession.profilePicture}}" />

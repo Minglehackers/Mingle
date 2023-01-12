@@ -1,46 +1,43 @@
-{{! views/users/user-profile.hbs }}
-
-{{! the new version, with the session: }}
-
 {{#if userInSession}}
-  <h2>Welcome, {{userInSession.username}}!</h2>
-  <p>This is your profile page my friend!</p>
-  <button>
-    <a href="/auth/profile/{{userInSession._id}}">Reload the page</a>
-  </button>
+<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+  <div class="card p-4">
+    <div class=" image d-flex flex-column justify-content-center align-items-center">
+  <h2 class="title">Welcome, {{userInSession.username}}!</h2>
 
-  <div>
-    <img src="{{userInSession.profilePicture}}" alt="Profile picture" style="width: 300px;" />
+   
+    <img class="rounded mx-auto d-block justify-content-center align-items-center" src="{{userInSession.profilePicture}}" alt="Profile picture"
+      style="width: 300px; margin-bottom:10px;" />
 
-    <!--To be modified-->
-    <p><b>Name:</b> {{userInSession.firstName}} {{userInSession.lastName}}</p>
-    <p><b>E-mail address:</b> {{userInSession.email}}</p>
+    <p><span class="name mt-3"> {{userInSession.firstName}}  {{userInSession.lastName}}</span></p>
+    
+ <div class="text mt-3">
+    <p><b>About me:</b> {{userInSession.aboutMe}}</p> </span> </div>
+    <p><b>E-mail address:</b><span class="idd"> {{userInSession.email}}</span></p>
     <p><b>Posts:</b> {{postArr.length}}</p>
-    <!-- {{#each postArr}}
-<p>
 
-  {{this.title}}
-</p> 
-
-    {{/each}}-->
     <p><b>Comments:</b> {{commentArr.length}}</p>
 
     {{#if samePerson}}
-      <div>
-        <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a>
-        <a href="/auth/profile/{{userInSession._id}}/delete">Delete</a>
-      </div>
-    {{/if}}
-
+    <div class="d-flex justify-content-center">
+       <div class=" d-flex mt-2"> <button class="btn btn-dark"> <a href="/auth/profile/{{userInSession._id}}/edit">Edit profile</a></button></div>
+       </div>
+      <div class=" d-flex mt-2"> <button class="btn btn-danger"><a href="/auth/profile/{{userInSession._id}}/delete">Delete</a></button></div>
+       
+    
+    {{else}}
     <div>
-
       <a href="/inbox/sendmsg/{{userInSession._id}}">Send message</a>
     </div>
+    {{/if}}
 
   </div>
 
-{{else}}
+  {{else}}
 
-  <br /><p>Still no logged in user, sorry!</p>
+  <br />
+  <p>Still no logged in user, sorry!</p>
 
-{{/if}}
+  {{/if}}
+  </div>
+  </div>
+</div>

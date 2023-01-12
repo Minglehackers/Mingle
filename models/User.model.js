@@ -40,6 +40,10 @@ const userSchema = new Schema(
       maxLength: 20,
       default: "Last Name"
     },
+    aboutMe: {
+      type: String,
+      default: "I am a user at this cool app."
+    },
     profilePicture: {
       type: String,
       default: 'https://cdn.dribbble.com/users/6142/screenshots/5679189/media/1b96ad1f07feee81fa83c877a1e350ce.png?compress=1&resize=1200x900&vertical=top'
