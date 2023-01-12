@@ -13,28 +13,60 @@ exports.displayInbox = (req, res, next) => {
     ''
     const chats = [];
 
-    // Message.find({ with: me })
-    //     .populate("with sentBy")
-    //     .then((messages) => {
-    //         messages.forEach((msg) => !chats.includes(msg.sentBy) && chats.push(msg.sentBy));
-    //         return Message.find({ sentBy: me });
-    //     })
-    //     .then((messages) => messages.forEach((msg) => !chats.includes(msg.with) && chats.push(msg.with)));
-    // console.log(chats);
-
-    Message.find({ sentBy: me }).populate("with sentBy")
+    Message.find({ with: me })
+        .populate("with sentBy")
         .then((messages) => {
-            console.log(messages)
-            const data = {
-                messages
-            }
+            messages.forEach((message) => {
+                const otherUser = message.sentBy;
 
+                chats.push(message.sentBy)
+            });
+            return Message.find({ sentBy: me }).populate("with sentBy");
+        })
+        .then((messages) => messages.forEach((msg) => {
+            chats.push(msg.with)
+        }))
+        .then(() => {
+            const uniqueChats = [...new Set(chats)];
+
+            return uniqueChats;
+        })
+        .then((uniqueChats) => {
+            // const data = {
+            //     chats: uniqueChats
+            // }
+            const uniqueUsers = uniqueChats.map((chat) => {
+                return User.findById(chat._id)
+            })
+
+            const data = {
+                chats: uniqueUsers
+            }
+            console.log("1", uniqueUsers)
+
+            console.log("uniqueChats", uniqueChats)
             res.render("users/inbox", data);
         })
         .catch((err) => {
             next(err);
         })
 };
+
+
+
+//     Message.find({ sentBy: me }).populate("with sentBy")
+//         .then((messages) => {
+//             console.log("messages", messages)
+//             const data = {
+//                 messages
+//             }
+
+//             res.render("users/inbox", data);
+//         })
+//         .catch((err) => {
+//             next(err);
+//         })
+// };
 
 
 // res.render("users/inbox", { JSON: JSON.stringify(chats) });
