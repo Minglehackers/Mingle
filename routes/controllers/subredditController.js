@@ -18,9 +18,10 @@ exports.listReddits = (req, res, next) => {
 }
 
 exports.filterReddits = (req, res, next) => {
-    const input = req.body.querry 
-    console.log("querry ", input)
+    console.log("from get ", req.query)
 
+    const input = req.query.querry 
+    
     Subreddit.find().then((subreddits) => {
         
         
