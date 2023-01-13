@@ -710,7 +710,6 @@ color: white;
   .pp-div1{
     display: flex;
     width: 85vw;
-    border: 2px solid green;
     margin-left: 1vw;
     justify-content:flex-end;
     

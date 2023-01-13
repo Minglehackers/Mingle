@@ -11,7 +11,7 @@ The ultimate social platform for connection and community.
 ## Created By :
 
 This project was a collaboration of three people who shares similar passion for programming.
-We did an awesome team-work and  put in our best efforts and hard work into this project.
+We did an awesome team-work and put in our best efforts and hard work into this project.
 
 We are :
 
@@ -51,7 +51,7 @@ We are :
 
 - Sign Up page
 
-![App Screenshot](./public/images/sign_up.PNG)
+![App Screenshot](./public/images/sign-up-page.PNG)
 
 - User Profile page
 
