@@ -51,7 +51,7 @@ We are :
 
 - Sign Up page
 
-![App Screenshot](./public/images/sign-up-page.PNG)
+![App Screenshot](./public/images/sign-up-page.png)
 
 - User Profile page
 
