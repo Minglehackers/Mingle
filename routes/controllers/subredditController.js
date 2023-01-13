@@ -128,15 +128,18 @@ exports.postCreateForm = (req, res, next) => {
 exports.deleteSubreddit = (req, res, next) => {
 
     const id = req.params.id
-    Comment.deleteMany({ subreddit: id }).then(() => {
-        Post.deleteMany({ subreddit: id }).then(() => {
+    Comment.deleteMany({ subreddit: id })
+    .then(() => {
+       return Post.deleteMany({ subreddit: id })
+    })
+       .then(() => {
             Subreddit.findByIdAndDelete(id).then(() => {
                 res.redirect("/subreddit")
             })
         })
 
-    })
-}
+    }
+
 
 exports.getEditForm = (req, res, next) => {
     const id = req.params.id;

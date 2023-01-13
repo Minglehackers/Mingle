@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const Post = require("../models/Post.model");
 const Comment = require("../models/Comment.model");
 
@@ -270,24 +271,36 @@ router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
 router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
   const id = req.params.id
 
-  User.findById(id)
-    .then((userInSession) => {
-      if (req.body.userDeletion === userInSession.username) {
-        User.findByIdAndDelete(id)
-          .then(() => {
-            res.redirect('/auth/logout')
+  Comment.deleteMany({ author: id })
+  .then(() => { 
+    return Post.deleteMany({ author: id })
+  })
+  .then(() => {
+        return Subreddit.deleteMany({ moderator: id })
+  })
+  .then(() => {
+          return User.findById(id)
+  })
+          .then((userInSession) => {
+            console.log(req.body.userDeletion);
+            console.log(userInSession.username);
+            if (req.body.userDeletion === userInSession.username) {
+              User.findByIdAndDelete(id)
+                .then(() => {
+                  res.redirect('/auth/logout')
+                })
+                .catch((error) => {
+                  console.log(`Error deleting user: ${error}`)
+                  next();
+                })
+            } else {
+              res.render('/profile/:id')
+            }
           })
-          .catch((error) => {
-            console.log(`Error deleting user: ${error}`)
-            next();
-          })
-      } else {
-        res.render('/profile/:id')
-      }
-    })
+        })
+    
 
 
-});
 
 
 // ? INBOX
