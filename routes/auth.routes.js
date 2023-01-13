@@ -23,6 +23,7 @@ const youShallNotPass = require("../middleware/youShallNotPass");
 // Controller  
 const inboxController = require("./controllers/inboxController");
 const Message = require("../models/Message.model");
+const Subreddit = require("../models/Subreddit.model");
 
 
 
@@ -264,6 +265,44 @@ router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
       next();
     })
 });
+// router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
+//   const id = req.params.id
+
+//   Comment.deleteMany({ author: id })
+//     .then(() => {
+//       return Post.deleteMany({ author: id })
+//     })
+//     .then(() => {
+//       return Subreddit.deleteMany({ moderator: id })
+//     })
+//     .then(() => {
+//       return User.findById(id)
+//     })
+//     .then((userInSession) => {
+//       console.log(req.body.userDeletion);
+//       console.log(userInSession.username);
+//       if (req.body.userDeletion === userInSession.username) {
+//         User.findByIdAndDelete(id)
+//           .then(() => {
+//             res.redirect('/auth/logout')
+//           })
+//           .catch((error) => {
+//             console.log(`Error deleting user: ${error}`)
+//             next();
+//           })
+//       } else {
+//         res.render('/profile/:id')
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(`Error deleting user: ${error}`)
+//       next();
+//     })
+// });
+
+
+
+
 
 // POST DELETE : /auth/delete
 router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {

@@ -13,7 +13,7 @@ const fileUploader = require('../config/cloudinary.config');
 router.get("/create", isLoggedIn, subredditController.getCreateForm);
 router.post("/create", isLoggedIn, fileUploader.single('img'), subredditController.postCreateForm);
 router.get("/", subredditController.listReddits);
-router.post("/filter", subredditController.filterReddits)
+router.get("/filter", subredditController.filterReddits)
 router.get("/:id", subredditController.displaySingleReddit);
 router.post("/:id/delete", isLoggedIn, subredditController.deleteSubreddit)
 // TODO: Update subreddit
@@ -24,13 +24,15 @@ router.post("/:id/edit", isLoggedIn, isSamePerson, fileUploader.single('img'), s
 router.get("/:id/post/create", isLoggedIn, postController.getCreateForm);
 router.post("/:id/post/create", isLoggedIn, fileUploader.single('img'), postController.postPost);
 router.get("/:id/post/:pid", postController.displayView);
+router.get("/:id/post/:pid/:pid", postController.displayView);
+
 router.post("/:id/post/:pid", isLoggedIn, postController.postNew);
 router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEditForm)
 router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, fileUploader.single('img'), postController.postEdit)
 router.post("/:id/post/:pid/delete", isLoggedIn, postController.delete)
 
 // router.post("/:id/post/create", (req, res, next) => {
-    
+
 //     const authorID = req.session.currentUser._id
 
 //     const newPost = {
@@ -51,14 +53,14 @@ router.post("/:id/post/:pid/delete", isLoggedIn, postController.delete)
 //         res.status(400).render(`posts/new-post`, {
 //           errorMessage: "The title and the text need to be at least 5 characters long.",
 //         });
-    
+
 //         return;
 //       }
 
 //       Post.create(newPost)
 //       .then((postDetails) => {
 //           console.log("from post ____" + postDetails);
-          
+
 //           res.redirect(`/subreddit/${postDetails.subreddit}/post/${postDetails._id}`);
 
 
@@ -78,9 +80,11 @@ router.post("/:id/post/:pid/delete", isLoggedIn, postController.delete)
 
 
 // ? Votes
-router.post("/:id/post/:pid/upvote", isLoggedIn, postController.upvote)
-router.post("/:id/post/:pid/downvote", isLoggedIn, postController.downvote)
+router.post("/:id/post/:pid/upvote/:type", isLoggedIn, postController.upvote)
+router.post("/:id/post/:pid/downvote/:type", isLoggedIn, postController.downvote)
 
+// router.post("/:id/post/:pid/upvotefromlist", isLoggedIn, postController.upvote)
+// router.post("/:id/post/:pid/downvote", isLoggedIn, postController.downvote)
 
 // *** COMMENTS ***
 router.post("/comment/:cid/delete", isLoggedIn, commentController.delete)

@@ -14,7 +14,7 @@
     <form action="/post/create" method="post" enctype="multipart/form-data">
 
         {{#if allSubreddits}}
-        <label class="crud-labels">Select Subredddit:
+        <label class="crud-labels">Select Community:
             <select class="form-select" id="crud-select" name="subreddit">
                 {{#each allSubreddits}}
                 <option value="{{this._id}}">{{this.name}}</option>
