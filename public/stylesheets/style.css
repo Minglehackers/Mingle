@@ -706,12 +706,20 @@ color: white;
     -webkit-text-fill-color: transparent;
 }
 
-.pp-div1{
-  display: flex;
-  margin-left: 1400px;
-  justify-content:flex-end;
-  
+@media screen and (min-width: 992px) {
+  .pp-div1{
+    display: flex;
+    width: 85vw;
+    border: 2px solid green;
+    margin-left: 1vw;
+    justify-content:flex-end;
+    
+  }
 }
+
+  
+
+
 
 .body-index{
   background-color: white;
