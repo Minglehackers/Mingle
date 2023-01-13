@@ -20,15 +20,26 @@
 
   <div class="sd-buttons">
     <form action="/subreddit/{{subredditdetails._id}}/edit" method="get">
-    <button class="btn custom-btn btn1-lp" id="crud-btn-update">Edit</button>
+    <button class="btn custom-btn btn1-lp" id="btn-up-edit">Edit</button>
     </form>
 
     <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
       <button class="btn custom-btn btn1-lp" id="btn-up-delete">Delete Community</button>
     </form>
+
+    <form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
+  <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
+  </form>
   </div>
-  <a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
+
+  {{else}}
+  <div class="sd-buttons">
+<form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
+  <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
+  </form>
+  </div>
 {{/if}}
+
 
 </div>
  

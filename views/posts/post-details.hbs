@@ -126,7 +126,7 @@
          
       </div>
       <br>
-      <button type="submit" class="btn btn-primary">Post Comment</button>
+      <button type="submit" class="btn custom-btn btn1-lp" id="crud-btn-update" style="width: 180px; margin-left:10px;">Post Comment</button>
       {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
       {{/if}}
@@ -167,12 +167,12 @@
          
             {{#equal author._id ../userDetails._id}}
      <div class="sd-buttons">
-               <form action="/subreddit/comment/{{_id}}/edit" method="get">       <button class="btn btn-primary">Edit</a></button></form>
+               <form action="/subreddit/comment/{{_id}}/edit" method="get"><button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
                
                <form action="/subreddit/comment/{{_id}}/delete" method="post">
                <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
                <input type="hidden" name="pid" value="{{originalPost._id}}">
-               <button class="btn btn-secondary">Delete</button>
+               <button class="btn custom-btn btn1-lp" id="btn-up-delete" style="width: 60px; height:40px; font-size: 16px;">Delete</button>
             </form>
             </div>
             {{/equal}}

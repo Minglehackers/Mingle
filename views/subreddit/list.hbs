@@ -12,13 +12,13 @@
     <input type="text" class="form-control" id="search" name="querry" placeholder="Search" />
 
     <div class="filtbtn"></div>
-    <button type="submit" class="btn custom-btn btn1-lp" id="crud-btn-update">Submit</button>
+    <button type="submit" class="btn custom-btn btn1-lp" id="btn-up-edit">Submit</button>
 
   </form>
 
   {{#if filteredSubreddits}}
 
-    <a href="/subreddit"><button class="btn" type="submit">Clear Filters </button></a>
+    <a href="/subreddit"><button class="btn custom-btn btn1-lp" id="crud-btn-update" style="margin-top:20px; margin-bottom: 20px;" type="submit">Clear Filters </button></a>
 
     <section class="subreddit-list">
 
@@ -50,7 +50,11 @@
   {{!-- {{#unless !filteredSubreddits}} --}}
   <section class="subreddit-list">
     {{#unless filteredSubreddits}}
-
+<div class="sd-buttons">
+  <form action="/subreddit/create" method="get">
+  <button class="btn custom-btn btn1-lp" id="crud-btn-update" style="width: 220px; margin-bottom: 20px;">Create a Community</button>
+  </form>
+  </div>
       {{#each subreddits}}
         <a href="subreddit/{{_id}}">
           <div class="subreddit-list-card">
@@ -76,7 +80,5 @@
 
   {{!-- {{/if}} --}}
 
-  <div class="text-center">
-    <a class="btn btn-primary" href="/subreddit/create">Create a Community</a>
-  </div>
+  
 </div>

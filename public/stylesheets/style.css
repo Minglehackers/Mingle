@@ -1076,3 +1076,19 @@ section a {
 #search{
   margin-bottom: 0;
 }
+
+#btn1-lp{
+  padding: 0;
+}
+
+#btn1-lp:hover{
+  color: #444;
+}
+
+#btn2-lp{
+  padding: 0;
+}
+
+#btn2-lp:hover{
+  color: #444;
+}
