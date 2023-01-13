@@ -85,6 +85,8 @@
             {{/if}}
           </div>
 
+  
+
           <div class="card-bottom">
 <div class="votes-btm">
   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote postDetails.upvotes  postDetails.author._id "orange"}}" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
@@ -105,7 +107,15 @@
 
        </div>
 
+{{#if samePerson}}
+<!-- EDIT AND DELETE  -->
+  <div class="sd-buttons">
+       <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="get"><button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
+           <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete" method="post"><button class="btn custom-btn btn1-lp" id="btn-up-delete" style="width: 60px; height:40px; font-size: 16px;">Delete</a></button></form>
           </div>
+{{/if}}
+ 
+
       </div>
       </div>
        </div>
