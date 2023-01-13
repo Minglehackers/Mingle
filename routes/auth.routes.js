@@ -253,25 +253,34 @@ router.post("/profile/:id/edit", isLoggedIn, fileUploader.single('profile-pictur
 
 // *** DELETE USER ***
 // GET DELETE : /auth/profile/:id/delete
-router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
-  const id = req.params.id
+// router.get("/profile/:id/delete", isLoggedIn, (req, res) => {
+//   const id = req.params.id
 
-  User.findById(id)
-    .then((userInSession) => {
-      res.render("users/user-delete", { userInSession });
-    })
-    .catch(error => {
-      console.log(`Error updating user: ${error}`)
-      next();
-    })
-});
-
-// POST DELETE : /auth/delete
+//   User.findById(id)
+//     .then((userInSession) => {
+//       res.render("users/user-delete", { userInSession });
+//     })
+//     .catch(error => {
+//       console.log(`Error updating user: ${error}`)
+//       next();
+//     })
+// });
 router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
   const id = req.params.id
 
-  User.findById(id)
+  Comment.deleteMany({ author: id })
+    .then(() => {
+      return Post.deleteMany({ author: id })
+    })
+    .then(() => {
+      return Subreddit.deleteMany({ moderator: id })
+    })
+    .then(() => {
+      return User.findById(id)
+    })
     .then((userInSession) => {
+      console.log(req.body.userDeletion);
+      console.log(userInSession.username);
       if (req.body.userDeletion === userInSession.username) {
         User.findByIdAndDelete(id)
           .then(() => {
@@ -284,22 +293,43 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
       } else {
         res.render('/profile/:id')
       }
-    })
-
-
-});
-
-
-// ? INBOX
 
 
 
+      // POST DELETE : /auth/delete
+      router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
+        const id = req.params.id
+
+        User.findById(id)
+          .then((userInSession) => {
+            if (req.body.userDeletion === userInSession.username) {
+              User.findByIdAndDelete(id)
+                .then(() => {
+                  res.redirect('/auth/logout')
+                })
+                .catch((error) => {
+                  console.log(`Error deleting user: ${error}`)
+                  next();
+                })
+            } else {
+              res.render('/profile/:id')
+            }
+          })
 
 
-router.get('/inbox', youShallNotPass, inboxController.displayInbox);
-router.get('/inbox/:id', youShallNotPass, inboxController.displayConversation);
-
-router.post('/inbox/:id', youShallNotPass, inboxController.sendMessage);
+      });
 
 
-module.exports = router;
+      // ? INBOX
+
+
+
+
+
+      router.get('/inbox', youShallNotPass, inboxController.displayInbox);
+      router.get('/inbox/:id', youShallNotPass, inboxController.displayConversation);
+
+      router.post('/inbox/:id', youShallNotPass, inboxController.sendMessage);
+
+
+      module.exports = router;
