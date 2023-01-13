@@ -13,7 +13,7 @@ const fileUploader = require('../config/cloudinary.config');
 router.get("/create", isLoggedIn, subredditController.getCreateForm);
 router.post("/create", isLoggedIn, fileUploader.single('img'), subredditController.postCreateForm);
 router.get("/", subredditController.listReddits);
-router.post("/filter", subredditController.filterReddits)
+router.get("/filter", subredditController.filterReddits)
 router.get("/:id", subredditController.displaySingleReddit);
 router.post("/:id/delete", isLoggedIn, subredditController.deleteSubreddit)
 // TODO: Update subreddit

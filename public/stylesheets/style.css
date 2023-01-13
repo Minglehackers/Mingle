@@ -164,84 +164,52 @@ section a {
   gap: calc(10px + 1vw);
 }
 
-.card-top {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-self: flex-start;
-  gap: 10px;
-  cursor: default;
-  margin-top: 10px;
-  border-bottom: 2px solid #ddd;
-  /* background-color: #dedede; */
-}
+/**********Sign up page ************/
 
-.card-middle {
+.signup {
+  margin: 2em 10em 2em 10em;
+
+  padding: 2em 6em 2em 6em;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(117deg, rgb(240, 122, 54) 0%, rgba(236, 107, 107, 0.976) 96%, rgb(235, 102, 41) 98%);
+  color: #ffff;
+
+  border-radius: 1.25rem;
+
+  display: flex;
+  justify-content: center;
+}
+#container_1 {
+  text-align: center;
+}
+#container_2 {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: baseline;
-
-  margin: 0;
-  padding: 1rem 0;
-  width: 800px;
-  max-height: 200px;
-  overflow: hidden;
+}
+.su-form {
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 1em;
+}
+#su-submit {
+  display: block;
+  width: 50%;
+  margin-left: 10rem;
+  padding: 0.75rem;
+  background: rgb(2, 0, 36);
+  color: inherit;
+  border-radius: 15px;
   cursor: pointer;
-  /* background-color: #dedede; */
-  /* border: 2px solid #ddd; */
-  /* border-radius: 4px; */
-  /* cursor: pointer; */
 }
 
-.card-middle > h3 {
-  margin: 0.4rem 0;
-  font-weight: bold;
-  width: 100%;
-}
-
-.card-middle > p {
-  margin: 0.4rem 0;
-  width: 100%;
-}
-
-.card-bottom {
+.signup-label {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-self: flex-end;
-  gap: 10px;
-  cursor: pointer;
-  margin: 0;
-  border-bottom: 2px solid #ddd;
-
-  /* background-color: #dedede; */
+  flex-direction: column;
 }
-.card-bottom > img {
-  max-height: 300px;
-  max-width: auto;
-  object-fit: contain;
+.base-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.arrow {
-  color: #333;
-}
-
-.arrow:hover {
-  color: orange;
-}
-
-.by-user {
-  font-weight: bold;
-}
-
-.by-user:hover {
-  color: var(--primary-color);
-}
-
-@media (max-width: 768px) {
-  .p111111 {
-    display: none;
-  }
-}
+/**********Sign up page ************/
+/******** Log In ******************/
