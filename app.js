@@ -128,6 +128,11 @@ hbs.handlebars.registerHelper('checkVote', function (upvotes, user, color) {
 });
 
 
+hbs.handlebars.registerHelper("linkFix", function (link) {
+
+    return link.slice(0, 4) === "http" ? link : "http://" + link;
+});
+
 
 
 hbs.handlebars.registerHelper('stringify', function (object) {

@@ -24,6 +24,8 @@ router.post("/:id/edit", isLoggedIn, isSamePerson, fileUploader.single('img'), s
 router.get("/:id/post/create", isLoggedIn, postController.getCreateForm);
 router.post("/:id/post/create", isLoggedIn, fileUploader.single('img'), postController.postPost);
 router.get("/:id/post/:pid", postController.displayView);
+router.get("/:id/post/:pid/:pid", postController.displayView);
+
 router.post("/:id/post/:pid", isLoggedIn, postController.postNew);
 router.get("/:id/post/:pid/edit", isLoggedIn, isSamePerson, postController.getEditForm)
 router.post("/:id/post/:pid/edit", isLoggedIn, isSamePerson, fileUploader.single('img'), postController.postEdit)

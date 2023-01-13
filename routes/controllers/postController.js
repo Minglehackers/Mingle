@@ -237,7 +237,7 @@ exports.upvote = (req, res, next) => {
 
     Post.findById(pid)
         .then((post) => {
-            // handle upvote and downvote logic
+
             if (post.upvotes.includes(userID)) {
                 return Post.findByIdAndUpdate(pid, { $pull: { upvotes: userID } }, { new: true });
             } else {
@@ -255,7 +255,7 @@ exports.upvote = (req, res, next) => {
             if (type === "thread") {
                 res.redirect(`/subreddit/${id}/post/${pid}`);
             } else {
-                res.redirect(`/subreddit/${id}/`);
+                res.redirect(`/subreddit/${id}`);
             }
 
         })

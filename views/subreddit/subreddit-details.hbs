@@ -23,6 +23,7 @@
       <button class="btn btn-danger">Delete Subreddit</button>
     </form>
   </div>
+  <a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
 {{/if}}
 
 </div>
@@ -89,10 +90,10 @@
 
           <div>
             
-<a href="#{{_id}}">
+{{!-- <a href="#{{_id}}"> --}}
             <span>Posted:</span>
             {{publishedAgo createdAt}}
-</a>
+{{!-- </a> --}}
           </div>
         </div>
 
@@ -139,5 +140,5 @@
 </section>
 {{! </div> }}
 <div class="text-center">
-  <a class="btn btn-primary" href="/subreddit/{{subredditdetails._id}}/post/create">Create Post</a>
+  
 </div>
