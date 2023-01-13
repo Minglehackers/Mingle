@@ -151,9 +151,7 @@ exports.deleteSubreddit = (req, res, next) => {
             })
         })
 
-})
 }
-
 
 exports.getEditForm = (req, res, next) => {
     const id = req.params.id;
