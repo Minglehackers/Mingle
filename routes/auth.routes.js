@@ -293,43 +293,50 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
       } else {
         res.render('/profile/:id')
       }
+    })
+    .catch((error) => {
+      console.log(`Error deleting user: ${error}`)
+      next();
+    })
+});
 
 
 
-      // POST DELETE : /auth/delete
-      router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
-        const id = req.params.id
 
-        User.findById(id)
-          .then((userInSession) => {
-            if (req.body.userDeletion === userInSession.username) {
-              User.findByIdAndDelete(id)
-                .then(() => {
-                  res.redirect('/auth/logout')
-                })
-                .catch((error) => {
-                  console.log(`Error deleting user: ${error}`)
-                  next();
-                })
-            } else {
-              res.render('/profile/:id')
-            }
+// POST DELETE : /auth/delete
+router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
+  const id = req.params.id
+
+  User.findById(id)
+    .then((userInSession) => {
+      if (req.body.userDeletion === userInSession.username) {
+        User.findByIdAndDelete(id)
+          .then(() => {
+            res.redirect('/auth/logout')
           })
+          .catch((error) => {
+            console.log(`Error deleting user: ${error}`)
+            next();
+          })
+      } else {
+        res.render('/profile/:id')
+      }
+    })
 
 
-      });
+});
 
 
-      // ? INBOX
+// ? INBOX
 
 
 
 
 
-      router.get('/inbox', youShallNotPass, inboxController.displayInbox);
-      router.get('/inbox/:id', youShallNotPass, inboxController.displayConversation);
+router.get('/inbox', youShallNotPass, inboxController.displayInbox);
+router.get('/inbox/:id', youShallNotPass, inboxController.displayConversation);
 
-      router.post('/inbox/:id', youShallNotPass, inboxController.sendMessage);
+router.post('/inbox/:id', youShallNotPass, inboxController.sendMessage);
 
 
-      module.exports = router;
+module.exports = router;
