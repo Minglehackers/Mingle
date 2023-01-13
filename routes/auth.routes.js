@@ -303,6 +303,7 @@ router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
 
 
 
+
 // POST DELETE : /auth/delete
 router.post('/profile/:id/delete', isLoggedIn, (req, res, next) => {
   const id = req.params.id

@@ -104,13 +104,24 @@ exports.displayView = (req, res, next) => {
     const pid = req.params.pid;
     let commentArr;
     let totalVotes;
+    let fallBackUser = "63c0da3a67554c58ce13a469"
 
-
-    Comment.find({
-        originalPost: pid,
+    User.findById("63c0da3a67554c58ce13a469").then((user) => {
+        fallBackUser = user
+    }).then(() => {
+        return Comment.find({
+            originalPost: pid,
+        })
+            .populate("originalPost author")
+    }).then((postdetails) => {
+        if (!postdetails.author) {
+            postdetails.author = fallBackUser
+        }
+        return postdetails
     })
-        .populate("originalPost author")
         .then((postdetails) => {
+
+            console.log(postdetails, "postdetails")
             commentArr = postdetails;
             commentArr.forEach(element => {
                 if (req.session.currentUser) {

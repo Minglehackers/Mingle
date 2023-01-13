@@ -110,14 +110,15 @@ hbs.handlebars.registerHelper('countVotes', function (up, down) {
     return up - down;
 });
 
-hbs.handlebars.registerHelper('checkVote', function (upvotes, downvotes, user) {
+hbs.handlebars.registerHelper('checkVote', function (upvotes, user, color) {
     if (user) {
         if (upvotes.includes(user._id)) {
-            return 'upvoted';
+            return color;
         }
-        if (downvotes.includes(user._id)) {
-            return 'downvoted';
-        }
+        // if (downvotes.includes(user._id)) {
+        //     return 'orange';
+        // }
+        return "black"
     }
     return '';
 });
@@ -131,7 +132,16 @@ hbs.handlebars.registerHelper('stringify', function (object) {
 
 
 
-
+hbs.handlebars.registerHelper('checkUserExists', function (user, id) {
+    if (user) {
+        if (user._id == "63c0da3a67554c58ce13a469") {
+            return "deleted account";
+        } else {
+            return user.username;
+        }
+    }
+    return "deleted account";
+});
 
 
 const postRoutes = require("./routes/post.routes");

@@ -18,9 +18,8 @@ exports.listReddits = (req, res, next) => {
 }
 
 exports.filterReddits = (req, res, next) => {
-    console.log("from get ", req.query)
-
-    const input = req.query.querry
+    const input = req.body.querry
+    console.log("querry ", input)
 
     Subreddit.find().then((subreddits) => {
 
@@ -141,17 +140,18 @@ exports.postCreateForm = (req, res, next) => {
 exports.deleteSubreddit = (req, res, next) => {
 
     const id = req.params.id
-    Comment.deleteMany({ subreddit: id })
-        .then(() => {
-            return Post.deleteMany({ subreddit: id })
-        })
-        .then(() => {
+    Comment.deleteMany({ subreddit: id }).then(() => {
+        Post.deleteMany({ subreddit: id }).then(() => {
             Subreddit.findByIdAndDelete(id).then(() => {
                 res.redirect("/subreddit")
             })
         })
 
+    })
 }
+
+
+
 
 exports.getEditForm = (req, res, next) => {
     const id = req.params.id;
