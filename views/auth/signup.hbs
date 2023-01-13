@@ -1,24 +1,28 @@
-<div id="form">
-  <h2>Sign Up</h2>
+<div class="credentials-div">
+  <h2 class="titles">Sign Up</h2>
+
+
   <form action="/auth/signup" method="POST">
+    <div class="credentials-details">
+      <label class="crud-labels"> Username: <br>
+        <input class="input-text-crud" type="text" name="username" placeholder="Your username" />
+      </label>
+      <br>
 
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
-    </label>
+      <label class="crud-labels"> Email: <br>
+        <input class="input-text-crud" type="email" name="email" placeholder="Your email" />
+      </label>
+      <br>
 
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
+      <label class="crud-labels"> Password: <br>
+        <input class="input-text-crud" type="password" name="password" placeholder="Your password" />
+      </label>
 
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
-
-    <button type="submit">Sign Up</button>
-
-
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
+      <button class="btn custom-btn btn1-lp" type="submit">Sign Up</button>
   </form>
+
+  {{#if errorMessage}}
+    <p class="error" id="error-credentials">{{errorMessage}}</p>
+  {{/if}}
+</div>
 </div>

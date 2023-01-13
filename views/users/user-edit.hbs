@@ -1,28 +1,35 @@
-<div>
+<div class="crud-div">
+  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+</svg>Go Back</button></a>
+</div>
+
+
+<div class="crud-div">
+  
   <h2>Edit {{userInSession.username}}'s profile</h2>
-
+<hr class="crud-bar">
   <form action="/auth/profile/{{userInSession._id}}/edit" method="post" enctype="multipart/form-data">
-    <label>First Name:
-      <input type="text" name="firstName" maxlength="20" value="{{userInSession.firstName}}" />
+    <label class="crud-labels">First Name: 
+      <input class="input-text-crud" type="text" name="firstName" maxlength="20" value="{{userInSession.firstName}}" />
     </label>
+    <br>
 
-    <label>Last Name:
-      <input type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}" />
+    <label class="crud-labels">Last Name: 
+      <input class="input-text-crud" type="text" name="lastName" maxlength="20" value="{{userInSession.lastName}}" />
     </label>
+    <br>
 
-    <label>About me:
-      <textarea class="form-control" name="aboutMe" cols="30" rows="4" maxlength="50" value="{{userInSession.aboutMe}}" /> </textarea>
+    <label class="crud-labels">About me: 
+      <textarea class="form-control" name="aboutMe" cols="60" rows="4" maxlength="1000" value="{{userInSession.aboutMe}}" /> </textarea>
     </label>
+    <br>
 
-    <label>Profile picture:
-      <input type="file" name="profile-picture-image" />
+    <label class="crud-labels">Profile picture: 
+      <input class="crud-img" type="file" name="profile-picture-image" />
       <input type="text" name="existingImage" hidden value="{{userInSession.profilePicture}}" />
     </label>
-    <div class="">
-      <label>is Admin
-        <input type="checkbox" name="isAdmin" />
-      </label>
-    </div>
-    <button type="submit">Update</button>
+    <br>
+    <button class="btn custom-btn btn1-lp" id="crud-btn-update" type="submit">Update</button>
   </form>
 </div>

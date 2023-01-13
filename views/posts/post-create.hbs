@@ -1,39 +1,45 @@
+<div class="crud-div">
+  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg>Go Back</button></a>
+</div>
+
+
+<div class="crud-div">
 <h3>Create a new post</h3>
+<hr class="crud-bar">
+
 {{#if name}}
-<h5>For the Subreddit : {{name}}</h5>
+<h4><b>For the community:</b> {{name}}</h4> <br>
 {{/if}}
 <form action="/subreddit/{{_id}}/post/create" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <br />
-        <label>
+        <label class="crud-labels">
             Title:
-            <br /><br />
             {{#if title}}
-                <input type="text" class="form-control" name="title" value={{title}} />
+                <input class="input-text-crud" type="text" name="title" value={{title}}/>
             {{else}}
-                <input type="text" class="form-control" name="title" />        
+                <input class="input-text-crud" type="text" name="title" placeholder="Enter a title" />        
             {{/if}}
         </label>
-    </div>
-    <br> <br>
-    <div class="form-group">
-        <label> Text: <br><br>
-            <textarea class="form-control" name="text" cols="30" rows="4" value={{text}} /> </textarea>
-
+        <br>
+        <label class="crud-labels">Text:
+            <textarea class="form-control" name="text" cols="60" rows="4" placeholder="Enter a text"/></textarea>
         </label>
-        <br><br>
-    </div>
-
-
-    <div class="form-group">
-        <label>Picture:
-            <input type="file" name="img" />
+        <br>
+        <label class="crud-labels">Picture:
+            <input class="crud-img" type="file" name="img" />
         </label>
-    </div>
-    <br><br>
-    <button class="btn btn-primary" type="submit"> Create Post</button>
+    <br>
+    <button class="btn custom-btn btn1-lp" id="crud-btn-update" type="submit">Create Post</button>
 </form>
+</div>
+
 
 {{#if errorMessage}}
+<div class="crud-div">
 <p class="error">{{errorMessage}}</p>
+</div>
 {{/if}}

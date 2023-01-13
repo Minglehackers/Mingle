@@ -15,10 +15,6 @@ const commentSchema = new Schema(
       type: Boolean,
       default: true
     },
-    // comments: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Comment"
-    // }],
     originalPost: {
       type: Schema.Types.ObjectId,
       ref: "Post",

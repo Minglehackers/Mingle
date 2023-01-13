@@ -1,27 +1,26 @@
-<a class="button google" href="/auth/login/profile/google">Log in with Google</a>
+<div class="credentials-div">
+  <h2 class="titles">Log In</h2>
 
-
-<div id="login-form">
-  <h2>Log In</h2>
   <form action="/auth/login" method="POST">
-
-    <label> Username
-      <input type="text" name="username" placeholder="Your username" />
+<div class="credentials-details">
+    <label class="crud-labels">Username: <br>
+      <input class="input-text-crud" type="text" name="username" placeholder="Your username" />
+    </label>
+<br>
+    <label class="crud-labels">Email: <br>
+      <input class="input-text-crud" type="email" name="email" placeholder="Your email" />
+    </label>
+<br>
+    <label class="crud-labels">Password: <br>
+      <input class="input-text-crud" type="password" name="password" placeholder="Your password" />
     </label>
 
-    <label> Email
-      <input type="email" name="email" placeholder="Your email" />
-    </label>
-
-    <label> Password
-      <input type="password" name="password" placeholder="Your password" />
-    </label>
-
-    <button type="submit">Log In</button>
+    <button class="btn custom-btn btn2-lp" type="submit">Log In</button>
+</form>
 
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
     
-  </form>
+</div>
 </div>

@@ -1,20 +1,36 @@
-<h2>Update your post</h2>
-<h2>Edit the post: {{postDetails.title}}</h2>
+<div class="crud-div">
+  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg>Go Back</button></a>
+</div>
 
-<form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="post" enctype="multipart/form-data">
-  <label>
-    Title:
-    <input type="text" name="title" value="{{postDetails.title}}" />
-  </label>
+<div class="crud-div">
+  <h2>Update your post</h2>
+  <hr class="crud-bar">
+  <h2>Edit the post: {{postDetails.title}}</h2>
 
-  <label>
-    Text:
-    <textarea name="text" cols="30" rows="4">{{postDetails.text}}</textarea>
-  </label>
-
-  <label>Picture:
-      <input type="file" name="img" />
+  <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="post"
+    enctype="multipart/form-data">
+    <label class="crud-labels">
+      Title:
+      <input class="form-control" style="width: 800px;" type="text" name="title" value="{{postDetails.title}}" />
     </label>
+    <br>
 
-  <button>Save changes</button>
-</form>
+    <label class="crud-labels">
+      Text:
+      <textarea class="form-control" name="text" cols="60" rows="4">{{postDetails.text}}</textarea>
+    </label>
+    <br>
+
+    <label class="crud-labels">Picture:
+      <input class="crud-img" type="file" name="img" />
+    </label>
+    <br>
+
+    <button class="btn custom-btn btn1-lp" id="crud-btn-update">Save changes</button>
+  </form>
+</div>

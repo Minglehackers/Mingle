@@ -1,41 +1,54 @@
-<h3>Create a new post</h3>
+<div class="crud-div">
+    <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>Go Back</button></a>
+</div>
 
-<form action="/post/create" method="post" enctype="multipart/form-data">
+<div class="crud-div">
+    <h3>Create a new post</h3>
+    <hr class="crud-bar">
 
-{{#if allSubreddits}}
-    <label>Select Subredddit:
-        <select name="subreddit">
-            {{#each allSubreddits}}
-            <option value="{{this._id}}">{{this.name}}</option>
-            {{/each}}
-        </select>
-    </label>
-{{/if}}
+    <form action="/post/create" method="post" enctype="multipart/form-data">
 
-
-    <div class="form-group">
-        <label>
-            Title:
-            <br><br>
-            <input type="text" class="form-control" name="title" />
+        {{#if allSubreddits}}
+        <label class="crud-labels">Select Subredddit:
+            <select class="form-select" id="crud-select" name="subreddit">
+                {{#each allSubreddits}}
+                <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
         </label>
-    </div>
-    <br> <br>
-    <div class="form-group">
-        <label> Text: <br><br>
-            <textarea class="form-control" name="text" cols="30" rows="4" /> </textarea>
+        {{/if}}
+        <br>
 
-        </label>>
-        <br><br>
-        <label>Picture:
-            <input type="file" name="img" />
+        <label class="crud-labels">Title:
+            <input type="text" class="form-control" name="title" placeholder="Enter a title" />
         </label>
-        <br><br>
-    </div>
-    <button type="submit">Create Post</button>
+        <br>
+
+        <label class="crud-labels">Text:
+            <textarea class="form-control" name="text" cols="60" rows="4" placeholder="Enter a text"/></textarea>
+        </label>
+        <br>
+
+        <label class="crud-labels">Picture:
+            <input class="crud-img" type="file" name="img" />
+        </label>
+        <br>
+
+        <button type="submit" class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
+</div>
+
 
 </form>
+</div>
+
 
 {{#if errorMessage}}
-<p class="error">{{errorMessage}}</p>
+<div class="crud-div">
+    <p class="error">{{errorMessage}}</p>
+</div>
 {{/if}}
