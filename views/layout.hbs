@@ -11,6 +11,7 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+     <link rel="icon" type="image/x-icon" href="/images/favicon.ico.png">
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
@@ -46,13 +47,13 @@
               <a class="nav-link active" aria-current="page" href="/inbox">Inbox</a>
             </li>
 
-             <div id ="nav-form">
+             <div class="hambi" id ="nav-form">
                    <form class="d-flex" id="logout-form" action="/auth/logout" method="GET">
                <li class="nav-item">
                   <img src="{{userDetails.profilePicture}}" alt="Profile picture" style="width: 50px;">
                 </li>
           <li class="nav-item hello"> Hello,{{userDetails.username}}</li>
-                <li class="nav-item"><button id = "logout-btn">Logout</button></li>
+                <li class="nav-item"><button id = "logout-btn" class=" btn btn-primary ">Logout</button></li>
             </form>
            </div>
       

@@ -247,8 +247,8 @@ section a {
   color: var(--primary-color);
 }
 
-@media (max-width: 768px) {
-  .p111111 {
+@media only screen and (max-width: 900) {
+  .hambi {
     display: none;
   }
 }
@@ -348,5 +348,72 @@ section a {
   width: 980px;
 }
 
+.subreddit-list-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: white;
+  width: 980px;
+}
+
+.card-top-subreddit {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-start;
+  gap: 10px;
+  cursor: default;
+  margin-top: 10px;
+  margin-left: 2rem;
+  border-bottom: 2px solid #ddd;
+  overflow: hidden;
+  /* background-color: #dedede; */
+}
+
+.card-middle-subreddit {
+  display: flex;
+
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding: 1rem 0;
+  width: 800px;
+
+  width: 50rem;
+  max-height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+  /* background-color: #dedede; */
+  /* border: 2px solid #ddd; */
+  /* border-radius: 4px; */
+  /* cursor: pointer; */
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin: 0;
+  padding: 1rem 0;
+  width: 980px;
+
+  max-height: 200px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: var(--main-bg-color);
+  /* border: 2px solid #ddd; */
+  /* border-radius: 4px; */
+  /* cursor: pointer; */
+}
+
+.flitbtn {
+  flex-basis: 1;
+}
 /**********Sign up page ************/
 /******** Log In ******************/ ;

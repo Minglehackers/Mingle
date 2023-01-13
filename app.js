@@ -105,6 +105,10 @@ hbs.handlebars.registerHelper('publishedAgo', function (date) {
 
 });
 
+hbs.handlebars.registerHelper('formatDate', function (date) {
+    const postDate = new Date(date);
+    return postDate.toLocaleString().slice(0, -10);
+});
 
 hbs.handlebars.registerHelper('countVotes', function (up, down) {
     return up - down;
