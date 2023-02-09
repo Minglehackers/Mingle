@@ -271,10 +271,29 @@ a {
 }
 
 .text mt-3 {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 /*Landing page*/
+
+.img-lp {
+  padding-top: 150px;
+  background-image: url("https://res.cloudinary.com/dm6a8aocc/image/upload/v1673541239/mingle/5891169_3045684_wejbd3.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.line-lp {
+  width: 35%;
+}
+
+.lp {
+  margin-top: 10px;
+  margin-left: 50px;
+}
+
 .header-lp {
   margin-top: 5vh;
 }
@@ -287,7 +306,7 @@ a {
 }
 
 .custom-btn {
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   flex-direction: row;
   width: 250px;
@@ -445,24 +464,6 @@ a {
   width: 100%;
 }
 
-.img-lp {
-  padding-top: 150px;
-  background-image: url("https://res.cloudinary.com/dm6a8aocc/image/upload/v1673541239/mingle/5891169_3045684_wejbd3.jpg");
-  background-position: center;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-}
-
-.line-lp {
-  width: 35%;
-}
-
-.lp {
-  margin-top: 10px;
-  margin-left: 50px;
-}
-
 .img-up {
   background-image: url("https://res.cloudinary.com/dm6a8aocc/image/upload/v1673546865/mingle/profile-picture-banner_sbi3im.jpg");
   background-position: center;
@@ -493,6 +494,11 @@ a {
   margin-bottom: 0;
 }
 
+.user-profile {
+  width: 30vw;
+  background-color: transparent;
+}
+
 .mt-3 p {
   font-size: 20px;
 }
@@ -520,11 +526,12 @@ a {
 .crud-div {
   padding-left: 40px;
   padding-top: 40px;
+  margin-bottom: 20px;
 }
 
 .input-text-crud {
   padding: 10px;
-  width: 445px;
+  width: 435px;
   height: 40px;
   margin-bottom: 30px;
 }
@@ -546,14 +553,15 @@ a {
 
 .crud-img {
   border: transparent;
-  margin-left: 10px;
   padding: 0;
   height: 50px;
   margin-bottom: 30px;
 }
 
 #crud-btn-update {
-  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  width: 110px;
   background-image: linear-gradient(315deg, #ff903f 0%, #ff903f 74%);
   color: #333;
   margin: 0;
@@ -561,7 +569,7 @@ a {
 }
 
 #crud-btn-update:hover {
-  width: 150px;
+  width: 110px;
   background-image: linear-gradient(315deg, #ee6300 0%, #ee6300 74%);
   color: white;
   margin: 0;
@@ -569,7 +577,9 @@ a {
 }
 
 #go-back-btn {
-  width: 150px;
+  height: 40px;
+  font-size: 16px;
+  width: 110px;
   background-image: linear-gradient(315deg, #ff1058 0%, #ff1058 74%);
   color: white;
   margin: 0;
@@ -577,7 +587,7 @@ a {
 }
 
 #go-back-btn:hover {
-  width: 150px;
+  width: 110px;
   background-image: linear-gradient(315deg, #ff447a 0%, #ff447a 74%);
   color: #333;
   margin: 0;
@@ -596,8 +606,9 @@ a {
 }
 
 #crud-btn-delete {
-  width: 250px;
-  height: 42px;
+  height: 40px;
+  font-size: 16px;
+  width: 160px;
   background-image: linear-gradient(315deg, crimson 0%, crimson 74%);
   color: white;
   margin: 0;
@@ -605,8 +616,9 @@ a {
 }
 
 #crud-btn-delete:hover {
-  width: 250px;
-  height: 42px;
+  height: 40px;
+  font-size: 16px;
+  width: 160px;
   background-image: linear-gradient(315deg, rgb(158, 17, 45) 0%, rgb(158, 17, 45) 74%);
   margin: 0;
   padding: 0;
@@ -739,7 +751,7 @@ a {
 
 .sd-buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -921,7 +933,7 @@ input {
   align-items: center;
   margin: 0.3rem;
   /* margin: 4rem 1.6rem 1.6rem 1.6rem; */
-  padding: 0 4rem 2rem 4rem;
+  padding: 0 3vw 2rem 3vw;
   background-color: white;
   width: 900px;
   min-height: 220px;
@@ -1045,7 +1057,9 @@ section a {
 }
 
 #btn-up-edit {
-  width: 200px;
+  font-size: 18px;
+  height: 40px;
+  width: 160px;
   background-image: linear-gradient(315deg, #333 0%, #333 74%);
   color: white;
   margin: 0;
@@ -1053,7 +1067,7 @@ section a {
 }
 
 #btn-up-edit:hover {
-  width: 200px;
+  width: 160px;
   background-image: linear-gradient(315deg, #555 0%, #555 74%);
   color: white;
   margin: 0;
@@ -1061,7 +1075,9 @@ section a {
 }
 
 #btn-up-delete {
-  width: 200px;
+  font-size: 18px;
+  height: 40px;
+  width: 160px;
   background-image: linear-gradient(315deg, crimson 0%, crimson 74%);
   color: white;
   margin: 0;
@@ -1069,7 +1085,7 @@ section a {
 }
 
 #btn-up-delete:hover {
-  width: 200px;
+  width: 160px;
   background-image: linear-gradient(315deg, rgb(158, 17, 45) 0%, rgb(158, 17, 45) 74%);
   color: white;
   margin: 0;
@@ -1082,6 +1098,7 @@ section a {
 
 #btn1-lp {
   padding: 0;
+  width: 200px;
 }
 
 #btn1-lp:hover {
@@ -1089,6 +1106,7 @@ section a {
 }
 
 #btn2-lp {
+  width: 200px;
   padding: 0;
 }
 

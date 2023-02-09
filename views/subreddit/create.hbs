@@ -12,24 +12,26 @@
   <hr class="crud-bar">
 
   <form action="/subreddit/create" method="POST" enctype="multipart/form-data">
-      <label for="name" class="crud-labels">Name
+    <label for="name" class="crud-labels">Name
       <input class="input-text-crud" type="text" id="name" name="name" minlength="3" placeholder="Enter a name">
-</label>
-<br>
+    </label>
+    <br>
     <label for="description" class="crud-labels">Description
-    <textarea class="form-control" id="name"  cols="60" rows="4" name="description" placeholder="Enter a name"></textarea>
-</label>
-<br>
+      <textarea class="form-control" id="name" cols="34" rows="4" name="description"
+        placeholder="Enter a name"></textarea>
+    </label>
+    <br>
     <label class="crud-labels">Picture:
       <input class="crud-img" type="file" name="img" />
     </label>
     <br>
-    <button class="btn custom-btn btn1-lp" id="crud-btn-update" type="submit" class="btn btn-primary">Submit</button>
+    <button class="btn custom-btn btn1-lp mb-4" id="crud-btn-update" type="submit"
+      class="btn btn-primary">Submit</button>
   </form>
 </div>
 
 {{#if errorMessage}}
 <div class="crud-div">
-<p class="error">{{errorMessage}}</p>
+  <p class="error">{{errorMessage}}</p>
 </div>
 {{/if}}

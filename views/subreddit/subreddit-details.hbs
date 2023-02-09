@@ -7,10 +7,10 @@
 
 <div class="subreddit-description">
 <h1 class="mb-3 text-center"> {{subredditdetails.name}}</h1>
-<img src="{{subredditdetails.img}}" alt="image" style="width: 100px; border-radius:100%;" />
+<img src="{{subredditdetails.img}}" alt="image" style="width: 100px; border-radius:5%;" />
 <h2>Moderator: {{subredditdetails.moderator.username}}</h2>
 <h5>About this Community:</h5>
-<p>
+<p class="text-center">
 
   {{subredditdetails.description}}
 </p>
@@ -20,11 +20,11 @@
 
   <div class="sd-buttons">
     <form action="/subreddit/{{subredditdetails._id}}/edit" method="get">
-    <button class="btn custom-btn btn1-lp" id="btn-up-edit">Edit</button>
+    <button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 80px; font-size: 16px;">Edit</button>
     </form>
 
     <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
-      <button class="btn custom-btn btn1-lp" id="btn-up-delete">Delete Community</button>
+      <button class="btn custom-btn btn1-lp" id="btn-up-delete" style="width: 80px; font-size: 16px;">Delete</button>
     </form>
 
     <form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
