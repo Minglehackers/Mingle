@@ -1,63 +1,67 @@
 <body class="body-index">
   {{#if userInSession}}
-<div class="img-up"></div>
-<div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+  <div class="img-up"></div>
+  <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
 
-  <div class="card p-4 user-profile">
-    <div class=" image d-flex flex-column justify-content-center align-items-center">
-      <img class="rounded mx-auto d-block justify-content-center align-items-center"
-        src="{{userInSession.profilePicture}}" alt="Profile picture" style="width: 250px; margin-bottom:10px;" />
-      <h2 class="title">Welcome, <span class="username-up">{{userInSession.username}}</span>!</h2>
-      <p><span class="name mt-3"> {{userInSession.firstName}} {{userInSession.lastName}}</span></p>
+    <div class="card p-4 bg-transparent">
+      <div class=" image d-flex flex-column justify-content-center align-items-center">
+        <img class="rounded mx-auto d-block justify-content-center align-items-center"
+          src="{{userInSession.profilePicture}}" alt="Profile picture" style="width: 250px; margin-bottom:10px;" />
+        <h2 class="title">Welcome, <span class="username-up">{{userInSession.username}}</span>!</h2>
+        <p><span class="name mt-3"> {{userInSession.firstName}} {{userInSession.lastName}}</span></p>
 
-      <div class="text mt-3">
-        <p><b>About me:</b> {{userInSession.aboutMe}}</p>
-        <p><b>E-mail address:</b> {{userInSession.email}}</p>
-        
-
-<div class="stats-up">
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-post-fill" viewBox="0 0 16 16">
-  <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM4.5 3h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h7a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5z"/>
-</svg>
-  <p><b>Posts:</b> {{postArr.length}}</p>
-</div>
-        
+        <div class="text mt-3">
+          <p><b>About me:</b> {{userInSession.aboutMe}}</p>
+          <p><b>E-mail address:</b> {{userInSession.email}}</p>
 
 
-<div class="stats-up">
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
-</svg>
-<p><b>Comments:</b> {{commentArr.length}}</p>
-</div>
-        
+          <div class="stats-up">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-file-post-fill" viewBox="0 0 16 16">
+              <path
+                d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM4.5 3h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zm0 2h7a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5z" />
+            </svg>
+            <p><b>Posts:</b> {{postArr.length}}</p>
+          </div>
+
+
+
+          <div class="stats-up">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
+              viewBox="0 0 16 16">
+              <path
+                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+            </svg>
+            <p><b>Comments:</b> {{commentArr.length}}</p>
+          </div>
+
+        </div>
+
+        {{#if samePerson}}
+        <div class="d-flex justify-content-center">
+          <div class=" d-flex mt-2"> <a href="/auth/profile/{{userInSession._id}}/edit"><button
+                class="btn custom-btn btn1-lp" id="btn-up-edit">Edit profile</button></a></div>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+          <div class=" d-flex mt-2"> <a href="/auth/profile/{{userInSession._id}}/delete"><button
+                class="btn custom-btn btn1-lp" id="btn-up-delete">Delete</button></a></div>
+        </div>
+        {{else}}
+        <div>
+          <a href="/inbox/sendmsg/{{userInSession._id}}">Send message</a>
+        </div>
+        {{/if}}
+
       </div>
 
-      {{#if samePerson}}
-      <div class="d-flex justify-content-center">
-        <div class=" d-flex mt-2"> <a href="/auth/profile/{{userInSession._id}}/edit"><button
-              class="btn custom-btn btn1-lp" id="btn-up-edit">Edit profile</button></a></div>
-      </div>
-      <br>
-      <div class="d-flex justify-content-center">
-        <div class=" d-flex mt-2"> <a href="/auth/profile/{{userInSession._id}}/delete"><button
-              class="btn custom-btn btn1-lp" id="btn-up-delete">Delete</button></a></div>
-      </div>
       {{else}}
-      <div>
-        <a href="/inbox/sendmsg/{{userInSession._id}}">Send message</a>
-      </div>
+
+      <br />
+      <p>Still no logged in user, sorry!</p>
+
       {{/if}}
-
     </div>
-
-    {{else}}
-
-    <br />
-    <p>Still no logged in user, sorry!</p>
-
-    {{/if}}
   </div>
-</div>
-</div>
+  </div>
 </body>
