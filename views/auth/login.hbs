@@ -2,21 +2,27 @@
   <div class="container-fluid h-100 d-flex flex-column justify-content-start align-items-center mt-4">
     <h1 class="mt-4 text-center titles">Log In</h1>
     <div class="p-4 mx-auto rounded d-md-flex d-lg-flex" style="background-color: rgb(240, 240, 240);">
-      <form class="d-flex flex-column justify-content-center w-100 mx-auto">
+      <form class="d-flex flex-column justify-content-center w-100 mx-auto" action="/auth/login" method="POST">
         <div class="form-group mx-auto" style="max-width: 400px;">
-          <label class="crud-labels" for="username">Username</label>
-          <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+          <label class="crud-labels">Username</label>
+          <input type="text" name="username" class="form-control" placeholder="Enter username">
         </div>
         <div class="form-group mx-auto" style="max-width: 400px;">
-          <label class="crud-labels" for="email">Email address</label>
-          <input type="email" name="email" class="form-control" id="email" placeholder="Enter email">
+          <label class="crud-labels">Email address</label>
+          <input type="email" name="email" class="form-control" placeholder="Enter email">
         </div>
         <div class="form-group mx-auto" style="max-width: 400px;">
-          <label class="crud-labels" for="password">Password</label>
-          <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+          <label class="crud-labels">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
-        <button type="submit" class="btn custom-btn btn2-lp mx-auto" id="btn2-lp" style="max-width: 400px;">Submit</button>
+        <button type="submit" class="btn custom-btn btn2-lp mx-auto" id="btn2-lp"
+          style="max-width: 400px;">Submit</button>
       </form>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      {{#if errorMessage}}
+      <p class="mt-4 text-center error">{{errorMessage}}</p>
+      {{/if}}
     </div>
   </div>
 </body>
