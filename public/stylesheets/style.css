@@ -535,12 +535,12 @@ a {
 }
 
 .form-control {
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 30px;
 }
 
 .crud-labels {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -595,13 +595,9 @@ a {
 }
 
 .error {
-  padding: 20px;
-  color: white;
+  color: crimson;
   font-weight: bold;
-  height: 100px;
-  background-color: crimson;
-  font-size: 20px;
-  width: 600px;
+  font-size: 18px;
 }
 
 #crud-btn-delete {
@@ -626,6 +622,26 @@ a {
   margin-bottom: 30px;
 }
 
+.input-text-crud {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+@media (min-width: 768px) {
+  .p-4 {
+    width: 550px;
+  }
+
+  .form-control{
+    width: 400px;
+  }
+}
+
+
 .titles {
   font-family: "Kaushan Script";
   height: 80px;
@@ -636,12 +652,13 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
+
 .credentials-details {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 30vw;
+  max-width: 500px;
   padding: 30px;
   padding-bottom: 50px;
   border-radius: 3%;
@@ -658,8 +675,8 @@ a {
 
 #error-credentials {
   margin-top: 20px;
-  width: 500px;
-}
+  max-width: 500px;
+} 
 
 .nbs {
   font-size: 20px;
