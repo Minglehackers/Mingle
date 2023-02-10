@@ -301,14 +301,14 @@ a {
     align-content: center;
     text-align: center;
   }
-}
 
-@media (min-width: 769px){
-  .lp {
-    
+  .img-lp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
-
 
 .header-lp {
   margin-top: 5vh;
