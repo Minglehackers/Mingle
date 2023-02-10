@@ -320,6 +320,12 @@ a {
   margin-bottom: 5vh;
 }
 
+@media (max-width: 768px){
+  .mingle-lp {
+    margin-top: -5vh;
+  }
+}
+
 .custom-btn {
   font-size: 18px;
   display: flex;
@@ -563,12 +569,12 @@ a {
   margin-bottom: 60px;
 }
 
-.crud-img {
-  border: transparent;
-  padding: 0;
-  height: 50px;
-  margin-bottom: 30px;
+@media (max-width: 768px){
+  .crud-img {
+    max-width: 300px;
+  }
 }
+
 
 #crud-btn-update {
   height: 40px;

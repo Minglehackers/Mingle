@@ -1,78 +1,85 @@
 <div class="crud-div">
-  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-</svg>Go Back</button></a>
+  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg>Go Back</button></a>
 </div>
 
 <section class="post-details">
 
-   <a href="/subreddit/{{postDetails.subreddit}}">
-      <h1 class="mb-3 text-center">{{postDetails.title}}</h1>
-   </a>
+  <a href="/subreddit/{{postDetails.subreddit}}">
+    <h1 class="mb-3 text-center">{{postDetails.title}}</h1>
+  </a>
 
 
-<section class="post-list normal-list">
+  <section class="post-list normal-list">
 
 
     <div class="post-list-card-wrapper">
- 
-      {{!-- {{{getVotes upvotes.length downvotes.length this ../userDetails.username }}}  --}}
 
-                   
-                     <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote"
-                        method="post">
-                   
-                     </form>
+      {{!-- {{{getVotes upvotes.length downvotes.length this ../userDetails.username }}} --}}
 
 
-  <div class="card-votes">
+      <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote" method="post">
 
- <form action="/subreddit/{{postDetails.subreddit._id}}/post/{{postDetails._id}}/upvote/thread" method="post">
-<button type="submit" class="vote-arrow" style="background-color:transparent">
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote postDetails.upvotes  postDetails.author._id "orange"}}" class="arrow bi bi-arrow-up-short" viewBox="0 0 16 16">
-  <path
-    fill-rule="evenodd"
-    d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-  ></path>
-</svg>
- </button>  </form>
-
-      <h4>{{countVotes postDetails.upvotes.length postDetails.downvotes.length}}</h4>
+      </form>
 
 
- <form action="/subreddit/{{postDetails.subreddit._id}}/post/{{postDetails._id}}/downvote/thread" method="post">
-<button class="vote-arrow" id="" style="background-color:transparent">
-       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote postDetails.downvotes  postDetails.author._id "blue"}}" class="arrow bi bi-arrow-down-short" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-</svg>  </button></form>
+      <div class="card-votes">
 
-           </div>
-       
-     
+        <form action="/subreddit/{{postDetails.subreddit._id}}/post/{{postDetails._id}}/upvote/thread" method="post">
+          <button type="submit" class="vote-arrow" style="background-color:transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+              fill="{{checkVote postDetails.upvotes  postDetails.author._id " orange"}}"
+              class="arrow bi bi-arrow-up-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z">
+              </path>
+            </svg>
+          </button>
+        </form>
+
+        <h4>{{countVotes postDetails.upvotes.length postDetails.downvotes.length}}</h4>
+
+
+        <form action="/subreddit/{{postDetails.subreddit._id}}/post/{{postDetails._id}}/downvote/thread" method="post">
+          <button class="vote-arrow" id="" style="background-color:transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+              fill="{{checkVote postDetails.downvotes  postDetails.author._id " blue"}}"
+              class="arrow bi bi-arrow-down-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+            </svg> </button>
+        </form>
+
+      </div>
+
+
 
 
       <div class="post-list-card">
         <div class="card-top">
-          <div >
+          <div>
             <span>by:</span>
-            <a
-                       </a>
-            <a class="by-user"  href="/auth/profile/{{postDetails.author._id}}">
-              {{postDetails.author.username}}
-              <img src="{{postDetails.author.profilePicture}}" alt="image" style="width: 20px; border-radius:100%;" />
-            </a>
+            <a </a>
+              <a class="by-user" href="/auth/profile/{{postDetails.author._id}}">
+                {{postDetails.author.username}}
+                <img src="{{postDetails.author.profilePicture}}" alt="image" style="width: 20px; border-radius:100%;" />
+              </a>
           </div>
 
           <div>
-            
-{{!-- <a href="#{{postDetails._id}}"> --}}
-            <span>Posted:</span>
-            {{publishedAgo postDetails.createdAt}}
-</a>
+
+            {{!-- <a href="#{{postDetails._id}}"> --}}
+              <span>Posted:</span>
+              {{publishedAgo postDetails.createdAt}}
+            </a>
           </div>
         </div>
 
-    <div>
+        <div>
           <div class="card-middle">
             <h3>{{postDetails.title}}</h3>
             <p>{{postDetails.text}} </p>
@@ -81,123 +88,131 @@
 
           <div class="card-bottom">
             {{#if postDetails.img}}
-              <img src="{{postDetails.img}}" alt="image" />
+            <img src="{{postDetails.img}}" alt="image" />
             {{/if}}
           </div>
 
-  
+
 
           <div class="card-bottom">
-<div class="votes-btm">
-  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote postDetails.upvotes  postDetails.author._id "orange"}}" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                <path
-                  fill-rule="evenodd"
-                  d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-                ></path>
-    </svg>
+            <div class="votes-btm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                fill="{{checkVote postDetails.upvotes  postDetails.author._id " orange"}}" class="bi bi-arrow-up-short"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z">
+                </path>
+              </svg>
 
-     {{postDetails.upvotes.length}}
-    
+              {{postDetails.upvotes.length}}
 
 
-       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote postDetails.downvotes  postDetails.author._id "blue"}}" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-</svg> 
-    {{postDetails.downvotes.length}}
 
-       </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+                fill="{{checkVote postDetails.downvotes  postDetails.author._id " blue"}}"
+                class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+              </svg>
+              {{postDetails.downvotes.length}}
 
-{{#if samePerson}}
-<!-- EDIT AND DELETE  -->
-  <div class="sd-buttons">
-       <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="get"><button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
-           <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete" method="post"><button class="btn custom-btn btn1-lp" id="btn-up-delete" style="width: 60px; height:40px; font-size: 16px;">Delete</a></button></form>
+            </div>
+
+            {{#if samePerson}}
+            <!-- EDIT AND DELETE  -->
+            <div class="sd-buttons">
+              <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/edit" method="get"><button
+                  class="btn custom-btn btn1-lp" id="btn-up-edit"
+                  style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
+              <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/delete" method="post"><button
+                  class="btn custom-btn btn1-lp" id="btn-up-delete"
+                  style="width: 60px; height:40px; font-size: 16px;">Delete</a></button></form>
+            </div>
+            {{/if}}
+
+
           </div>
-{{/if}}
- 
-
+        </div>
       </div>
-      </div>
-       </div>
     </div>
 
-   <!-- jump link to comment thread  -->
+    <!-- jump link to comment thread  -->
 
 
-   <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}" method="post">
+    <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}" method="post">
       <div class="form-comment">
 
 
 
-         
-         <label>
-             <h5>Comment as <a href="/auth/profile/{{userDetails._id}}">{{userDetails.username}}</a>: </h5></label>
-            <textarea class="form-control" name="text" cols="30" rows="4" /> </textarea>
-         
+
+        <label>
+          <h5>Comment as <a href="/auth/profile/{{userDetails._id}}">{{userDetails.username}}</a>: </h5>
+        </label>
+        <textarea class="form-control" name="text" cols="30" rows="4" /> </textarea>
+
       </div>
       <br>
-      <button type="submit" class="btn custom-btn btn1-lp" id="crud-btn-update" style="width: 180px; margin-left:10px;">Post Comment</button>
+      <button type="submit" class="btn custom-btn btn1-lp" id="crud-btn-update"
+        style="width: 180px; margin-left:10px;">Post Comment</button>
       {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
       {{/if}}
 
-   </form>
+    </form>
 
-   <hr>
-   <!-- Comments thread will appear here for the specific post -->
-   <h2 id="comment_thread">Comments for this thread:</h2>
+    <hr>
+    <!-- Comments thread will appear here for the specific post -->
+    <h2 id="comment_thread">Comments for this thread:</h2>
 
 
 
-   <ul class="list-group">
+    <ul class="list-group">
       {{#each comments}}
-   <div class="card-top">
-          <div >
-            <span>by:</span>
-            <a
-                       </a>
-            <a class="by-user"  href="/auth/profile/{{author._id}}">
+      <div class="card-top">
+        <div>
+          <span>by:</span>
+          <a </a>
+            <a class="by-user" href="/auth/profile/{{author._id}}">
               {{author.username}}
               <img src="{{author.profilePicture}}" alt="image" style="width: 20px; border-radius:100%;" />
             </a>
-          </div>
+        </div>
 
-          <div>
-      
-<a href="#{{_id}}">
+        <div>
+
+          <a href="#{{_id}}">
             <span>Posted:</span>
             {{publishedAgo createdAt}}
-</a>
-          </div>
+          </a>
         </div>
-      <li class="list-group-item" >
-         <p>{{text}}</p>
-
-
-         
-            {{#equal author._id ../userDetails._id}}
-     <div class="sd-buttons">
-               <form action="/subreddit/comment/{{_id}}/edit" method="get"><button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
-               
-               <form action="/subreddit/comment/{{_id}}/delete" method="post">
-               <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
-               <input type="hidden" name="pid" value="{{originalPost._id}}">
-               <button class="btn custom-btn btn1-lp" id="btn-up-delete" style="width: 60px; height:40px; font-size: 16px;">Delete</button>
-            </form>
-            </div>
-            {{/equal}}
+      </div>
+      <li class="list-group-item">
+        <p>{{text}}</p>
 
 
 
+        {{#equal author._id ../userDetails._id}}
+        <div class="sd-buttons">
+          <form action="/subreddit/comment/{{_id}}/edit" method="get"><button class="btn custom-btn btn1-lp"
+              id="btn-up-edit" style="width: 60px; height:40px; font-size: 16px;">Edit</a></button></form>
 
-         </p>
+          <form action="/subreddit/comment/{{_id}}/delete" method="post">
+            <input type="hidden" name="sid" value="{{originalPost.subreddit}}">
+            <input type="hidden" name="pid" value="{{originalPost._id}}">
+            <button class="btn custom-btn btn1-lp" id="btn-up-delete"
+              style="width: 60px; height:40px; font-size: 16px;">Delete</button>
+          </form>
+        </div>
+        {{/equal}}
+
+
+
+
+        </p>
       </li>
       {{/each}}
- 
-</section>
+
+  </section>
 
 
-   </div>
-
-
-
+  </div>

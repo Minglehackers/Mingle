@@ -1,37 +1,64 @@
 <div class="crud-div">
-  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
-        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
-        viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+  <a href="javascript:history.back()"><button
+      class="btn custom-btn btn1-lp"
+      id="go-back-btn"
+    ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+        ></path>
       </svg>Go Back</button></a>
 </div>
 
 <div class="crud-div">
   <h2>Create a community</h2>
-  <hr class="crud-bar">
+  <hr class="crud-bar" />
 
   <form action="/subreddit/create" method="POST" enctype="multipart/form-data">
     <label for="name" class="crud-labels">Name
-      <input class="input-text-crud" type="text" id="name" name="name" minlength="3" placeholder="Enter a name">
+      <input
+        class="input-text-crud"
+        type="text"
+        id="name"
+        name="name"
+        minlength="3"
+        placeholder="Enter a name"
+      />
     </label>
-    <br>
+    <br />
     <label for="description" class="crud-labels">Description
-      <textarea class="form-control" id="name" cols="34" rows="4" name="description"
-        placeholder="Enter a name"></textarea>
+      <textarea
+        class="form-control"
+        id="name"
+        cols="34"
+        rows="4"
+        name="description"
+        placeholder="Enter a name"
+      ></textarea>
     </label>
-    <br>
+    <br />
     <label class="crud-labels">Picture:
-      <input class="crud-img" type="file" name="img" />
+      <input class="form-control crud-img" type="file" name="img" />
     </label>
-    <br>
-    <button class="btn custom-btn btn1-lp mb-4" id="crud-btn-update" type="submit"
-      class="btn btn-primary">Submit</button>
+    <br />
+    <button
+      class="btn custom-btn btn1-lp mb-4"
+      id="crud-btn-update"
+      type="submit"
+      class="btn btn-primary"
+    >Submit</button>
   </form>
 </div>
 
 {{#if errorMessage}}
-<div class="crud-div">
-  <p class="error">{{errorMessage}}</p>
-</div>
+  <div class="crud-div">
+    <p class="error">{{errorMessage}}</p>
+  </div>
 {{/if}}
