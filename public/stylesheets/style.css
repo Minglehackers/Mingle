@@ -52,17 +52,9 @@ h3 {
 }
 
 .hello {
-  margin: 7.5px;
   font-size: 20px;
 }
-#logout-form {
-  display: inline-flex;
-}
-#logout-btn {
-  gap: 5px;
-  margin-left: 10px;
-  margin-top: 5px;
-}
+
 #header-index {
   display: flex;
   justify-content: center;
@@ -179,17 +171,7 @@ section a {
 h1 {
   color: 15px;
 }
-.hello {
-  margin: 7.5px;
-}
-#logout-form {
-  display: inline-flex;
-}
-#logout-btn {
-  gap: 5px;
-  margin-left: 10px;
-  margin-top: 5px;
-}
+
 #header-index {
   display: flex;
   justify-content: center;
@@ -291,6 +273,10 @@ a {
 }
 
 @media (max-width: 768px) {
+  .navbar-text.hello{
+    display: none;
+  }
+
   .line-lp {
     padding: 0;
     margin: 0;
@@ -722,15 +708,11 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
-#logout-btn {
-  background-color: transparent;
-  border: none;
-  padding-top: 8px;
-  padding-left: 8px;
-  margin: 0;
+.logout {
+  font-size: 20px;
 }
 
-#logout-btn:hover {
+.logout:hover {
   background: linear-gradient(45deg, #d287e3, 50%, #ff407c, 100%, #00b7ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -842,7 +824,7 @@ a {
 
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
+  align-content: center;
   margin: 0;
   padding: 1rem 0;
   width: 900px;
@@ -1045,7 +1027,7 @@ section a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-self: flex-end;
+  align-self: center;
   gap: 10px;
   cursor: pointer;
   margin: 0;

@@ -15,7 +15,8 @@
     <input type="text" class="form-control" id="search" name="querry" placeholder="Search" />
 
     <div class="filtbtn"></div>
-    <button type="submit" class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 120px; font-size: 16px;">Submit</button>
+    <button type="submit" class="btn custom-btn btn1-lp" id="btn-up-edit"
+      style="width: 120px; font-size: 16px;">Submit</button>
 
   </form>
 
@@ -37,7 +38,6 @@
             <p class="card-text">{{description}}</p>
             <p>created:{{formatDate createdAt}}
             </p>
-
           </div>
 
           <div class="card-bottom"><img src={{img}} width="100px" /></div>
@@ -52,7 +52,7 @@
   {{/if}}
 
   <br />
-  
+
   <section class="subreddit-list">
     {{#unless filteredSubreddits}}
     <div class="sd-buttons">
@@ -72,13 +72,12 @@
             <p class="card-text">{{description}}</p>
             <p>created:{{formatDate createdAt}}
             </p>
-
           </div>
 
-          <div class="card-bottom"><img src={{img}} width="100px" /></div>
-
+          <div class="card-bottom">
+            <img src={{img}} width="100px" />
+          </div>
         </div>
-
       </div>
     </a>
     {{/each}}
