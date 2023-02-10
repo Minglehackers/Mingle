@@ -278,8 +278,9 @@ a {
 
 .img-lp {
   padding-top: 150px;
+  padding-left: 50px;
   background-image: url("https://res.cloudinary.com/dm6a8aocc/image/upload/v1673541239/mingle/5891169_3045684_wejbd3.jpg");
-  background-position: center;
+  background-position: 25%;
   background-size: cover;
   height: 100%;
   width: 100%;
@@ -289,10 +290,24 @@ a {
   width: 35%;
 }
 
-.lp {
-  margin-top: 10px;
-  margin-left: 50px;
+@media (max-width: 768px) {
+  .lp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin-left: -16px;
+    justify-content: center;
+    align-content: center;
+  }
 }
+
+@media (min-width: 769px){
+  .lp {
+    
+  }
+}
+
 
 .header-lp {
   margin-top: 5vh;
@@ -314,7 +329,6 @@ a {
   color: #444;
   border-radius: 5px;
   padding: 10px 25px;
-  margin-top: 5vh;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -332,7 +346,6 @@ a {
   padding: 0;
   border: none;
   font-weight: bold;
-  margin-right: 20px;
 }
 .btn1-lp:hover {
   background-color: #89d8d3;
@@ -402,7 +415,6 @@ a {
   padding: 0;
   font-weight: bold;
   border: none;
-  margin-right: 20px;
 }
 .btn2-lp:hover {
   background-color: #89d8d3;
