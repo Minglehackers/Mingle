@@ -277,8 +277,8 @@ a {
 /*Landing page*/
 
 .img-lp {
-  padding-top: 150px;
-  padding-left: 50px;
+  /* padding-top: 150px;
+  padding-left: 50px; */
   background-image: url("https://res.cloudinary.com/dm6a8aocc/image/upload/v1673541239/mingle/5891169_3045684_wejbd3.jpg");
   background-position: 25%;
   background-size: cover;
@@ -296,9 +296,10 @@ a {
     flex-direction: column;
     align-items: center;
     align-content: center;
-    margin-left: -16px;
+    /* margin-left: -16px; */
     justify-content: center;
     align-content: center;
+    text-align: center;
   }
 }
 
@@ -317,7 +318,6 @@ a {
   color: #333;
   font-family: "Kaushan Script";
   font-size: 100px;
-  margin-bottom: 5vh;
 }
 
 @media (max-width: 768px){
