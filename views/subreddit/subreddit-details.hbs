@@ -1,26 +1,29 @@
 <div class="crud-div">
-  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-</svg>Go Back</button></a>
+  <a href="javascript:history.back()"><button class="btn custom-btn btn1-lp" id="go-back-btn"><svg
+        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg>Go Back</button></a>
 </div>
 {{!-- show details of logedd in user --}}
 
 <div class="subreddit-description">
-<h1 class="mb-3 text-center"> {{subredditdetails.name}}</h1>
-<img src="{{subredditdetails.img}}" alt="image" style="width: 100px; border-radius:5%;" />
-<h2>Moderator: {{subredditdetails.moderator.username}}</h2>
-<h5>About this Community:</h5>
-<p class="text-center">
+  <h1 class="mb-3 text-center"> {{subredditdetails.name}}</h1>
+  <img src="{{subredditdetails.img}}" alt="image" style="width: 100px; border-radius:5%;" />
+  <h2>Moderator: {{subredditdetails.moderator.username}}</h2>
+  <h5>About this Community:</h5>
+  <p class="text-center">
 
-  {{subredditdetails.description}}
-</p>
+    {{subredditdetails.description}}
+  </p>
 
-{{#if samePerson}}
+  {{#if samePerson}}
 
 
   <div class="sd-buttons">
     <form action="/subreddit/{{subredditdetails._id}}/edit" method="get">
-    <button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 80px; font-size: 16px;">Edit</button>
+      <button class="btn custom-btn btn1-lp" id="btn-up-edit" style="width: 80px; font-size: 16px;">Edit</button>
     </form>
 
     <form action="/subreddit/{{subredditdetails._id}}/delete" method="post">
@@ -28,21 +31,21 @@
     </form>
 
     <form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
-  <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
-  </form>
+      <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
+    </form>
   </div>
 
   {{else}}
   <div class="sd-buttons">
-<form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
-  <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
-  </form>
+    <form action="/subreddit/{{subredditdetails._id}}/post/create" method="get">
+      <button class="btn custom-btn btn1-lp" id="crud-btn-update">Create Post</button>
+    </form>
   </div>
-{{/if}}
+  {{/if}}
 
 
 </div>
- 
+
 
 
 
@@ -52,108 +55,112 @@
 
 
 <section class="post-list">
-{{#each post}}
+  {{#each post}}
 
-    <div class="post-list-card-wrapper">
- 
-      {{!-- {{{getVotes upvotes.length downvotes.length this ../userDetails.username }}}  --}}
+  <div class="post-list-card-wrapper">
 
-                   
-                     <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote"
-                        method="post">
-                   
-                     </form>
+    {{!-- {{{getVotes upvotes.length downvotes.length this ../userDetails.username }}} --}}
 
 
-  <div class="card-votes">
+    <form action="/subreddit/{{postDetails.subreddit}}/post/{{postDetails._id}}/downvote" method="post">
 
- <form action="/subreddit/{{../subredditdetails._id}}/post/{{_id}}/upvote/list" method="post">
-<button type="submit" class="vote-arrow" style="background-color:transparent">
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote upvotes  author._id "orange"}}" class="arrow bi bi-arrow-up-short" viewBox="0 0 16 16">
-  <path
-    fill-rule="evenodd"
-    d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-  ></path>
-</svg>
- </button>  </form>
+    </form>
+
+
+    <div class="card-votes">
+
+      <form action="/subreddit/{{../subredditdetails._id}}/post/{{_id}}/upvote/list" method="post">
+        <button type="submit" class="vote-arrow" style="background-color:transparent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote upvotes  author._id "
+            orange"}}" class="arrow bi bi-arrow-up-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z">
+            </path>
+          </svg>
+        </button>
+      </form>
 
       <h4>{{countVotes upvotes.length downvotes.length}}</h4>
 
 
- <form action="/subreddit/{{../subredditdetails._id}}/post/{{_id}}/downvote/list" method="post">
-<button class="vote-arrow" style="background-color:transparent">
-       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote downvotes  author._id "blue"}}" class="arrow bi bi-arrow-down-short" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-</svg>  </button></form>
+      <form action="/subreddit/{{../subredditdetails._id}}/post/{{_id}}/downvote/list" method="post">
+        <button class="vote-arrow" style="background-color:transparent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote downvotes  author._id "
+            blue"}}" class="arrow bi bi-arrow-down-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+          </svg> </button>
+      </form>
 
-           </div>
-       
-     
+    </div>
 
 
-      <div class="post-list-card">
-        <div class="card-top">
-          <div >
-            <span>by:</span>
-            <a
-                       </a>
-            <a class="by-user"  href="/auth/profile/{{author._id}}">
+
+
+    <div class="post-list-card">
+      <div class="card-top">
+        <div>
+          <span>by:</span>
+          <a </a>
+            <a class="by-user" href="/auth/profile/{{author._id}}">
               {{checkUserExists author}}
               <img src="{{author.profilePicture}}" alt="image" style="width: 20px; border-radius:100%;" />
             </a>
-          </div>
-
-          <div>
-            
-{{!-- <a href="#{{_id}}"> --}}
-            <span>Posted:</span>
-            {{publishedAgo createdAt}}
-{{!-- </a> --}}
-          </div>
         </div>
 
-        <a href="{{subreddit}}/post/{{_id}}">
-          <div class="card-middle">
-            <h3>{{title}}</h3>
-            <p>{{text}} </p>
+        <div>
 
-          </div>
-
-          <div class="card-bottom">
-            {{#if img}}
-              <img src="{{img}}" alt="image" />
-            {{/if}}
-          </div>
-
-          <div class="card-bottom">
-<div class="votes-btm">
-  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote upvotes  author._id "orange"}}" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                <path
-                  fill-rule="evenodd"
-                  d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"
-                ></path>
-    </svg>
-
-     {{upvotes.length}}
-    
-
-
-       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote downvotes  author._id "blue"}}" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-</svg> 
-    {{downvotes.length}}
-
-       </div>
-
-          </div>
-        </a>
+          {{!-- <a href="#{{_id}}"> --}}
+            <span>Posted:</span>
+            {{publishedAgo createdAt}}
+            {{!-- </a> --}}
+        </div>
       </div>
-       </div>
+
+      <a href="{{subreddit}}/post/{{_id}}">
+        <div class="card-middle">
+          <h3>{{title}}</h3>
+          <p>{{text}} </p>
+
+        </div>
+
+        <div class="card-bottom">
+          {{#if img}}
+          <img src="{{img}}" alt="image" class="img-fluid"/>
+          {{/if}}
+        </div>
+
+        <div class="card-bottom">
+          <div class="votes-btm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote upvotes  author._id "
+              orange"}}" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z">
+              </path>
+            </svg>
+
+            {{upvotes.length}}
+
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="{{checkVote downvotes  author._id "
+              blue"}}" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+            </svg>
+            {{downvotes.length}}
+
+          </div>
+
+        </div>
+      </a>
     </div>
+  </div>
+  </div>
 
   {{/each}}
 </section>
 {{! </div> }}
 <div class="text-center">
-  
+
 </div>

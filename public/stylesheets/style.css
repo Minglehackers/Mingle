@@ -291,6 +291,11 @@ a {
 }
 
 @media (max-width: 768px) {
+  .line-lp {
+    padding: 0;
+    margin: 0;
+  }
+
   .lp {
     display: flex;
     flex-direction: column;
@@ -657,6 +662,10 @@ a {
 
 
 @media (min-width: 768px) {
+  .card-top-subreddit{
+    margin-left: 20px;
+  }
+
   .p-4 {
     width: 550px;
   }
@@ -816,7 +825,7 @@ a {
 }
 
 .card-top-subreddit {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -824,11 +833,9 @@ a {
   gap: 10px;
   cursor: default;
   margin-top: 10px;
-  margin-left: 2rem;
   border-bottom: 2px solid #ddd;
-  overflow: hidden;
   /* background-color: #dedede; */
-}
+} 
 
 .card-middle-subreddit {
   display: flex;
